@@ -13,6 +13,9 @@
     <div class="areas">
         <img src="../areas.png" alt="areas"/>
         <!-- <canvas></canvas> -->
+        <div class="result">
+            <span>Нет попадания</span>
+        </div>
     </div>
     <div class="table">
         <span>Предыдущие попытки</span>
@@ -76,7 +79,7 @@
             <label for="">
                 <input type="text" name="" id=""/>
             </label>
-            <span>field must contain number</span>
+            <span class="y-coord-warn">field must contain number</span>
         </div>
 
         <div class="r-coord">
