@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>ЛР №1</title>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="stylesheet" href="front/style.css"/>
-    <title>ЛР №1</title>
+    <script src="front/script.js"></script>
 </head>
 <body>
 <header>Тюрин Иван 335047</header>
 
 <div class="main">
     <div class="areas">
-        <img src="../areas.png" alt="areas"/>
+        <img src="areas.png" alt="areas"/>
         <!-- <canvas></canvas> -->
         <div class="result">
             <span>Нет попадания</span>
@@ -57,29 +58,28 @@
             </tbody>
         </table>
     </div>
-    <form class="coords" action="check.php" method="get">
+    <form class="coords-form" action="" onsubmit="submitForm(); return false;" name="coords" >
         <div class="x-coord">
             <span>X:</span>
-            <!-- div.checkboxes>div.sel-bubble*9>label[for=x-chkbox-$]+input[type=checkbox id=x-chkbox-$] -->
             <div class="x-chkboxes">
                 <?php
                 $x_values = array(-5, -4, -3, -2, -1, 0, 1, 2, 3);
                 for ($i = 0; $i < count($x_values); $i++) {
                     echo "<div class=\"sel-bubble\">
                             <label for=\"x-chkbox-{$i}\">{$x_values[$i]}</label
-                            ><input type=\"checkbox\" id=\"x-chkbox-{$i}\" />
+                            ><input type=\"checkbox\" id=\"x-chkbox-{$i}\" name=\"x\" value=\"{$x_values[$i]}\"/>
                           </div>";
                 }
                 ?>
             </div>
+            <span class="warn-msg">at least one box must be checked</span>
         </div>
-
         <div class="y-coord">
             <span>Y:</span>
             <label for="">
-                <input type="text" name="" id=""/>
+                <input type="text" name="y" id="" required/>
             </label>
-            <span class="y-coord-warn">field must contain number</span>
+            <span class="warn-msg">field must contain number</span>
         </div>
 
         <div class="r-coord">
@@ -90,7 +90,7 @@
                 for ($i = 0; $i < count($y_values); $i++) {
                     echo "<div class=\"sel-bubble\">
                             <label for=\"r-radio-{$i}\">{$y_values[$i]}</label
-                            ><input type=\"radio\" id=\"r-radio-{$i}\" name=\"r-coord-radio\"/>
+                            ><input type=\"radio\" id=\"r-radio-{$i}\" name=\"r\" required value=\"{$y_values[$i]}\"/>
                           </div>";
                 }
                 ?>
