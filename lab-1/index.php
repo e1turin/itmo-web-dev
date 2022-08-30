@@ -8,7 +8,10 @@
     <script src="front/script.js"></script>
 </head>
 <body>
-<header>Тюрин Иван 335047</header>
+<header>
+    <h1>Тюрин Иван</h1>
+    <h2>335047</h2>
+</header>
 
 <div class="main">
     <div class="areas">
@@ -20,8 +23,7 @@
     </div>
     <div class="table">
         <span>Предыдущие попытки</span>
-        <hr/>
-        <table>
+        <table class="results-table">
             <thead>
             <tr>
                 <th>X</th>
@@ -31,34 +33,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>miss</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>miss</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>miss</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>miss</td>
-            </tr>
             </tbody>
         </table>
+        <div class="table-reset-button">
+            <input class="reset-btn" onclick="reset_table();" type="button" value="Reset">
+        </div>
     </div>
-    <form class="coords-form" action="" onsubmit="submitForm(); return false;" name="coords" >
+    <form class="coords-form" action="" onsubmit="submit_form(); return false;" name="coords">
         <div class="x-coord">
             <span>X:</span>
             <div class="x-chkboxes">
@@ -66,8 +47,8 @@
                 $x_values = array(-5, -4, -3, -2, -1, 0, 1, 2, 3);
                 for ($i = 0; $i < count($x_values); $i++) {
                     echo "<div class=\"sel-bubble\">
-                            <label for=\"x-chkbox-{$i}\">{$x_values[$i]}</label
-                            ><input type=\"checkbox\" id=\"x-chkbox-{$i}\" name=\"x\" value=\"{$x_values[$i]}\"/>
+                            <label for=\"x-chkbox-$i\">$x_values[$i]</label
+                            ><input type=\"checkbox\" id=\"x-chkbox-$i\" name=\"x\" value=\"$x_values[$i]\"/>
                           </div>";
                 }
                 ?>
@@ -79,7 +60,7 @@
             <label for="">
                 <input type="text" name="y" id="" required/>
             </label>
-            <span class="warn-msg">field must contain number</span>
+            <span class="warn-msg">field must contain number in range (-3; 5)</span>
         </div>
 
         <div class="r-coord">
@@ -102,6 +83,6 @@
     </form>
 </div>
 
-<footer>footer</footer>
+<!--<footer></footer>-->
 </body>
 </html>
