@@ -1,9 +1,11 @@
+/* //data loads directly from php
 (function () {
     fetch("back/restore_table.php")
         .then(async response => {
-            handle_response(await response.text());
+            handle_response(await response.text()); //response==={json-array or single json record}
         });
 })()
+*/
 
 function submit_form() {
     const coords = document.forms['coords'];

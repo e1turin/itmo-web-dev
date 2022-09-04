@@ -35,6 +35,18 @@
             </tr>
             </thead>
             <tbody>
+            <?php
+            session_start();
+            if (isset($_SESSION['result'])) {
+                foreach ($_SESSION['result'] as $row) {
+                    $inside = $row['inside'] ? "✅" : "❌";
+                    echo "<tr> 
+                            <td>{$row['x']}</td> <td>{$row['y']}</td> <td>{$row['r']}</td> <td>{$inside}</td> <td>{$row['cur_time']}</td> <td>{$row['time']}</td> 
+                          </tr>";
+
+                }
+            }
+            ?>
             </tbody>
         </table>
         <div class="table-reset-button">
