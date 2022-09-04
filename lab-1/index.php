@@ -30,6 +30,8 @@
                 <th>Y</th>
                 <th>R</th>
                 <th>AC</th>
+                <th>Server time</th>
+                <th>Response time</th>
             </tr>
             </thead>
             <tbody>

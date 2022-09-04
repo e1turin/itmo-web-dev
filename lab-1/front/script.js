@@ -74,6 +74,14 @@ function add_res_row(json_response) {
     AC.innerHTML = json_response['inside'] ? "✅" : "❌";
     new_row.appendChild(AC);
 
+    let server_time = document.createElement('td');
+    server_time.innerHTML = json_response['cur_time'];
+    new_row.appendChild(server_time);
+
+    let response_time = document.createElement('td');
+    response_time.innerHTML = json_response['time'];
+    new_row.appendChild(response_time);
+
     tbody.appendChild(new_row);
 }
 
