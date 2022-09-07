@@ -76,12 +76,12 @@ $response = array(
 );
 
 
-$json_response = json_encode($response);
 
 if (!isset($_SESSION['result'])) {
     $_SESSION = array();
 }
-
 $_SESSION['result'][] = $response; // todo: compact format
 
-echo $json_response;
+//$json_response = json_encode($response);
+
+//echo $json_response;

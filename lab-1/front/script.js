@@ -15,10 +15,13 @@ function submit_form() {
 
     if (validate_form(x, y, r)) {
         let req = `?x=${x}&y=${y}&r=${r}`;
-        fetch("back/check.php" + req)
+        window.location.href += req;    //reload on click
+        /*
+        fetch("back/check.php" + req)   //no reload on click
             .then(async response => {
                 handle_response(await response.text())
             });
+         */
     } else {
         //todo inactive btn
         alert("invalid input in form");

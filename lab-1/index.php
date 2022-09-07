@@ -1,3 +1,6 @@
+<?php
+include "back/check.php"; // for get request with page reload
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +14,14 @@
 <header>
     <h1>Тюрин Иван</h1>
     <h2>335047</h2>
+    <h3>Вариант: 1022</h3>
 </header>
 
 <div class="main">
     <div class="areas">
         <img src="areas.png" alt="areas"/>
         <!-- <canvas></canvas> -->
-        <div class="result">
-            <span>Нет попадания</span>
-        </div>
+<!--                <div class="result"> <span>Нет попадания</span> </div>-->
     </div>
     <div class="table">
         <span>Предыдущие попытки</span>
@@ -49,7 +51,7 @@
             ?>
             </tbody>
         </table>
-        <div class="table-reset-button">
+        <div class="table-reset-btn">
             <input class="reset-btn" onclick="reset_table();" type="button" value="Reset">
         </div>
     </div>
@@ -72,7 +74,7 @@
         <div class="y-coord">
             <span>Y:</span>
             <label for="">
-                <input type="text" name="y" id="" required/>
+                <input type="text" name="y" placeholder="-3 < y < 5" required/>
             </label>
             <span class="warn-msg">field must contain number in range (-3; 5)</span>
         </div>

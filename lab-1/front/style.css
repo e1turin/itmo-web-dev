@@ -10,6 +10,8 @@ img {
 header {
     background-color: aquamarine;
     padding: 20px;
+    font-style: italic;
+    color: rebeccapurple;
 }
 
 header h1, h2 {
@@ -22,6 +24,9 @@ header h1 {
 
 header h2 {
     font-size: 30px;
+}
+header h3 {
+    font-size: 25px;
 }
 
 .main {
@@ -176,7 +181,7 @@ input:focus:invalid {
     border-radius: 10px;
 }
 
-.table-reset-button {
+.table-reset-btn {
     display: flex;
     /*align-items: center;*/
     /*justify-content: center;*/
