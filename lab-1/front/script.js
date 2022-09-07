@@ -35,6 +35,7 @@ function reset_table() {
             let res_table = get_res_table();
             res_table.getElementsByTagName('tbody')[0].remove();
             res_table.appendChild(document.createElement("tbody"))
+            window.location.href = '/';
         });
 }
 
@@ -119,8 +120,16 @@ function get_y_value(form) {
     let y_coords = form['y'];
     let y_input = y_coords.value.replaceAll(",", ".");
     let y_as_num = Number(y_input);
-    if (!isNaN(y_as_num) && -3 < y_as_num && y_as_num < 5) {
-        return y_as_num;
+    // if (!isNaN(y_as_num) && -3 < y_as_num && y_as_num < 5) {
+    if (!isNaN(y_as_num) &&
+        (/^-[012]\.[0-9]*/.test(y_input)        // in range of floats (-3;0]
+            || /^[01234]\.[0-9]*/.test(y_input) // in range of floats [0;5)
+            || /^-[012]/.test(y_input)          // in range of integers (-3;0]
+            || /^[01234]/.test(y_input)         // in range of integers  [0;5)
+        )
+    ) {
+
+        return y_input;
     }
     return undefined;
 }

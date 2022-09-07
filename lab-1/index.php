@@ -33,7 +33,7 @@ include "back/check.php"; // for get request with page reload
                 <th>R</th>
                 <th>AC</th>
                 <th>Server time</th>
-                <th>Response time</th>
+                <th>Response time, ms</th>
             </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@ include "back/check.php"; // for get request with page reload
                 }
                 ?>
             </div>
-            <span class="warn-msg">at least one box must be checked</span>
+            <span class="warn-msg">at least one box must be checked, first box only is put to request </span>
         </div>
         <div class="y-coord">
             <span>Y:</span>

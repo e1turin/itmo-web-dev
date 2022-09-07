@@ -10,23 +10,36 @@ $y = isset($_GET["y"]) ? str_replace(",", ".", $_GET["y"]) : null;
 $r = isset($_GET["r"]) ? $_GET["r"] : null;
 $msg = "";
 
-function check_coords($x, $y, $r)
+function validate_coords($x, $y, $r)
 {
-    if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) &&   // X@TA
-        in_array($r, ["1", "2", "3", "4", "5"], true) &&                            // R@TA
+    function _validate_y_coord($y)
+    {
+        if (preg_match('/^-[012]\.[0-9]*/', $y) || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats (-3;0] || [0;5)
+            || preg_match('/^-[012]/', $y) || preg_match('/^[01234]', $y) // in range of integers (-3;0] || [0;5)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) &&
+        in_array($r, ["1", "2", "3", "4", "5"], true) &&
         is_numeric($x) && is_numeric($r) && is_numeric($y) &&
-        $y > -3 && $y < 5                                                                // Y@TA
+        _validate_y_coord($y)
     ) {
         return true;
     } else {
 //        $msg = "wrong values";
         //todo: give msg
+        $msg = "one or more coordinates are not in allowed range";
         return false;
     }
 }
 
-if (!check_coords($x, $y, $r)) {
-    http_response_code(400);
+
+if (!validate_coords($x, $y, $r)) {
+    //http_response_code(400); // invalid input
     return;
 }
 
@@ -76,12 +89,10 @@ $response = array(
 );
 
 
-
 if (!isset($_SESSION['result'])) {
     $_SESSION = array();
 }
 $_SESSION['result'][] = $response; // todo: compact format
 
-//$json_response = json_encode($response);
-
+//$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
 //echo $json_response;
