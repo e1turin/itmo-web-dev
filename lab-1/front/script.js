@@ -15,7 +15,7 @@ function submit_form() {
 
     if (validate_form(x, y, r)) {
         let req = `?x=${x}&y=${y}&r=${r}`;
-        window.location.href += req;    //reload on click
+        window.location.href = window.location.href.split("?")[0]+req;    //reload on click
         /*
         fetch("back/check.php" + req)   //no reload on click
             .then(async response => {

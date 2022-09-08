@@ -19,9 +19,12 @@ include "back/check.php"; // for get request with page reload
 
 <div class="main">
     <div class="areas">
-        <img src="areas.png" alt="areas"/>
+<!--        <img src="areas.png" alt="areas"/>-->
+        <?php
+        include "areas.svg";
+        ?>
         <!-- <canvas></canvas> -->
-<!--                <div class="result"> <span>Нет попадания</span> </div>-->
+        <!--                <div class="result"> <span>Нет попадания</span> </div>-->
     </div>
     <div class="table">
         <span>Предыдущие попытки</span>
@@ -38,7 +41,7 @@ include "back/check.php"; // for get request with page reload
             </thead>
             <tbody>
             <?php
-            session_start();
+            //            session_start();
             if (isset($_SESSION['result'])) {
                 foreach ($_SESSION['result'] as $row) {
                     $inside = $row['inside'] ? "✅" : "❌";
@@ -69,7 +72,7 @@ include "back/check.php"; // for get request with page reload
                 }
                 ?>
             </div>
-            <span class="warn-msg">at least one box must be checked, first box only is put to request </span>
+            <span class="warn-msg">at least one box must be checked, only <u>the first</u> checkbox is taken in the query</span>
         </div>
         <div class="y-coord">
             <span>Y:</span>

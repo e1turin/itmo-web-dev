@@ -10,23 +10,52 @@ $y = isset($_GET["y"]) ? str_replace(",", ".", $_GET["y"]) : null;
 $r = isset($_GET["r"]) ? $_GET["r"] : null;
 $msg = "";
 
+if (
+    $x === null || $y === null || $r === null ||
+    !validate_coords($x, $y, $r)
+) {
+    //http_response_code(400); // invalid input
+    return;
+}
+
+$current_time = date("H:i:s");
+$time = number_format(microtime(true) - $start_time, 10, ".", "") * 1000000;
+
+$response = array(
+    'x' => $x,
+    'y' => $y,
+    'r' => $r,
+    'inside' => inside_area($x, $y, $r),
+    'cur_time' => $current_time,
+    'time' => (int)$time,
+    'msg' => $msg
+);
+
+
+if (!isset($_SESSION['result'])) {
+    $_SESSION = array();
+}
+$_SESSION['result'][] = $response; // todo: compact format
+
+//$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
+//echo $json_response;
+
+
 function validate_coords($x, $y, $r)
 {
-    function _validate_y_coord($y)
+    function _validate_y($y)
     {
-        if (preg_match('/^-[012]\.[0-9]*/', $y) || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats (-3;0] || [0;5)
-            || preg_match('/^-[012]/', $y) || preg_match('/^[01234]', $y) // in range of integers (-3;0] || [0;5)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return preg_match('/^-[012]\.[0-9]*/', $y)  // in range of floats (-3;0]
+            || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats [0;5)
+            || preg_match('/^-[012]/', $y)          // in range of integers [0;5)
+            || preg_match('/^[01234]/', $y)         // in range of integers [0;5)
+            ;
     }
 
-    if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) &&
-        in_array($r, ["1", "2", "3", "4", "5"], true) &&
-        is_numeric($x) && is_numeric($r) && is_numeric($y) &&
-        _validate_y_coord($y)
+    if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) // validate x
+        && in_array($r, ["1", "2", "3", "4", "5"], true) //validate r
+        && _validate_y($y)
+        // && is_numeric($x) && is_numeric($r) && is_numeric($y) //unnecessary check for a number type
     ) {
         return true;
     } else {
@@ -35,13 +64,9 @@ function validate_coords($x, $y, $r)
         $msg = "one or more coordinates are not in allowed range";
         return false;
     }
+
 }
 
-
-if (!validate_coords($x, $y, $r)) {
-    //http_response_code(400); // invalid input
-    return;
-}
 
 function inside_area($x, $y, $r)
 {
@@ -74,25 +99,3 @@ function inside_area($x, $y, $r)
     }
 
 }
-
-$current_time = date("H:i:s");
-$time = number_format(microtime(true) - $start_time, 10, ".", "") * 1000000;
-
-$response = array(
-    'x' => $x,
-    'y' => $y,
-    'r' => $r,
-    'inside' => inside_area($x, $y, $r),
-    'cur_time' => $current_time,
-    'time' => (int)$time,
-    'msg' => $msg
-);
-
-
-if (!isset($_SESSION['result'])) {
-    $_SESSION = array();
-}
-$_SESSION['result'][] = $response; // todo: compact format
-
-//$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
-//echo $json_response;
