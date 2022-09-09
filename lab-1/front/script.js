@@ -91,7 +91,6 @@ function add_res_row(json_response) {
     tbody.appendChild(new_row);
 }
 
-
 function validate_form(x, y, r) {
     let result = true;
 
