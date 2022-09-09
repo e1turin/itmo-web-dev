@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background: rgb(218, 238, 182);
+    background: rgb(246, 237, 141);
 }
 
 img {
@@ -30,12 +30,16 @@ header h3 {
 }
 
 .main {
-    background-color: rgb(218, 238, 182);
+    /*background-color: rgb(255, 255, 255);*/
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 50px;
-    padding: 5%;
+    gap: 30px;
+    padding: 20px;
+}
+.section {
+    border: black solid 1px;
+    padding: 30px;
 }
 
 .areas {
@@ -67,6 +71,7 @@ header h3 {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    align-items: center;
 }
 
 .main .table table, th, td {
@@ -82,11 +87,17 @@ header h3 {
 .main .table th, td {
     min-width: 30px;
 }
+.main .table .table-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    gap: 10%;
 
+}
 .main .table span {
+    white-space: nowrap;
     font-size: 30px;
     padding-bottom: 10px;
-    border-bottom: 2px dashed salmon;
 }
 
 .coords-form {
@@ -129,6 +140,7 @@ input:focus:invalid {
 }
 
 .y-coord label, input {
+    background-color: inherit;
     border-radius: 10px;
     font-size: 20px;
     padding: 5px;
@@ -179,12 +191,13 @@ input:focus:invalid {
     font-size: 20px;
     padding: 5px;
     border-radius: 10px;
+    background-color: aquamarine;
 }
 
 .table-reset-btn {
     display: flex;
-    /*align-items: center;*/
-    /*justify-content: center;*/
+    align-items: center;
+    justify-content: center;
     width: 100%;
 }
 
@@ -192,6 +205,7 @@ input:focus:invalid {
     font-size: 20px;
     padding: 10px;
     border-radius: 10px;
+    background: aquamarine;
 }
 
 footer {

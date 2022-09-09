@@ -18,16 +18,20 @@ include "back/check.php"; // for get request with page reload
 </header>
 
 <div class="main">
-    <div class="areas">
-<!--        <img src="areas.png" alt="areas"/>-->
+    <div class="areas section">
+        <!--        <img src="areas.png" alt="areas"/>-->
         <?php
         include "areas.svg";
         ?>
-        <!-- <canvas></canvas> -->
-        <!--                <div class="result"> <span>Нет попадания</span> </div>-->
     </div>
-    <div class="table">
-        <span>Предыдущие попытки</span>
+    <div class="table section">
+        <div class="table-header">
+            <span>Предыдущие попытки</span>
+            <div class="table-reset-btn">
+                <input class="reset-btn" onclick="reset_table();" type="button" value="Сбросить">
+            </div>
+
+        </div>
         <table class="results-table">
             <thead>
             <tr>
@@ -35,8 +39,8 @@ include "back/check.php"; // for get request with page reload
                 <th>Y</th>
                 <th>R</th>
                 <th>AC</th>
-                <th>Server time</th>
-                <th>Response time, ms</th>
+                <th>Время на сервере</th>
+                <th>Время ответа, мс</th>
             </tr>
             </thead>
             <tbody>
@@ -54,11 +58,9 @@ include "back/check.php"; // for get request with page reload
             ?>
             </tbody>
         </table>
-        <div class="table-reset-btn">
-            <input class="reset-btn" onclick="reset_table();" type="button" value="Reset">
-        </div>
+
     </div>
-    <form class="coords-form" action="" onsubmit="submit_form(); return false;" name="coords">
+    <form class="coords-form section" action="" onsubmit="submit_form(); return false;" name="coords">
         <div class="x-coord">
             <span>X:</span>
             <div class="x-chkboxes">
@@ -72,14 +74,14 @@ include "back/check.php"; // for get request with page reload
                 }
                 ?>
             </div>
-            <span class="warn-msg">at least one box must be checked, only <u>the first</u> checkbox is taken in the query</span>
+            <span class="warn-msg"> — минимум один из вариантов должен быть выбран, <br> (<u>только первый</u> из них попадет в запрос).</span>
         </div>
         <div class="y-coord">
             <span>Y:</span>
             <label for="">
                 <input type="text" name="y" placeholder="-3 < y < 5" required/>
             </label>
-            <span class="warn-msg">field must contain number in range (-3; 5)</span>
+            <span class="warn-msg"> — поле должно содержать число в диапозоне (-3; 5).</span>
         </div>
 
         <div class="r-coord">
@@ -97,7 +99,7 @@ include "back/check.php"; // for get request with page reload
             </div>
         </div>
         <div class="coords-submit-btn">
-            <input class="submit-btn" type="submit" value="Save">
+            <input class="submit-btn" type="submit" value="Выбрать">
         </div>
     </form>
 </div>

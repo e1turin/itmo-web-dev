@@ -14,7 +14,7 @@ if (
     $x === null || $y === null || $r === null ||
     !validate_coords($x, $y, $r)
 ) {
-    //http_response_code(400); // invalid input
+    http_response_code(400); // bad request
     return;
 }
 
