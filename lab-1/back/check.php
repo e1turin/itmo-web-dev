@@ -1,12 +1,15 @@
 <?php
 $start_time = microtime(true);
-session_start();
-date_default_timezone_set('Europe/Moscow');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$date_time = new \DateTime("now", new \DateTimeZone('Europe/Moscow'));
 error_reporting(E_ALL);
-ini_set('display_errors', 'Off');
+ini_set('display_errors', 'On');
 
 $x = isset($_GET["x"]) ? $_GET["x"] : null;
-$y = isset($_GET["y"]) ? str_replace(",", ".", $_GET["y"]) : null;
+//$y = isset($_GET["y"]) ? str_replace(",", ".", $_GET["y"]) : null;
+$y = isset($_GET["y"]) ? get_y_value($_GET["y"], 4) : null;
 $r = isset($_GET["r"]) ? $_GET["r"] : null;
 $msg = "";
 
@@ -26,7 +29,7 @@ $response = array(
     'y' => $y,
     'r' => $r,
     'inside' => inside_area($x, $y, $r),
-    'cur_time' => $current_time,
+    'cur_time' => $date_time->format(\DateTime::RFC850),
     'time' => (int)$time,
     'msg' => $msg
 );
@@ -40,33 +43,40 @@ $_SESSION['result'][] = $response; // todo: compact format
 //$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
 //echo $json_response;
 
+function get_y_value($str, $precession = 4)
+{
+    $matches = array();
+    if (!preg_match('/^(-?\d+)\.?(\d*)$/', $str, $matches)) {
+        return null;
+    }
+    $integer_part = $matches[1];
+    $float_part = substr($matches[2], 0, $precession);
+    return floatval("$integer_part.$float_part");
+}
 
 function validate_coords($x, $y, $r)
 {
     function _validate_y($y)
     {
-        return preg_match('/^-[012]\.[0-9]*/', $y)  // in range of floats (-3;0]
-            || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats [0;5)
-            || preg_match('/^-[012]/', $y)          // in range of integers [0;5)
-            || preg_match('/^[01234]/', $y)         // in range of integers [0;5)
-            ;
+        return $y > -3 && $y < 5;
+//        return preg_match('/^-[012]\.[0-9]*/', $y)  // in range of floats (-3;0]
+//            || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats [0;5)
+//            || preg_match('/^-[012]/', $y)          // in range of integers [0;5)
+//            || preg_match('/^[01234]/', $y)         // in range of integers [0;5)
+//            ;
     }
 
     if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) // validate x
         && in_array($r, ["1", "2", "3", "4", "5"], true) //validate r
-        && _validate_y($y)
-        // && is_numeric($x) && is_numeric($r) && is_numeric($y) //unnecessary check for a number type
+        && _validate_y($y) // y: float with fixed precession 4
     ) {
         return true;
     } else {
-//        $msg = "wrong values";
-        //todo: give msg
         $msg = "one or more coordinates are not in allowed range";
         return false;
     }
 
 }
-
 
 function inside_area($x, $y, $r)
 {
@@ -74,7 +84,7 @@ function inside_area($x, $y, $r)
     {
         //todo: msg
         return $x <= 0 && $y >= 0 // II term
-            && 4 * ($x * $x + $y * $y) <= $r * $r; // in quad of circle
+            && 4 * ($x ** 2 + $y ** 2) <= $r ** 2; // in quad of circle
     }
 
     function _in_triangle($x, $y, $r)

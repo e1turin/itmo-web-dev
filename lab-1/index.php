@@ -1,5 +1,10 @@
 <?php
-include "back/check.php"; // for get request with page reload
+$reset = isset($_GET["reset"]) ? $_GET["reset"] : null;
+if ($reset !== null){
+    include "back/reset_table.php";
+} else {
+    include "back/check.php"; // for get request with page reload
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +29,7 @@ include "back/check.php"; // for get request with page reload
         include "areas.svg";
         ?>
     </div>
-    <form class="coords-form section" name="coords">
+    <form class="coords-form section" onreset="" name="coords">
         <div class="input-coord">
             <div class="x-coord">
                 <span>X:</span>
@@ -93,7 +98,7 @@ include "back/check.php"; // for get request with page reload
                 <input class="submit-btn" id="form-submit-btn" type="submit" value="Выбрать" disabled>
             </div>
             <div class="form-reset">
-                <input type="reset" class="reset" value="Очистить форму">
+                <button onclick="location.href='/'" type="reset" class="reset" value="Очистить форму">Очистить форму</button>
             </div>
         </div>
     </form>
@@ -101,7 +106,7 @@ include "back/check.php"; // for get request with page reload
         <div class="table-header">
             <span>Предыдущие попытки</span>
             <div class="table-reset-btn">
-                <form action="" method="get" name="clear-table">
+                <form action="" method="get" name="reset-table">
                     <button class="reset-btn" name="reset" type="submit" value="true">Сбросить</button>
                 </form>
             </div>

@@ -85,25 +85,36 @@ function get_r_value() {
     return el;
 }
 
-function get_y_value(dy) {
-    let y_coords = document.forms['coords']['y'];
-    let y_input = y_coords.value.replaceAll(",", ".");
-    if(! /^-?\d+\.?\d*$/.test(y_input)) return null; // deny exponential form
-    let y_as_num = parseFloat(y_input);
+function get_y_value(new_y, precession = 4) {
+    // let y_coords = document.forms['coords']['y'];
+    // let y_input = y_coords.value.replaceAll(",", ".");
+    let y_input = new_y.toString().replaceAll(",", ".");
+    if (!/^-?\d+\.?\d*$/.test(y_input)) return null; // ban exponential form
+    let y_as_num = ParseFloat(y_input, precession);
     if (isNaN(y_as_num)) return null;
-    y_as_num = y_as_num.toFixed(4);
-    if (y_as_num > 5 || y_as_num < -3) {
+    // y_as_num = y_as_num.toFixed(precession);
+    console.log(y_as_num);
+    if (y_as_num >= 5 || y_as_num <= -3) {
         return null;
     } else {
         return y_as_num;
     }
 }
 
+function ParseFloat(str, val) {
+    str = str.toString();
+    str = str.slice(0, (str.indexOf(".")) + val + 1);
+    return Number(str);
+}
+
 // useless >>>
-function submit_form() { }
+function submit_form() {
+}
+
 function get_res_table() {
     return document.getElementsByClassName("results-table")[0];
 }
+
 function reset_table() {
     fetch("back/reset_table.php")
         .then(async response => {
@@ -114,6 +125,7 @@ function reset_table() {
             window.location.href = '/';
         });
 }
+
 function handle_response(response) {
     if (response !== "") {
         let json = JSON.parse(response);
@@ -129,6 +141,7 @@ function handle_response(response) {
         console.log("response is empty");
     }
 }
+
 function add_res_row(json_response) {
     let tbody = get_res_table().getElementsByTagName('tbody')[0];
     let new_row = document.createElement('tr');
@@ -160,4 +173,5 @@ function add_res_row(json_response) {
 
     tbody.appendChild(new_row);
 }
+
 // useless <<<
