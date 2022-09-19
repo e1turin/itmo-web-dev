@@ -5,10 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $date_time = new \DateTime("now", new \DateTimeZone('Europe/Moscow'));
 error_reporting(E_ALL);
-ini_set('display_errors', 'On');
+ini_set('display_errors', 'Off');
 
 $x = isset($_GET["x"]) ? $_GET["x"] : null;
-//$y = isset($_GET["y"]) ? str_replace(",", ".", $_GET["y"]) : null;
 $y = isset($_GET["y"]) ? get_y_value($_GET["y"], 4) : null;
 $r = isset($_GET["r"]) ? $_GET["r"] : null;
 $msg = "";
@@ -59,11 +58,6 @@ function validate_coords($x, $y, $r)
     function _validate_y($y)
     {
         return $y > -3 && $y < 5;
-//        return preg_match('/^-[012]\.[0-9]*/', $y)  // in range of floats (-3;0]
-//            || preg_match('/^[01234]\.[0-9]*/', $y) // in range of floats [0;5)
-//            || preg_match('/^-[012]/', $y)          // in range of integers [0;5)
-//            || preg_match('/^[01234]/', $y)         // in range of integers [0;5)
-//            ;
     }
 
     if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) // validate x
@@ -82,21 +76,18 @@ function inside_area($x, $y, $r)
 {
     function _in_circle($x, $y, $r)
     {
-        //todo: msg
         return $x <= 0 && $y >= 0 // II term
             && 4 * ($x ** 2 + $y ** 2) <= $r ** 2; // in quad of circle
     }
 
     function _in_triangle($x, $y, $r)
     {
-        //todo: msg
         return $x <= 0 && $y <= 0 //III term
             && 2 * ($x + $y) >= -$r; // in triangle
     }
 
     function _in_rectangle($x, $y, $r)
     {
-        //todo: msg
         return $x >= 0 && $y <= 0 //IV term
             && $x <= $r && 2 * $y >= -$r;// in rectangle
     }
@@ -104,7 +95,6 @@ function inside_area($x, $y, $r)
     if (_in_circle($x, $y, $r) || _in_triangle($x, $y, $r) || _in_rectangle($x, $y, $r)) {
         return true;
     } else {
-        //todo: msg
         return false;
     }
 

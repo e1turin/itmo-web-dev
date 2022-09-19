@@ -5,4 +5,4 @@ if (session_status() === PHP_SESSION_NONE) {
 if (isset($_SESSION['result'])) {
     unset($_SESSION['result']);
 }
-echo "session result cleared";
+return;

@@ -1,215 +1,116 @@
-body {
-    margin: 0;
-    background: rgb(246, 237, 141);
-}
-
-img {
-    border: 3px solid black;
-}
-
-header {
-    background-color: aquamarine;
-    padding: 20px;
-    font-style: italic;
-    color: rebeccapurple;
-}
-
-header h1, h2 {
-    margin: 0;
-}
-
-header h1 {
-    font-size: 40px;
-}
-
-header h2 {
-    font-size: 30px;
-}
-header h3 {
-    font-size: 25px;
+body :not(.areas *) {
+    border: #7f99da solid 1px;
+    border-radius: 10px;
 }
 
 .main {
-    /*background-color: rgb(255, 255, 255);*/
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px;
-    padding: 20px;
 }
+
 .section {
-    border: black solid 1px;
-    padding: 30px;
+    margin: 10px;
+    height: fit-content;
+    padding: 10px;
 }
 
-.areas {
-    flex-grow: 1;
+.main .coords-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
 }
 
-.areas .result {
-    display: flex;
-    justify-content: center;
+.input-coord {
+    display: block;
     align-items: center;
-    border: #e22ba5 solid 2px;
-    background-color: #da5fb8;
-    border-radius: 10px;
-    padding: 7px;
-}
-
-.areas .result span {
-    font-size: 30px;
-    color: antiquewhite;
-}
-
-.main .table {
-    flex-grow: 1;
-    order: 3;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.main .table table, th, td {
-    border: 2px solid rgb(124, 124, 184);
-    border-collapse: collapse;
-}
-
-.main .table table {
-    width: 100%;
-    max-width: 500px;
-}
-
-.main .table th, td {
-    min-width: 30px;
-}
-.main .table .table-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    gap: 10%;
-
-}
-.main .table span {
-    white-space: nowrap;
-    font-size: 30px;
-    padding-bottom: 10px;
-}
-
-.coords-form {
-    flex-grow: 2;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    gap: 20px;
-}
-
-input:invalid {
-    box-shadow: 0 0 5px 1px red;
-}
-
-input:focus:invalid {
-    box-shadow: none;
+    gap: 10px;
+    padding: 5px;
 }
 
 .x-coord {
-    flex-grow: 1;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    width: fit-content;
+    margin-bottom: 10px;
 }
 
-.x-chkboxes {
+.x-coord .x-checkboxes {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 7px;
 }
 
 .y-coord {
-    flex-grow: 1;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-.y-coord label, input {
-    background-color: inherit;
-    border-radius: 10px;
-    font-size: 20px;
+.y-coord .y-input {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.r-coord {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.r-coord .r-radios {
+    display: inherit;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: black dashed 1px;
+    border-radius: 20px;
     padding: 5px;
 }
 
 .warn-msg {
-    font-size: 20px;
-    font-weight: bold;
-    color: crimson;
+    word-wrap: normal;
+    margin-left: 20px;
+    display: inline;
+    height: fit-content;
 }
 
-.r-coord {
-    flex-grow: 1;
+.form-final {
+    order: -1;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
 }
 
-.r-radios {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.sel-bubble {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    background-color: rgb(124, 124, 184);
-    color: rgb(250, 248, 218);
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 5px;
+.form-final .form-reset, .form-submit {
     height: fit-content;
 }
 
-.coords-submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.form-final .form-submit .submit-btn {
+    background: #e18d2c;
+    padding: 5px;
+    color: black;
 }
 
-.submit-btn {
-    width: 75%;
-    font-size: 20px;
-    padding: 5px;
-    border-radius: 10px;
-    background-color: aquamarine;
+#final-input-r, #final-input-x, #final-input-y {
+    min-width: 30px;
+    min-height: 30px;
+}
+
+.table .table-header {
+    display: flex;
+    justify-content: space-around;
 }
 
 .table-reset-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    display: inline-block;
 }
-
-.reset-btn {
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    background: aquamarine;
-}
-
-footer {
-    background-color: blueviolet;
-    height: 70px;
-}
-

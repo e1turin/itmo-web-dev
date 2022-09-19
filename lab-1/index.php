@@ -1,6 +1,6 @@
 <?php
 $reset = isset($_GET["reset"]) ? $_GET["reset"] : null;
-if ($reset !== null){
+if ($reset !== null) {
     include "back/reset_table.php";
 } else {
     include "back/check.php"; // for get request with page reload
@@ -10,9 +10,10 @@ if ($reset !== null){
 <html lang="en">
 <head>
     <title>ЛР №1</title>
+    <link rel="icon" type="image/x-icon" href="/front/favicon.ico">
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <!--    <link rel="stylesheet" href="front/style.css"/>-->
+    <link rel="stylesheet" href="front/style.css"/>
     <script src="front/script.js"></script>
 </head>
 <body>
@@ -38,7 +39,7 @@ if ($reset !== null){
                     $x_values = array(-5, -4, -3, -2, -1, 0, 1, 2, 3);
                     for ($i = 0; $i < count($x_values); $i++) {
                         echo
-                        "<div class=\"sel-bubble\">
+                        "<div class=\"selection\">
                             <label for=\"x-input-$i\">$x_values[$i]</label>
                             <input type=\"checkbox\" class=\"x-input\" id=\"x-input-$i\" name=\"x\" value=\"$x_values[$i]\"/>
                          </div>";
@@ -46,16 +47,14 @@ if ($reset !== null){
                     ?>
                 </div>
             </div>
-            <span class="warn-msg"> — минимум один из вариантов должен быть выбран, (<u>только первый</u> из них попадет в запрос).</span>
+            <span class="warn-msg"> — <u>Только первый</u> из выбранных попадет в запрос.</span>
         </div>
         <div class="input-coord">
             <div class="y-coord">
                 <span>Y:</span>
-                <label for="">
-                    <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" required/>
-                </label>
+                <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" maxlength="9" required/>
             </div>
-            <span class="warn-msg"> — поле должно содержать число в диапозоне (-3; 5).</span>
+            <span class="warn-msg"> — поле должно содержать число в десятичной форме из диапозона (-3; 5), дробная часть ограничивается 4 знаками.</span>
         </div>
         <div class="input-coord">
             <div class="r-coord">
@@ -65,7 +64,7 @@ if ($reset !== null){
                     $y_values = array(1, 2, 3, 4, 5);
                     for ($i = 0; $i < count($y_values); $i++) {
                         echo
-                        "<div class=\"sel-bubble\">
+                        "<div class=\"selection\">
                             <label for=\"r-input-$i\">$y_values[$i]</label>
                             <input type=\"radio\" class=\"r-input\" id=\"r-input-$i\" name=\"r\" required value=\"$y_values[$i]\"/>
                          </div>";
@@ -73,7 +72,7 @@ if ($reset !== null){
                     ?>
                 </div>
             </div>
-            <span class="warn-msg">Необходимо выбрать один из пунктов</span>
+            <span class="warn-msg"> — Необходимо выбрать один из пунктов</span>
         </div>
         <div class="form-final">
             <div class="final-input">
@@ -87,9 +86,9 @@ if ($reset !== null){
                     </thead>
                     <tbody>
                     <tr>
-                        <td id="final-input-x">-</td>
-                        <td id="final-input-y">-</td>
-                        <td id="final-input-r">-</td>
+                        <td id="final-input-x">❌</td>
+                        <td id="final-input-y">❌</td>
+                        <td id="final-input-r">❌</td>
                     </tr>
                     </tbody>
                 </table>
@@ -98,7 +97,8 @@ if ($reset !== null){
                 <input class="submit-btn" id="form-submit-btn" type="submit" value="Выбрать" disabled>
             </div>
             <div class="form-reset">
-                <button onclick="location.href='/'" type="reset" class="reset" value="Очистить форму">Очистить форму</button>
+                <button onclick="location.href='/'" type="reset" class="reset" value="Очистить форму">Очистить форму
+                </button>
             </div>
         </div>
     </form>
