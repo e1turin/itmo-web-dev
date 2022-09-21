@@ -17,6 +17,25 @@ body :not(.areas *) {
     /*border-radius: 10px;*/
 }
 
+body header {
+    color: var(--accent-1-color);
+    font-style: italic;
+
+}
+
+body header h1 {
+    font-size: x-large;
+    margin-bottom: 0;
+}
+body header h2 {
+    margin-top: 0;
+    font-size: x-large;
+}
+body header h3 {
+    margin-top: 0;
+    font-size: xx-large;
+}
+
 .main {
     display: flex;
     justify-content: space-between;
@@ -179,7 +198,7 @@ body :not(.areas *) {
     padding: 10px;
 }
 
-.main .form-final .form-submit .submit-btn:disabled {
+.main .form-final .form-submit .submit-btn[disabled] {
     background: var(--background-color);
     color: gray;
 }
@@ -227,6 +246,7 @@ body :not(.areas *) {
 }
 
 .results-table th, .results-table td {
+    min-width: 20px;
     padding: 5px;
     text-align: center;
     vert-align: middle;
