@@ -15,6 +15,7 @@ if ($reset !== null) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="stylesheet" href="front/style.css"/>
     <script src="front/script.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
 <body>
 <header>
@@ -47,14 +48,21 @@ if ($reset !== null) {
                     ?>
                 </div>
             </div>
-            <span class="warn-msg"> — <u>Только первый</u> из выбранных попадет в запрос.</span>
+            <div class="warn">
+                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span class="warn-msg"> — <u>Только самый левый</u> из выбранных попадает в запрос.</span>
+            </div>
         </div>
         <div class="input-coord">
             <div class="y-coord">
                 <span>Y:</span>
-                <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" maxlength="9" required/>
+                <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" maxlength="9"
+                       required/>
             </div>
-            <span class="warn-msg"> — поле должно содержать число в десятичной форме из диапозона (-3; 5), дробная часть ограничивается 4 знаками.</span>
+            <div class="warn">
+                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span class="warn-msg"> — Поле должно содержать число в десятичной форме из диапозона (-3; 5), дробная часть ограничивается 4 знаками.</span>
+            </div>
         </div>
         <div class="input-coord">
             <div class="r-coord">
@@ -72,7 +80,10 @@ if ($reset !== null) {
                     ?>
                 </div>
             </div>
-            <span class="warn-msg"> — Необходимо выбрать один из пунктов</span>
+            <div class="warn">
+                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span class="warn-msg"> — Необходимо выбрать один из пунктов</span>
+            </div>
         </div>
         <div class="form-final">
             <div class="final-input">

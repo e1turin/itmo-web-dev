@@ -1,6 +1,20 @@
+:root {
+    --background-color: #34302e;
+    --key-color: #a0ea55;
+    --accent-1-color: #fabf39;
+    --accent-2-color: #1ba0e1;
+    --accent-3-color: #fff5bd
+}
+
+body {
+    background: var(--background-color);
+    font-family: Calibri;
+    color: var(--key-color);
+}
+
 body :not(.areas *) {
-    border: #7f99da solid 1px;
-    border-radius: 10px;
+    /*border: #7f99da solid 1px;*/
+    /*border-radius: 10px;*/
 }
 
 .main {
@@ -13,6 +27,10 @@ body :not(.areas *) {
     margin: 10px;
     height: fit-content;
     padding: 10px;
+    border-radius: 20px;
+}
+.main .areas {
+    background: var(--key-color);
 }
 
 .main .coords-form {
@@ -22,7 +40,7 @@ body :not(.areas *) {
 }
 
 .input-coord {
-    display: block;
+    display: flex;
     align-items: center;
     gap: 10px;
     padding: 5px;
@@ -33,7 +51,8 @@ body :not(.areas *) {
     align-items: center;
     gap: 10px;
     width: fit-content;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+    /*height: fit-content;*/
 }
 
 .x-coord .x-checkboxes {
@@ -46,7 +65,8 @@ body :not(.areas *) {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+
 }
 
 .y-coord .y-input {
@@ -59,7 +79,8 @@ body :not(.areas *) {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
+    /*height: fit-content;*/
 }
 
 .r-coord .r-radios {
@@ -72,33 +93,102 @@ body :not(.areas *) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: black dashed 1px;
+    border: var(--key-color) dashed 1px;
     border-radius: 20px;
     padding: 5px;
 }
 
+.warn {
+    /*background-color: #e18d2c;*/
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted var(--key-color); /* If you want dots under the hoverable text */
+}
+
+.warn-icon {
+    font-size: 18px;
+    color: var(--accent-1-color);
+}
+
 .warn-msg {
-    word-wrap: normal;
+    /*word-wrap: normal;*/
     margin-left: 20px;
     display: inline;
     height: fit-content;
+    font-size: large;
 }
 
-.form-final {
+/* Tooltip text */
+.warn .warn-msg {
+    visibility: hidden;
+    width: 240px;
+    background-color: var(--accent-2-color);
+    color: var(--accent-3-color);
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    /*
+    top: 100%;
+    left: 50%;
+    margin-left: -60px; !* Use half of the width (120/2 = 60), to center the tooltip *!
+    */
+    top: -5px;
+    left: 105%;
+}
+
+.warn:hover .warn-msg {
+    visibility: visible;
+}
+
+.main .form-final {
     order: -1;
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.form-final .form-reset, .form-submit {
+.final-input-table {
+    border: 1px var(--key-color) solid;
+    border-collapse: collapse;
+}
+
+.final-input-table th, .final-input-table td {
+    padding: 5px;
+    text-align: center;
+    vert-align: middle;
+    border: 1px var(--accent-1-color) dashed;
+}
+
+.final-input-table td {
+    height: 25px;
+}
+
+.main .form-final .form-reset, .form-submit {
     height: fit-content;
 }
 
-.form-final .form-submit .submit-btn {
-    background: #e18d2c;
+.main .form-final .form-submit .submit-btn {
+    border: 1px solid black;
+    border-radius: 10px;
+    background: var(--accent-1-color);
+    color: var(--background-color);
+    padding: 10px;
+}
+
+.main .form-final .form-submit .submit-btn:disabled {
+    background: var(--background-color);
+    color: gray;
+}
+
+.main .form-reset button {
     padding: 5px;
-    color: black;
+    border: 0 solid black;
+    border-radius: 5px;
+    background: var(--accent-3-color);
 }
 
 #final-input-r, #final-input-x, #final-input-y {
@@ -109,8 +199,38 @@ body :not(.areas *) {
 .table .table-header {
     display: flex;
     justify-content: space-around;
+    margin: 10px;
 }
 
-.table-reset-btn {
+.table .table-header span {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.table .table-header .table-reset-btn {
     display: inline-block;
 }
+.table .table-header .table-reset-btn form .reset-btn {
+    padding: 5px;
+    border: 0;
+    border-radius: 5px;
+    background: var(--accent-3-color);
+}
+
+.results-table {
+    border: 1px var(--key-color) solid;
+    border-collapse: collapse;
+}
+
+.results-table thead {
+    border: 1px var(--key-color) solid;
+}
+
+.results-table th, .results-table td {
+    padding: 5px;
+    text-align: center;
+    vert-align: middle;
+    border: 1px var(--accent-1-color) dashed;
+    border-collapse: collapse;
+}
+

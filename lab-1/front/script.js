@@ -1,3 +1,5 @@
+let p;
+let ev;
 (() => {
     const Point = {x: null, y: null, r: null}
 
