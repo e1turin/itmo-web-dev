@@ -47,18 +47,17 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
             </div>
             <div class="warn">
-                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
                 <span class="warn-msg"> — <u>Только самый левый</u> из выбранных попадает в запрос.</span>
             </div>
         </div>
         <div class="input-coord">
             <div class="y-coord">
                 <span>Y:</span>
-                <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" maxlength="9"
-                       required/>
+                <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" required/>
             </div>
             <div class="warn">
-                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
                 <span class="warn-msg"> — Поле должно содержать число в десятичной форме из диапозона (-3; 5), дробная часть ограничивается 4 знаками.</span>
             </div>
         </div>
@@ -79,7 +78,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
             </div>
             <div class="warn">
-                <span><i class='fas fa-exclamation-triangle warn-icon'></i></span>
+                <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
                 <span class="warn-msg"> — Необходимо выбрать один из пунктов</span>
             </div>
         </div>
