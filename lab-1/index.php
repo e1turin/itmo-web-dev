@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $reset = isset($_GET["reset"]) ? $_GET["reset"] : null;
 if ($reset !== null) {
     include "back/reset_table.php";
@@ -108,7 +111,7 @@ if ($reset !== null) {
                 <input class="submit-btn" id="form-submit-btn" type="submit" value="Выбрать" disabled>
             </div>
             <div class="form-reset">
-                <button onclick="location.href='/'" type="reset" class="reset" value="Очистить форму">Очистить форму
+                <button onclick="" type="reset" class="reset" value="Очистить форму">Очистить форму
                 </button>
             </div>
         </div>
@@ -136,7 +139,6 @@ if ($reset !== null) {
             </thead>
             <tbody>
             <?php
-            //            session_start();
             if (isset($_SESSION['result'])) {
                 foreach ($_SESSION['result'] as $row) {
                     $inside = $row['inside'] ? "✅" : "❌";
