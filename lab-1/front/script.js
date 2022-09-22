@@ -1,5 +1,3 @@
-let p;
-let ev;
 (() => {
     const Point = {x: null, y: null, r: null}
 
@@ -88,14 +86,10 @@ let ev;
     }
 
     function get_y_value(new_y, precession = 4) {
-        // let y_coords = document.forms['coords']['y'];
-        // let y_input = y_coords.value.replaceAll(",", ".");
-        let y_input = new_y.toString().replaceAll(",", ".");
+        let y_input = new_y.toString().replaceAll(",", ".")
         if (!/^-?\d+\.?\d*$/.test(y_input)) return null; // ban exponential form
         let y_as_num = ParseFloat(y_input, precession);
         if (isNaN(y_as_num)) return null;
-        // y_as_num = y_as_num.toFixed(precession);
-        console.log(y_as_num);
         if (y_as_num >= 5 || y_as_num <= -3) {
             return null;
         } else {
@@ -175,6 +169,7 @@ let ev;
 
         tbody.appendChild(new_row);
     }
+
 // useless <<<
 
 })();

@@ -3,16 +3,18 @@ $start_time = microtime(true);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$date_time = new \DateTime("now", new \DateTimeZone('Europe/Moscow'));
+$date_time = new \DateTime('now', new \DateTimeZone('Europe/Moscow'));
 error_reporting(E_ALL);
 ini_set('display_errors', 'Off');
 
-$x = isset($_GET["x"]) ? $_GET["x"] : null;
-$y = isset($_GET["y"]) ? get_y_value($_GET["y"], 4) : null;
-$r = isset($_GET["r"]) ? $_GET["r"] : null;
-$msg = "";
+$x = isset($_GET['x']) ? $_GET['x'] : null;
+$y = isset($_GET['y']) ? get_y_value($_GET['y'], 4) : null;
+$r = isset($_GET['r']) ? $_GET['r'] : null;
+$msg = '';
 
-if (
+if ($_SERVER['REQUEST_URI'] != 'back/check.php') {
+    return;
+} else if (
     $x === null || $y === null || $r === null ||
     !validate_coords($x, $y, $r)
 ) {
@@ -20,8 +22,8 @@ if (
     return;
 }
 
-$current_time = date("H:i:s");
-$time = number_format(microtime(true) - $start_time, 10, ".", "") * 1000000;
+$current_time = date('H:i:s');
+$time = number_format(microtime(true) - $start_time, 10, '.', '') * 1000000;
 
 $response = array(
     'x' => $x,
@@ -60,13 +62,13 @@ function validate_coords($x, $y, $r)
         return $y > -3 && $y < 5;
     }
 
-    if (in_array($x, ["-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3"], true) // validate x
-        && in_array($r, ["1", "2", "3", "4", "5"], true) //validate r
+    if (in_array($x, ['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3'], true) // validate x
+        && in_array($r, ['1', '2', '3', '4', '5'], true) //validate r
         && _validate_y($y) // y: float with fixed precession 4
     ) {
         return true;
     } else {
-        $msg = "one or more coordinates are not in allowed range";
+        $msg = 'one or more coordinates are not in allowed range';
         return false;
     }
 
