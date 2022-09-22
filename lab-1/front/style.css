@@ -208,6 +208,7 @@ body header h3 {
 }
 
 .main .form-reset button {
+    visibility: hidden; /* todo */
     padding: 5px;
     border: 0 solid black;
     border-radius: 5px;

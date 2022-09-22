@@ -123,6 +123,7 @@
     }
 
     function clear_form() {
+        //todo
     }
 
     function restore_table(){
@@ -143,8 +144,6 @@
                 let res_table = get_res_table();
                 res_table.getElementsByTagName('tbody')[0].remove();
                 res_table.appendChild(document.createElement("tbody"))
-                // todo: ?
-                window.history.pushState("", "лр 1", "/");
             });
     }
 
