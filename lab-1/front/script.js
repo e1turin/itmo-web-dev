@@ -2,6 +2,8 @@
     const Point = {x: null, y: null, r: null}
 
     document.addEventListener("DOMContentLoaded", () => {
+        // restore_table();
+
         let x_inputs = document.getElementsByClassName("x-input");
         for (let x of x_inputs) {
             x.addEventListener("input", on_x_change);
@@ -19,6 +21,10 @@
 
         let form = document.forms['coords'];
         form.onsubmit = submit_form;
+
+        let reset_form = document.forms['reset-table'];
+        reset_form.onsubmit = reset_table;
+
 
     });
 
@@ -103,22 +109,42 @@
         return Number(str);
     }
 
-// useless >>>
-    function submit_form() {
+    function submit_form(e) {
+        e.preventDefault();
+        let params = `?x=${Point.x}`
+            + `&y=${Point.y}`
+            + `&r=${Point.r}`;
+        fetch("back/check.php" + params)
+            .then(async response => {
+                handle_response(await response.text());
+            })
+        // .then(clear_form);
+
     }
 
-    function get_res_table() {
-        return document.getElementsByClassName("results-table")[0];
+    function clear_form() {
     }
 
-    function reset_table() {
-        fetch("back/reset_table.php")
+    function restore_table(){
+        let params = "?restore=true"
+        fetch("back/restore_table.php" + params)
+            .then(async response => {
+                handle_response(await response.text());
+            });
+    }
+
+    function reset_table(e) {
+        console.log(e.target)
+        e.preventDefault();
+        let params = "?reset=true";
+        fetch("back/reset_table.php" + params)
             .then(async response => {
                 console.log(await response);
                 let res_table = get_res_table();
                 res_table.getElementsByTagName('tbody')[0].remove();
                 res_table.appendChild(document.createElement("tbody"))
-                window.location.href = '/';
+                // todo: ?
+                window.history.pushState("", "лр 1", "/");
             });
     }
 
@@ -170,6 +196,8 @@
         tbody.appendChild(new_row);
     }
 
-// useless <<<
+    function get_res_table() {
+        return document.getElementsByClassName("results-table")[0];
+    }
 
 })();

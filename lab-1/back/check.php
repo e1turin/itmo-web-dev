@@ -12,9 +12,7 @@ $y = isset($_GET['y']) ? get_y_value($_GET['y'], 4) : null;
 $r = isset($_GET['r']) ? $_GET['r'] : null;
 $msg = '';
 
-if ($_SERVER['REQUEST_URI'] != 'back/check.php') {
-    return;
-} else if (
+if (
     $x === null || $y === null || $r === null ||
     !validate_coords($x, $y, $r)
 ) {
@@ -41,8 +39,8 @@ if (!isset($_SESSION['result'])) {
 }
 $_SESSION['result'][] = $response; // todo: compact format
 
-//$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
-//echo $json_response;
+$json_response = json_encode($response); // this script is used in index.php to provide full page reload on request
+echo $json_response;
 
 function get_y_value($str, $precession = 4)
 {
