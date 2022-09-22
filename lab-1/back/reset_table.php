@@ -1,6 +1,13 @@
 <?php
-session_start();
-if (isset($_SESSION['result'])) {
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$reset = isset($_GET['reset']) ? $_GET['reset'] : null;
+
+if ($reset === 'true' && isset($_SESSION['result'])) {
     unset($_SESSION['result']);
 }
-echo "session result cleared";
+
+echo 'previous result cleared';
+return;
