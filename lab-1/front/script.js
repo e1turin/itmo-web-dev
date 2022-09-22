@@ -2,7 +2,7 @@
     const Point = {x: null, y: null, r: null}
 
     document.addEventListener("DOMContentLoaded", () => {
-        // restore_table();
+        restore_table();
 
         let x_inputs = document.getElementsByClassName("x-input");
         for (let x of x_inputs) {
