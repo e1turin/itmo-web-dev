@@ -92,7 +92,7 @@
     }
 
     function get_y_value(new_y, precession = 4) {
-        let y_input = new_y.toString().replaceAll(",", ".")
+        let y_input = new_y.toString().replaceAll(",", ".").trim();
         if (!/^-?\d+\.?\d*$/.test(y_input)) return null; // ban exponential form
         let y_as_num = ParseFloat(y_input, precession);
         if (isNaN(y_as_num)) return null;

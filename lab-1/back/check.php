@@ -7,9 +7,9 @@ $date_time = new \DateTime('now', new \DateTimeZone('Europe/Moscow'));
 error_reporting(E_ALL);
 ini_set('display_errors', 'Off');
 
-$x = isset($_GET['x']) ? $_GET['x'] : null;
-$y = isset($_GET['y']) ? get_y_value($_GET['y'], 4) : null;
-$r = isset($_GET['r']) ? $_GET['r'] : null;
+$x = isset($_GET['x']) ? trim($_GET['x']) : null;
+$y = isset($_GET['y']) ? get_y_value(trim($_GET['y']), 4) : null;
+$r = isset($_GET['r']) ? trim($_GET['r']) : null;
 $msg = '';
 
 if (
