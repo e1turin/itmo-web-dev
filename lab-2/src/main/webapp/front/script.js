@@ -1,8 +1,16 @@
 (() => {
     const URL_ROOT = "/lab-2-1.0-SNAPSHOT/";
     const Point = {x: null, y: null, r: null};
+    let canvas = null;
+    let cft = null;
 
     document.addEventListener("DOMContentLoaded", () => {
+        canvas = document.getElementById("area");
+        cft = ((canvas.width / 2 - 10 - 10 - 10) / 5 / 2);
+        canvas.addEventListener("click", function (e) {
+            make_hit_by_click(canvas, e)
+        });
+        draw_canvas(canvas);
         restore_table();
 
         let x_inputs = document.getElementsByClassName("x-input");
@@ -74,6 +82,7 @@
         console.log('r:', event);
         Point.r = get_r_value();
         update_point();
+        draw_canvas(canvas)
     }
 
     function get_x_value() {
@@ -104,27 +113,25 @@
         }
     }
 
-    function ParseFloat(str, val) {
+    function ParseFloat(str, precession=4) {
         str = str.toString();
-        str = str.slice(0, (str.indexOf(".")) + val + 1);
+        str = str.slice(0, (str.indexOf(".")) + precession + 1);
         return Number(str);
     }
 
-    function submit_form(e) {
-        e.preventDefault();
-        let params = `?x=${Point.x}`
-            + `&y=${Point.y}`
-            + `&r=${Point.r}`;
+    function submit_point(x, y, r) {
+        let params = `?x=${x}`
+            + `&y=${y}`
+            + `&r=${r}`;
         fetch(URL_ROOT + "AreaCheckServlet" + params)
             .then(async response => {
                 handle_response(await response.text());
             })
-        // .then(clear_form);
-
     }
 
-    function clear_form() {
-        //todo
+    function submit_form(e) {
+        e.preventDefault();
+        submit_point(Point.x, Point.y, Point.r);
     }
 
     function restore_table() {
@@ -158,6 +165,7 @@
                 }
             } else {
                 add_res_row(json);
+                draw_hit(Number(json['x']), Number(json['y']), json['isInsideArea'])
             }
         } else {
             console.log("response is empty");
@@ -198,6 +206,108 @@
 
     function get_res_table() {
         return document.getElementsByClassName("results-table")[0];
+    }
+
+    /*
+     *      Graph
+     */
+    function make_hit_by_click(canvas, event) {
+        let rect = canvas.getBoundingClientRect()
+        console.log("x: ", event.clientX - rect.left, " y: ", event.clientY - rect.top);
+        let x_click = (event.clientX - rect.left - canvas.width / 2) / cft / 2;
+        let y_click = -(event.clientY - rect.top - canvas.height / 2) / cft / 2;
+        if (Point.r == null){
+            alert("Select Radius first")
+            return;
+        }
+        submit_point(ParseFloat(x_click), ParseFloat(y_click), Point.r);
+
+        // Point.y = ParseFloat(y_click);
+        // Point.x = ParseFloat(x_click);
+        // update_point();
+    }
+
+    function draw_hit(x, y, isInsideArea) {
+        let ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.arc(x * 2 * cft + canvas.width / 2,
+            -y * 2 * cft + canvas.height / 2,
+            3, 0, 7, false
+        );
+        ctx.closePath();
+        if (isInsideArea === true) {
+            ctx.fillStyle = "#248809";
+        } else {
+            ctx.fillStyle = "#c71717";
+        }
+        ctx.fill();
+    }
+
+
+    function draw_canvas(canvas) {
+        let context = canvas.getContext('2d');
+        let r_canvas;
+        if (Point.r == null) {
+            r_canvas = 2;
+        } else {
+            r_canvas = Point.r;
+        }
+        let step = cft * r_canvas;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        //draw target
+        context.lineWidth = 3;
+        context.beginPath();
+        context.moveTo(canvas.width / 2, canvas.height / 2);
+        context.arc(canvas.width / 2, canvas.height / 2, step, 0, Math.PI / 2, false);
+        context.moveTo(canvas.width / 2, canvas.height / 2 + step);
+        context.lineTo(canvas.width / 2, canvas.height / 2 + 2 * step);
+        context.lineTo(canvas.width / 2 - 2 * step, canvas.height / 2 + 2 * step);
+        context.lineTo(canvas.width / 2 - 2 * step, canvas.height / 2);
+        context.lineTo(canvas.width / 2, canvas.height / 2);
+        context.lineTo(canvas.width / 2, canvas.height / 2 - 2 * step);
+        context.lineTo(canvas.width / 2 + step, canvas.height / 2);
+        context.lineTo(canvas.width / 2, canvas.height / 2);
+        context.closePath();
+        context.stroke();
+        context.fillStyle = '#f4b943';
+        context.fill();
+
+        //draw lines
+        context.beginPath();
+        context.moveTo(10, canvas.height / 2);
+        context.lineTo(canvas.width - 10, canvas.height / 2);
+        context.lineTo(canvas.width - 20, canvas.height / 2 - 10);
+        context.lineTo(canvas.width - 20, canvas.height / 2 + 10);
+        context.lineTo(canvas.width - 10, canvas.height / 2);
+
+        context.moveTo(canvas.width / 2, canvas.height - 10);
+        context.lineTo(canvas.width / 2, 10);
+        context.lineTo(canvas.width / 2 - 10, 20);
+        context.lineTo(canvas.width / 2 + 10, 20);
+        context.lineTo(canvas.width / 2, 10);
+
+        context.moveTo(canvas.width / 2 - 2 * step, canvas.height / 2 + 10);
+        context.lineTo(canvas.width / 2 - 2 * step, canvas.height / 2 - 10);
+        context.moveTo(canvas.width / 2 - step, canvas.height / 2 + 10);
+        context.lineTo(canvas.width / 2 - step, canvas.height / 2 - 10);
+        context.moveTo(canvas.width / 2 + step, canvas.height / 2 + 10);
+        context.lineTo(canvas.width / 2 + step, canvas.height / 2 - 10);
+        context.moveTo(canvas.width / 2 + 2 * step, canvas.height / 2 + 10);
+        context.lineTo(canvas.width / 2 + 2 * step, canvas.height / 2 - 10);
+
+        context.moveTo(canvas.width / 2 + 10, canvas.height / 2 - 2 * step);
+        context.lineTo(canvas.width / 2 - 10, canvas.height / 2 - 2 * step);
+        context.moveTo(canvas.width / 2 + 10, canvas.height / 2 - step);
+        context.lineTo(canvas.width / 2 - 10, canvas.height / 2 - step);
+        context.moveTo(canvas.width / 2 + 10, canvas.height / 2 + step);
+        context.lineTo(canvas.width / 2 - 10, canvas.height / 2 + step);
+        context.moveTo(canvas.width / 2 + 10, canvas.height / 2 + 2 * step);
+        context.lineTo(canvas.width / 2 - 10, canvas.height / 2 + 2 * step);
+        context.closePath();
+        context.fillStyle = "#000000";
+        context.fill();
+        context.lineWidth = 2;
+        context.stroke();
     }
 
 })();

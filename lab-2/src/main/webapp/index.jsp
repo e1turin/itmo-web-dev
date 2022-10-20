@@ -1,10 +1,9 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>ЛР №2</title>
-    <link rel="icon" type="image/x-icon" href="/front/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./front/favicon.ico">
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="stylesheet" href="front/style.css"/>
@@ -20,7 +19,8 @@
 
 <div class="main">
     <div class="areas section">
-        <img src="task.png" alt="areas"/>
+<%--        <img src="task.png" alt="areas"/>--%>
+        <canvas id="area" width="400px" height="400px">[Turn on canvas in your browser]</canvas>
         <%--        <?php include "areas.svg"; ?>--%>
     </div>
     <form class="coords-form section" onreset="" name="coords">
@@ -56,7 +56,7 @@
         </div>
         <div class="input-coord">
             <div class="y-coord">
-                <span>Y:</span>
+                <label for="y-input"><span>Y:</span></label>
                 <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" required/>
             </div>
             <div class="warn">
@@ -68,7 +68,7 @@
             <div class="r-coord">
                 <span>R:</span>
                 <div class="r-radios">
-                    <% int[] radios = {-5, -4, -3, -2, -1, 0, 1, 2, 3};
+                    <% int[] radios = {1, 2, 3, 4, 5};
                         for (int i = 0; i < radios.length; ++i) { %>
                             <div class="selection">
                                 <label for="r-input-<%=i%>"><%=radios[i]%>

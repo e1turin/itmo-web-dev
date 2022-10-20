@@ -107,7 +107,7 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private boolean inTriangle(Double x, Double y, Double r) {
-        return x >= 0 && 2 * x < r && y <= r && y >= 0 && y + 2 * x == r;
+        return x >= 0 && 2 * x < r && y <= r && y >= 0 && y + 2 * x <= r;
     }
 
     private boolean inRectangle(Double x, Double y, Double r) {
@@ -117,6 +117,6 @@ public class AreaCheckServlet extends HttpServlet {
 
     private boolean inSector(Double x, Double y, Double r) {
         return x >= 0 && y <= 0
-                && x * x + y * y <= r * r;
+                && 4 * x * x + 4 * y * y <= r * r;
     }
 }
