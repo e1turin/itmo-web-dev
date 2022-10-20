@@ -167,7 +167,6 @@
     function add_res_row(json_response) {
         let tbody = get_res_table().getElementsByTagName('tbody')[0];
         let new_row = document.createElement('tr');
-        // for(const [key, val] of json_response){ }
 
         let x = document.createElement('td');
         x.innerHTML = json_response['x'];
@@ -182,15 +181,15 @@
         new_row.appendChild(r);
 
         let AC = document.createElement('td');
-        AC.innerHTML = json_response['inside'] ? "✅" : "❌";
+        AC.innerHTML = json_response['isInsideArea'] ? "✅" : "❌";
         new_row.appendChild(AC);
 
         let server_time = document.createElement('td');
-        server_time.innerHTML = json_response['cur_time'];
+        server_time.innerHTML = json_response['currentTime'];
         new_row.appendChild(server_time);
 
         let response_time = document.createElement('td');
-        response_time.innerHTML = json_response['time'];
+        response_time.innerHTML = json_response['runningTime'];
         new_row.appendChild(response_time);
 
 

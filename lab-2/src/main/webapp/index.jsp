@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ЛР №1</title>
+    <title>ЛР №2</title>
     <link rel="icon" type="image/x-icon" href="/front/favicon.ico">
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -125,7 +125,7 @@
         <div class="table-header">
             <span>Предыдущие попытки</span>
             <div class="table-reset-btn">
-                <form action="back/reset_table.php" method="get" name="reset-table">
+                <form action="/lab-2-1.0-SNAPSHOT/ControllerServlet" method="get" name="reset-table">
                     <button class="reset-btn" name="reset" type="submit" value="true">Сбросить</button>
                 </form>
             </div>
