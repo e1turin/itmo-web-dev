@@ -1,10 +1,12 @@
 (() => {
     const URL_ROOT = "/lab-2-1.0-SNAPSHOT/";
-    const Point = {x: null, y: null, r: null};
+    const Point = {x: null, y: null, r: 2};
     let canvas = null;
     let cft = null;
+    let hits = [];
 
     document.addEventListener("DOMContentLoaded", () => {
+        update_point();
         canvas = document.getElementById("area");
         cft = ((canvas.width / 2 - 10 - 10 - 10) / 5 / 2);
         canvas.addEventListener("click", function (e) {
@@ -82,7 +84,8 @@
         console.log('r:', event);
         Point.r = get_r_value();
         update_point();
-        draw_canvas(canvas)
+        draw_canvas(canvas);
+
     }
 
     function get_x_value() {
@@ -143,7 +146,9 @@
     }
 
     function reset_table(e) {
-        console.log(e.target)
+        hits = [];
+        draw_canvas(canvas);
+        console.log(e.target);
         e.preventDefault();
         let params = "?reset=true";
         fetch(URL_ROOT + "ControllerServlet" + params)
@@ -165,7 +170,6 @@
                 }
             } else {
                 add_res_row(json);
-                draw_hit(Number(json['x']), Number(json['y']), json['isInsideArea'])
             }
         } else {
             console.log("response is empty");
@@ -202,6 +206,8 @@
 
 
         tbody.appendChild(new_row);
+        hits.push({"x": Number(json_response['x']), "y": Number(json_response['y']), "isInsideArea": json_response['isInsideArea']})
+        draw_hit(Number(json_response['x']), Number(json_response['y']), null)//json_response['isInsideArea']
     }
 
     function get_res_table() {
@@ -235,7 +241,9 @@
             3, 0, 7, false
         );
         ctx.closePath();
-        if (isInsideArea === true) {
+        if (isInsideArea == null){
+            ctx.fillStyle = "#8f8d8d";
+        } else if (isInsideArea === true) {
             ctx.fillStyle = "#248809";
         } else {
             ctx.fillStyle = "#c71717";
@@ -308,6 +316,11 @@
         context.fill();
         context.lineWidth = 2;
         context.stroke();
+        console.log(hits);
+        for(let i=0; i< hits.length; ++i){
+            console.log(hits[i].x, hits[i].y);
+            draw_hit(hits[i].x, hits[i].y, null);
+        }
     }
 
 })();
