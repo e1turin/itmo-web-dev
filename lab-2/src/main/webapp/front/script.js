@@ -116,16 +116,14 @@
         }
     }
 
-    function ParseFloat(str, precession=4) {
+    function ParseFloat(str, precession = 4) {
         str = str.toString();
         str = str.slice(0, (str.indexOf(".")) + precession + 1);
         return Number(str);
     }
 
     function submit_point(x, y, r) {
-        let params = `?x=${x}`
-            + `&y=${y}`
-            + `&r=${r}`;
+        let params = `?x=${x}` + `&y=${y}` + `&r=${r}`;
         fetch(URL_ROOT + "AreaCheckServlet" + params)
             .then(async response => {
                 handle_response(await response.text());
@@ -139,17 +137,20 @@
 
     function restore_table() {
         let params = "?restore=true"
-        fetch(URL_ROOT + "ControllerServlet" + params)
-            .then(async response => {
-                handle_response(await response.text());
-            });
+        fetch(URL_ROOT + "ControllerServlet" + params, {
+            headers: {
+                'If-Modified-Since': (new Date()).toUTCString()
+            },
+        }).then(async response => {
+            handle_response(await response.text());
+        });
     }
 
     function reset_table(e) {
+        e.preventDefault();
         hits = [];
         draw_canvas(canvas);
         console.log(e.target);
-        e.preventDefault();
         let params = "?reset=true";
         fetch(URL_ROOT + "ControllerServlet" + params)
             .then(async response => {
@@ -206,7 +207,11 @@
 
 
         tbody.appendChild(new_row);
-        hits.push({"x": Number(json_response['x']), "y": Number(json_response['y']), "isInsideArea": json_response['isInsideArea']})
+        hits.push({
+            "x": Number(json_response['x']),
+            "y": Number(json_response['y']),
+            "isInsideArea": json_response['isInsideArea']
+        })
         draw_hit(Number(json_response['x']), Number(json_response['y']), null)//json_response['isInsideArea']
     }
 
@@ -222,7 +227,7 @@
         console.log("x: ", event.clientX - rect.left, " y: ", event.clientY - rect.top);
         let x_click = (event.clientX - rect.left - canvas.width / 2) / cft / 2;
         let y_click = -(event.clientY - rect.top - canvas.height / 2) / cft / 2;
-        if (Point.r == null){
+        if (Point.r == null) {
             alert("Select Radius first")
             return;
         }
@@ -236,12 +241,9 @@
     function draw_hit(x, y, isInsideArea) {
         let ctx = canvas.getContext('2d');
         ctx.beginPath();
-        ctx.arc(x * 2 * cft + canvas.width / 2,
-            -y * 2 * cft + canvas.height / 2,
-            3, 0, 7, false
-        );
+        ctx.arc(x * 2 * cft + canvas.width / 2, -y * 2 * cft + canvas.height / 2, 3, 0, 7, false);
         ctx.closePath();
-        if (isInsideArea == null){
+        if (isInsideArea == null) {
             ctx.fillStyle = "#8f8d8d";
         } else if (isInsideArea === true) {
             ctx.fillStyle = "#248809";
@@ -317,7 +319,7 @@
         context.lineWidth = 2;
         context.stroke();
         console.log(hits);
-        for(let i=0; i< hits.length; ++i){
+        for (let i = 0; i < hits.length; ++i) {
             console.log(hits[i].x, hits[i].y);
             draw_hit(hits[i].x, hits[i].y, null);
         }
