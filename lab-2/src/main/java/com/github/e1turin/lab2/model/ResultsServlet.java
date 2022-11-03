@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "ResultServlet", value = "/ResultServlet")
@@ -26,6 +24,7 @@ public class ResultsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("URL: " + request.getRequestURI());
+        Date date = Calendar.getInstance().getTime();
 
         PrintWriter out = response.getWriter();
 
@@ -53,9 +52,12 @@ public class ResultsServlet extends HttpServlet {
                 if (resetOption) {
                     HttpSession session = request.getSession();
                     session.setAttribute("attemptRecords", new ArrayList<AttemptRecord>());
+
+                    getServletContext().setAttribute("lastModifiedFromServlet", date.getTime());
                 }
             }
         }
+
         if (restoreValues != null) {
             List<Boolean> restoreOptionValues = getValidValues(response, out, restoreValues);
             if (restoreOptionValues == null) return;

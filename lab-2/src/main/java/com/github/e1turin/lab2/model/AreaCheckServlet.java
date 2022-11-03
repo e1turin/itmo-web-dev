@@ -86,6 +86,8 @@ public class AreaCheckServlet extends HttpServlet {
         attemptRecords.add(currAttemptRecord);
         session.setAttribute("attemptRecords", attemptRecords);
 
+        getServletContext().setAttribute("lastModifiedFromServlet", date.getTime());
+
         //TODO: try{}catch{} as gson can fail with serializing Double.infinity
         Gson gson = new Gson();
         String JSONResponse = gson.toJson(currAttemptRecord);
@@ -94,7 +96,7 @@ public class AreaCheckServlet extends HttpServlet {
 
     private String validateInputNumber(String number) { //TODO
         int endIndex = Math.min(number.length(), 9);
-        if (!number.trim().matches("^(-?\\d+)\\.?(\\d*)$")){
+        if (!number.trim().matches("^(-?\\d+)\\.?(\\d*)$")) {
             return null;
         }
         return number.substring(0, endIndex);
