@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <servlet>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>com.github.e1turin.lab2.controller.ControllerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/ControllerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <servlet-class>com.github.e1turin.lab2.model.AreaCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <url-pattern>/AreaCheckServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ResultsServlet</servlet-name>
+        <servlet-class>com.github.e1turin.lab2.model.ResultsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResultsServlet</servlet-name>
+        <url-pattern>/ResultsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>IndexJsp</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IndexJsp</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>NotModifiedFilter</filter-name>
+        <filter-class>com.github.e1turin.lab2.controller.NotModifiedFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NotModifiedFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+</web-app>
