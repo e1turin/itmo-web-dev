@@ -12,7 +12,10 @@
         canvas.addEventListener("click", function (e) {
             make_hit_by_click(canvas, e)
         });
+
         draw_canvas(canvas);
+        // restore_table(confirm("Cached?"));
+        // console.log(getCookie('lastModified'));
         restore_table();
 
         let x_inputs = document.getElementsByClassName("x-input");
@@ -87,6 +90,7 @@
         draw_canvas(canvas);
 
     }
+    setCookie('lastModified', (new Date()).toUTCString(), 1);
 
     function get_x_value() {
         let el = [...document.forms['coords']['x']].find(el => el.checked);
@@ -127,7 +131,7 @@
         fetch(URL_ROOT + "AreaCheckServlet" + params)
             .then(async response => {
                 handle_response(await response.text());
-            })
+            });
     }
 
     function submit_form(e) {
@@ -135,12 +139,12 @@
         submit_point(Point.x, Point.y, Point.r);
     }
 
-    function restore_table() {
-        let params = "?restore=true"
+    function restore_table(cached = true) {
+        let params = "?restore=true";
+        //TODO: save to cookies date of last modification
+        let req_headers = {'If-Modified-Since': (new Date()).toUTCString()};
         fetch(URL_ROOT + "ControllerServlet" + params, {
-            headers: {
-                'If-Modified-Since': (new Date()).toUTCString()
-            },
+            headers: req_headers,
         }).then(async response => {
             handle_response(await response.text());
         });
@@ -232,10 +236,6 @@
             return;
         }
         submit_point(ParseFloat(x_click), ParseFloat(y_click), Point.r);
-
-        // Point.y = ParseFloat(y_click);
-        // Point.x = ParseFloat(x_click);
-        // update_point();
     }
 
     function draw_hit(x, y, isInsideArea) {

@@ -41,7 +41,7 @@ public class ResultsServlet extends HttpServlet {
             } else {
                 Boolean resetOption = resetOptionValues.get(0);
                 if (resetOption == null) {
-                    response.setStatus(400); //Todo: define statuses
+                    response.setStatus(400); //TODO: define statuses
                     out.println("<h1>Error: Incorrect parameters</h1>");
                     out.print("<p>");
                     out.print("Parsed value of parameters: (reset=" + resetOption + ")");

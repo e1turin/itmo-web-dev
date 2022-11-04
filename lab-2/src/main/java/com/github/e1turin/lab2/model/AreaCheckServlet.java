@@ -86,7 +86,8 @@ public class AreaCheckServlet extends HttpServlet {
         attemptRecords.add(currAttemptRecord);
         session.setAttribute("attemptRecords", attemptRecords);
 
-        getServletContext().setAttribute("lastModifiedFromServlet", date.getTime());
+        long lastModifiedFromServlet = date.getTime();
+        getServletContext().setAttribute("lastModifiedFromServlet", lastModifiedFromServlet);
 
         //TODO: try{}catch{} as gson can fail with serializing Double.infinity
         Gson gson = new Gson();

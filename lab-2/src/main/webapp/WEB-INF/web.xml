@@ -35,6 +35,7 @@
         <servlet-name>IndexJsp</servlet-name>
         <url-pattern>/index.jsp</url-pattern>
     </servlet-mapping>
+
     <filter>
         <filter-name>NotModifiedFilter</filter-name>
         <filter-class>com.github.e1turin.lab2.controller.NotModifiedFilter</filter-class>
