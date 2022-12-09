@@ -25,7 +25,7 @@ public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info("URL: " + request.getRequestURI());
+        logger.info("URL curr: " + request.getRequestURI());
 
         long startTime = System.currentTimeMillis();
         PrintWriter out = response.getWriter();

@@ -19,7 +19,7 @@
 
 <div class="main">
     <div class="areas section">
-<%--        <img src="task.png" alt="areas"/>--%>
+        <%--        <img src="task.png" alt="areas"/>--%>
         <canvas id="area" width="400px" height="400px">[Turn on canvas in your browser]</canvas>
         <%--        <?php include "areas.svg"; ?>--%>
     </div>
@@ -30,23 +30,13 @@
                 <div class="x-checkboxes">
                     <% int[] checkboxes = {-5, -4, -3, -2, -1, 0, 1, 2, 3};
                         for (int i = 0; i < checkboxes.length; ++i) { %>
-                            <div class="selection">
-                                <label for="x-input-<%=i%>"><%=checkboxes[i]%>
-                                </label>
-                                <input type="checkbox" class="x-input" id="x-input-<%=i%>" name="x"
-                                       value="<%=checkboxes[i]%>"/>
-                            </div>
+                    <div class="selection">
+                        <label for="x-input-<%=i%>"><%=checkboxes[i]%>
+                        </label>
+                        <input type="checkbox" class="x-input" id="x-input-<%=i%>" name="x"
+                               value="<%=checkboxes[i]%>"/>
+                    </div>
                     <% } %>
-                    <%--                    <?php--%>
-                    <%--                    $x_values = array(-5, -4, -3, -2, -1, 0, 1, 2, 3);--%>
-                    <%--                    for ($i = 0; $i < count($x_values); $i++) {--%>
-                    <%--                        echo--%>
-                    <%--                        "<div class=\"selection\">--%>
-                    <%--                    <label for=\"x-input-$i\">$x_values[$i]</label> --%>
-                    <%--                    <input type=\"checkbox\" class=\"x-input\" id=\"x-input-$i\" name=\"x\" value=\"$x_values[$i]\"/>--%>
-                    <%--                </div>";--%>
-                    <%--                }--%>
-                    <%--                ?>--%>
                 </div>
             </div>
             <div class="warn">
@@ -70,23 +60,13 @@
                 <div class="r-radios">
                     <% int[] radios = {1, 2, 3, 4, 5};
                         for (int i = 0; i < radios.length; ++i) { %>
-                            <div class="selection">
-                                <label for="r-input-<%=i%>"><%=radios[i]%>
-                                </label>
-                                <input type="radio" class="r-input" id="r-input-<%=i%>" name="r" required
-                                       value="<%=radios[i]%>"/>
-                            </div>
+                    <div class="selection">
+                        <label for="r-input-<%=i%>"><%=radios[i]%>
+                        </label>
+                        <input type="radio" class="r-input" id="r-input-<%=i%>" name="r" required
+                               value="<%=radios[i]%>"/>
+                    </div>
                     <%} %>
-                    <%--            <?php--%>
-                    <%--                    $y_values = array(1, 2, 3, 4, 5);--%>
-                    <%--                    for ($i = 0; $i < count($y_values); $i++) {--%>
-                    <%--                        echo--%>
-                    <%--                        "<div class=\"selection\">--%>
-                    <%--            <label for=\"r-input-$i\">$y_values[$i]</label>--%>
-                    <%--            <input type=\"radio\" class=\"r-input\" id=\"r-input-$i\" name=\"r\" required value=\"$y_values[$i]\"/>--%>
-                    <%--        </div>";--%>
-                    <%--        }--%>
-                    <%--        ?>--%>
                 </div>
             </div>
             <div class="warn">
@@ -143,7 +123,7 @@
             </tr>
             </thead>
             <tbody>
-                <%--  AJAX  --%>
+            <%--  AJAX  --%>
             </tbody>
         </table>
 
