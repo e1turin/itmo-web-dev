@@ -1,144 +1,106 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"-->
+<!--        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>ЛР №2</title>
-    <link rel="icon" type="image/x-icon" href="./front/favicon.ico">
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="stylesheet" href="front/style.css"/>
-    <script src="front/script.js"></script>
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
 </h:head>
 <f:view>
-    <h:outputLabel value="Hello, world"/>
-    <h:button outcome="index">index</h:button>
-    <body>
-    <header>
-        <h1>Тюрин Иван</h1>
-        <h2>335047</h2>
-        <h3>Вариант: 1265</h3>
-    </header>
 
-    <div class="main">
-        <div class="areas section">
-            <%--        <img src="task.png" alt="areas"/>--%>
-            <canvas id="area" width="400px" height="400px">[Turn on canvas in your browser]</canvas>
-            <%--        <?php include "areas.svg"; ?>--%>
-        </div>
-        <form class="coords-form section" onreset="" name="coords">
-            <div class="input-coord">
-                <div class="x-coord">
-                    <span>X:</span>
-                    <div class="x-checkboxes">
-                        <% int[] checkboxes = {-5, -4, -3, -2, -1, 0, 1, 2, 3};
-                        for (int i = 0; i < checkboxes.length; ++i) { %>
-                        <div class="selection">
-                            <label for="x-input-<%=i%>"><%=checkboxes[i]%>
-                            </label>
-                            <input type="checkbox" class="x-input" id="x-input-<%=i%>" name="x"
-                                   value="<%=checkboxes[i]%>"/>
-                        </div>
-                        <% } %>
+    <h:body>
+
+        <header>
+            <h:outputLabel value="Main page"/>
+        </header>
+
+        <div class="main">
+            <div class="area-container">
+                <canvas id="area" width="600" height="600">Turn on canvas in your browser</canvas>
+            </div>
+
+            <div class="form-container">
+                <h:form>
+                    <!-- X INPUT FIELD -->
+                    <div class="input-container">
+                        <h:outputLabel>X:</h:outputLabel>
+                        <h:panelGrid columns="1" style="margin-bottom: 10px">
+                            <p:inputNumber id="x_param" value="#{userAttemptBean.XParam}" minValue="-5"
+                                           maxValue="5" emptyValue="zero" decimalPlaces="3" required="true"/>
+                            <p:slider for="x_param" minValue="-5.0" maxValue="5.0" step="0.001"/>
+                        </h:panelGrid>
                     </div>
-                </div>
-                <div class="warn">
-                    <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
-                    <span class="warn-msg"> — <u>Только самый левый</u> из выбранных попадает в запрос.</span>
-                </div>
-            </div>
-            <div class="input-coord">
-                <div class="y-coord">
-                    <label for="y-input"><span>Y:</span></label>
-                    <input class="y-input" id="y-input" type="text" name="y" placeholder="-3 < y < 5" required/>
-                </div>
-                <div class="warn">
-                    <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
-                    <span class="warn-msg"> — Поле должно содержать число в десятичной форме из диапозона (-3; 5), дробная часть ограничивается 4 знаками.</span>
-                </div>
-            </div>
-            <div class="input-coord">
-                <div class="r-coord">
-                    <span>R:</span>
-                    <div class="r-radios">
-                        <% int[] radios = {1, 2, 3, 4, 5};
-                        for (int i = 0; i < radios.length; ++i) { %>
-                        <div class="selection">
-                            <label for="r-input-<%=i%>"><%=radios[i]%>
-                            </label>
-                            <input type="radio" class="r-input" id="r-input-<%=i%>" name="r" required
-                                   value="<%=radios[i]%>"/>
-                        </div>
-                        <%} %>
+
+                    <!-- Y INPUT FIELD -->
+                    <div class="input-container">
+                        <h:outputLabel>Y:</h:outputLabel>
+                        <h:panelGrid columns="1" style="margin-bottom: 10px">
+                            <p:inputNumber id="y_param" value="#{userAttemptBean.YParam}" minValue="-3"
+                                           maxValue="3" emptyValue="zero" decimalPlaces="3" required="true"/>
+                        </h:panelGrid>
                     </div>
-                </div>
-                <div class="warn">
-                    <span><i class='fas fa-exclamation-triangle warn-icon'>[ ! ]</i></span>
-                    <span class="warn-msg"> — Необходимо выбрать один из пунктов</span>
-                </div>
-            </div>
-            <div class="form-final">
-                <div class="final-input">
-                    <table class="final-input-table">
-                        <thead>
-                        <tr>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>R</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td id="final-input-x">❌</td>
-                            <td id="final-input-y">❌</td>
-                            <td id="final-input-r">❌</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="form-submit">
-                    <input class="submit-btn" id="form-submit-btn" type="submit" value="Выбрать" disabled>
-                </div>
-                <div class="form-reset">
-                    <button onclick="" type="reset" class="reset" value="Очистить форму">Очистить форму</button>
-                </div>
-            </div>
-        </form>
-        <div class="table section">
-            <div class="table-header">
-                <span>Предыдущие попытки</span>
-                <div class="table-reset-btn">
-                    <form action="/lab-2-1.0-SNAPSHOT/ControllerServlet" method="get" name="reset-table">
-                        <button class="reset-btn" name="reset" type="submit" value="true">Сбросить</button>
-                    </form>
-                </div>
 
-            </div>
-            <table class="results-table">
-                <thead>
-                <tr>
-                    <th>X</th>
-                    <th>Y</th>
-                    <th>R</th>
-                    <th>AC</th>
-                    <th>Время на сервере</th>
-                    <th>Время ответа, мс</th>
-                </tr>
-                </thead>
-                <tbody>
-                <%--  AJAX  --%>
-                </tbody>
-            </table>
+                    <!-- R INPUT FIELD -->
+                    <div class="input-container">
+                        <h:outputLabel>R:</h:outputLabel>
+                        <h:panelGrid columns="1" style="margin-bottom: 10px">
+                            <p:spinner id="r_param" value="#{userAttemptBean.RParam}"
+                                       min="1" max="5" buttons="horizontal-after" required="true"/>
+                        </h:panelGrid>
+                    </div>
 
+                    <!-- PRIMEFACES SUBMIT BUTTON (already has ajax) -->
+                    <p:commandButton value="Выбрать точку" type="submit"
+                                     actionListener="#{userAttemptBean.addAttempt()}"
+                                     update="@form results-table"/>
+
+                    <!-- CLEAN BUTTON (already has ajax) -->
+                    <p:commandButton value="Очистить предыдущие попытки" type="submit"
+                                     actionListener="#{userAttemptBean.deleteAttempts()}"
+                                     update="@form results-table"/>
+                </h:form>
+            </div>
         </div>
-    </div>
 
-    <!--<footer></footer>-->
-    </body>
+        <h:dataTable id="results-table" value="${userAttemptBean.attempts}" var="attempt">
+            <!--styleClass="history_table"-->
+            <!--headerClass="history_head"-->
+            <!--rowClasses="order-table-odd-row,order-table-even-row"-->
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                ${attempt.x}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                ${attempt.y}
+            </h:column>
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                ${attempt.r}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Попадание</f:facet>
+                ${attempt.insideArea ? "✅" : "❌"}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Время запроса</f:facet>
+                ${attempt.currentTime}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Время выполнения</f:facet>
+                ${attempt.procTime}
+            </h:column>
+        </h:dataTable>
+
+        <br/>
+
+        <footer>
+            <h:button outcome="start" value="На начальную страницу"/>
+        </footer>
+    </h:body>
+
 </f:view>
-
 </html>

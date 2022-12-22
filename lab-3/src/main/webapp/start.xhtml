@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view>
+    <h:head>
+        <h:outputStylesheet>
+            .ui-analog-clock {
+                width: 200px;
+            }
+        </h:outputStylesheet>
+
+    </h:head>
+
+    <h:body>
+
+        <header>
+            <h1>Лабораторная работа №3</h1>
+            <h2>Вариант 13155</h2>
+            <h3>Тюрина Ивана P32131, ИСУ: 335047</h3>
+
+        </header>
+
+        <div class="main">
+            <div>
+                <p:clock mode="client" displayMode="analog"/>
+                <p:clock mode="client" displayMode="digital"/>
+            </div>
+        </div>
+
+        <br/>
+
+        <footer>
+            <div>
+                <h:button outcome="main" value="На главную страницу"/>
+            </div>
+        </footer>
+    </h:body>
+</f:view>
+</html>
