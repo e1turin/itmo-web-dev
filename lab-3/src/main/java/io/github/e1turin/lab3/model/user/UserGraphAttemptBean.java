@@ -1,6 +1,5 @@
 package io.github.e1turin.lab3.model.user;
 
-import com.google.gson.Gson;
 import io.github.e1turin.lab3.model.core.Point;
 import io.github.e1turin.lab3.model.core.PointPicker;
 import io.github.e1turin.lab3.model.core.UserAttempt;
@@ -15,22 +14,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Named
 @SessionScoped
-public class UserAttemptBean implements Serializable {
-
-    @Setter
+public class UserGraphAttemptBean implements Serializable {
     @Getter
+    @Setter
     private double xParam = 0.0;
-
-    @Setter
     @Getter
+    @Setter
     private double yParam = 0.0;
-
-    @Setter
     @Getter
+    @Setter
     private double rParam = 1.0;
 
     private final UserAttemptRepository attemptRepository = new UserAttemptRepository();
@@ -50,15 +45,4 @@ public class UserAttemptBean implements Serializable {
         UserAttempt userAttempt = UserAttempt.of(point, attemptResult, processingTime, currentTime);
         attemptRepository.addAttempt(userAttempt);
     }
-    public List<UserAttempt> getAttempts() {
-        return attemptRepository.getAttempts();
-    }
-    public String getAttemptsAsJson() {
-        return new Gson().toJson(getAttempts());
-    }
-
-    public void deleteAttempts() {
-        attemptRepository.clearAttempts();
-    }
-
 }

@@ -7,7 +7,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-
 </h:head>
 <f:view>
 
@@ -19,7 +18,8 @@
 
         <div class="main">
             <div class="area-container">
-                <canvas id="area" width="600" height="600">Turn on canvas in your browser</canvas>
+                <canvas id="area" width="600" height="600" style="border: solid 2px">Turn on canvas in your browser
+                </canvas>
             </div>
 
             <div class="form-container">
@@ -47,8 +47,17 @@
                     <div class="input-container">
                         <h:outputLabel>R:</h:outputLabel>
                         <h:panelGrid columns="1" style="margin-bottom: 10px">
-                            <p:spinner id="r_param" value="#{userAttemptBean.RParam}"
-                                       min="1" max="5" buttons="horizontal-after" required="true"/>
+                            <!--<p:spinner id="r_param" value="#{userAttemptBean.RParam}" widgetVar="r_param"-->
+                            <!--           onchange="on_r_change(e)"-->
+                            <!--           min="1" max="5" buttons="horizontal-after" required="true"/>-->
+                            <p:selectOneMenu id="r_param" value="#{userAttemptBean.RParam}" dir="rtl"
+                                             onchange="set_R(this.value)">
+                                <f:selectItem itemLabel="1️⃣" itemValue="1"/>
+                                <f:selectItem itemLabel="2️⃣" itemValue="2"/>
+                                <f:selectItem itemLabel="3️⃣" itemValue="3"/>
+                                <f:selectItem itemLabel="4️⃣" itemValue="4"/>
+                                <f:selectItem itemLabel="5️⃣" itemValue="5"/>
+                            </p:selectOneMenu>
                         </h:panelGrid>
                     </div>
 
@@ -101,6 +110,17 @@
             <h:button outcome="start" value="На начальную страницу"/>
         </footer>
     </h:body>
-
+    <h:inputText id="all_attempts_json" value="#{userAttemptBean.attemptsAsJson}" style="display:none"/>
+    <h:form id="graph_input">
+        <h:inputHidden id="graph_input_x" value="#{userGraphAttemptBean.XParam}"/>
+        <h:inputHidden id="graph_input_y" value="#{userGraphAttemptBean.YParam}"/>
+        <h:inputHidden id="graph_input_r" value="#{userGraphAttemptBean.RParam}"/>
+        <p:commandButton value="--graph_input_submit_btn--" id="graph_input_submit_btn"
+                         actionListener="#{userGraphAttemptBean.addAttempt()}" onsuccess="on_update()"
+                         update="@form results-table" style="display: none">
+            <!--            <f:ajax event="action" execute="@form"  render="results-table all_attempts_jsom" onevent="btnOKhandler"/>-->
+        </p:commandButton>
+    </h:form>
 </f:view>
+<h:outputScript library="js" name="script.js"/>
 </html>
