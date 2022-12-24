@@ -2,7 +2,7 @@ package io.github.e1turin.lab3.model.core
 
 class PointPicker {
     fun checkPoint(point: Point): Boolean {
-        return true
+        return isPointInsideArea(point)
     }
 
 
