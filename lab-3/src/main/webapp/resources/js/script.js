@@ -3,7 +3,7 @@ window.onload = () => {
     cnv = document.getElementById('area')
     ctx = cnv.getContext('2d')
     cnv.addEventListener('click', on_click)
-    draw_scene()
+    on_update()
 }
 
 const point_r = 5 // [px]
@@ -12,26 +12,28 @@ const border_offset = 10 // [px]
 const possible_R = [1, 2, 3, 4, 5] // [dp] = [Density-independent Pixels]
 const point_colors = {in: '#09911b', out: '#c71717'}
 const target_colors = {axis: '#2c2c2c', background: '#eec90f', area: '#2c71f5'}
+let delay_to_response = 200 // [ms] for js and jsf interop
 
 // Changeable radius
 let R = () => {
     return Math.min(...possible_R)
 }
 
+/* set R value with [dp] */
 const set_R = (val) => {
+    console.log(`[set_R] R := ${val} [dp]`)
     R = () => {
         return val
     }
 }
 
-const on_r_change = (event) => {
-    console.log('r:', event);
-    /* TODO */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+/* coefficient for converting [dp] to [px] */
 let cft = () => {
-    return Math.min(cnv.width, cnv.height) / Math.max(...possible_R) // [px/dp]
+    return ((Math.min(cnv.width, cnv.height) - border_offset) / (2 * Math.max(...possible_R)))  // [px/dp]
 }
 
 /* returns center point of canvas [px] */
@@ -41,6 +43,10 @@ let mid = () => {
 
 const get_points = () => {
     let points = JSON.parse(document.getElementById("all_attempts_json").value);
+
+    console.log("[get_points] points:")
+    console.log(points)
+
     return points
 }
 
@@ -52,11 +58,11 @@ const draw_circ = ({x, y}, r) => {
 }
 
 /* draws point with center in point (`x`, `y`) [dp] with fill color corresponding position inside or outside area */
-const draw_point = ({x, y, inside}) => {
-    ctx.fillStyle = inside === true ? point_colors.in : point_colors.out
+const draw_point = ({x, y, isInsideArea}) => {
+    ctx.fillStyle = isInsideArea == true ? point_colors.in : point_colors.out
     draw_circ({
         x: x * cft() + mid().x,
-        y: y * cft() + mid().y
+        y: (-1 * y * cft()) + mid().y
     }, point_r)
 }
 
@@ -132,31 +138,46 @@ const draw_target = () => {
 
 const draw_scene = () => {
     draw_target()
-    for (let point of get_points().filter((it) => {
-        return it.r === R()
-    })) {
+    let points = get_points().filter((it) => {
+        return (it.r == R())
+    })
+
+    console.log('[draw_scene] points to draw:')
+    console.log(points)
+
+    for (let point of points) {
         draw_point(point)
     }
 }
 
 const on_update = () => {
-    draw_scene()
+    sleep(delay_to_response).then(() => {
+            // to let `get_points` function to get ACTUAL data from 'all_attempts_json' after jsf request-response
+            console.log('[on_update]')
+            draw_scene()
+        }
+    )
 }
 
 /* return point (`x`, `y`) [px] of canvas */
 function get_mouse_position(canvas, event) {
     let rect = canvas.getBoundingClientRect();
-    return {
+    let point = {
         x: event.clientX - rect.left,
         y: event.clientY - rect.top
     };
+
+    console.log(`[get_mouse_position] {x: ${point.x}, y: ${point.y}} [px]`)
+
+    return point
 }
 
 const on_click = (event) => {
     let position = get_mouse_position(cnv, event)
-    let point = {x: (position.x - mid().x) / cft(), y: (position.y - mid().y) / cft()}
-    console.log(point)
-    draw_point(point)
+    let point = {x: (position.x - mid().x) / cft(), y: -((position.y - mid().y) / cft())}
+
+    console.log(`[on_click] point: {x: ${point.x}, y: ${point.y}} [dp]`)
+
     commit_attempt(point, R())
 }
 
@@ -164,5 +185,5 @@ const commit_attempt = ({x, y}, r) => {
     document.getElementById('graph_input:graph_input_x').value = x
     document.getElementById('graph_input:graph_input_y').value = y
     document.getElementById('graph_input:graph_input_r').value = r
-    document.getElementById('graph_input:graph_input_submit_btn').click()
+    document.getElementById('graph_input:graph_input_submit_btn').click() // entails `on_update` call
 }
