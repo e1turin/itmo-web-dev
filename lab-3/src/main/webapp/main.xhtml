@@ -5,104 +5,130 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <!-- bootstrap: -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
 </h:head>
 <f:view>
 
     <h:body>
-
-        <header>
-            <h:outputLabel value="Main page"/>
+        <header class="">
+            <div class="headers bg-light p-3">
+                <h1>Лабораторная работа №3</h1>
+                <h2>Вариант 13155</h2>
+                <h3>Тюрин Иван P32131, ИСУ: 335047</h3>
+            </div>
         </header>
 
-        <div class="main">
-            <div class="area-container">
-                <canvas id="area" width="600" height="600" style="border: solid 2px">Turn on canvas in your browser
+        <nav class="navbar navbar-expand-lg">
+            <div class="collapse navbar-collapse">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item mx-2">
+                        <h:button class="nav-link active" outcome="main" value="На главную страницу"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:button class="nav-link mx-2" outcome="start" value="На начальную страницу"/>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container d-flex my-3">
+            <div class="container">
+                <canvas id="area" class="rounded" width="600" height="600"
+                        style="border: solid 2px">Turn on canvas in your browser
                 </canvas>
             </div>
 
-            <div class="form-container">
+            <div class="container">
                 <h:form>
-                    <!-- X INPUT FIELD -->
-                    <div class="input-container">
-                        <h:outputLabel>X:</h:outputLabel>
-                        <h:panelGrid columns="1" style="margin-bottom: 10px">
-                            <p:inputNumber id="x_param" value="#{userAttemptBean.XParam}" minValue="-5"
-                                           maxValue="5" emptyValue="zero" decimalPlaces="3" required="true"/>
-                            <p:slider for="x_param" minValue="-5.0" maxValue="5.0" step="0.001"/>
-                        </h:panelGrid>
+                    <div class="container">
+
+                        <!-- X INPUT FIELD -->
+                        <div class="container d-inline-flex">
+                            <h:outputLabel class="m-3">X:</h:outputLabel>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                <p:inputNumber id="x_param" value="#{userAttemptBean.XParam}" minValue="-5"
+                                               maxValue="5" emptyValue="zero" decimalPlaces="3" required="true"/>
+                                <p:slider for="x_param" minValue="-5.0" maxValue="5.0" step="0.001"/>
+                            </h:panelGrid>
+                        </div>
+
+                        <!-- Y INPUT FIELD -->
+                        <div class="container d-inline-flex">
+                            <h:outputLabel class="m-3">Y:</h:outputLabel>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                <p:inputNumber id="y_param" value="#{userAttemptBean.YParam}" minValue="-3"
+                                               maxValue="3" emptyValue="zero" decimalPlaces="3" required="true"/>
+                            </h:panelGrid>
+                        </div>
+
+                        <!-- R INPUT FIELD -->
+                        <div class="container d-inline-flex">
+                            <h:outputLabel class="m-3">R:</h:outputLabel>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                <p:selectOneMenu id="r_param" value="#{userAttemptBean.RParam}"
+                                                 onchange="set_R(this.value); draw_scene()">
+                                    <f:selectItem itemLabel="1️⃣" itemValue="1"/>
+                                    <f:selectItem itemLabel="2️⃣" itemValue="2"/>
+                                    <f:selectItem itemLabel="3️⃣" itemValue="3"/>
+                                    <f:selectItem itemLabel="4️⃣" itemValue="4"/>
+                                    <f:selectItem itemLabel="5️⃣" itemValue="5"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </div>
                     </div>
 
-                    <!-- Y INPUT FIELD -->
-                    <div class="input-container">
-                        <h:outputLabel>Y:</h:outputLabel>
-                        <h:panelGrid columns="1" style="margin-bottom: 10px">
-                            <p:inputNumber id="y_param" value="#{userAttemptBean.YParam}" minValue="-3"
-                                           maxValue="3" emptyValue="zero" decimalPlaces="3" required="true"/>
-                        </h:panelGrid>
+                    <div class="container btn-group">
+                        <!-- PRIMEFACES SUBMIT BUTTON (already has ajax) -->
+                        <p:commandButton value="Выбрать точку" type="submit" class="m-2 btn btn-primary"
+                                         actionListener="#{userAttemptBean.addAttempt()}"
+                                         update="all_attempts_json @form results-table" onsuccess="on_update()"/>
+
+                        <!-- CLEAN BUTTON (already has ajax) -->
+                        <p:commandButton value="Очистить предыдущие попытки" type="submit" class="m-2 btn btn-secondary"
+                                         actionListener="#{userAttemptBean.deleteAttempts()}"
+                                         update="all_attempts_json @form results-table" onsuccess="on_update()"/>
                     </div>
-
-                    <!-- R INPUT FIELD -->
-                    <div class="input-container">
-                        <h:outputLabel>R:</h:outputLabel>
-                        <h:panelGrid columns="1" style="margin-bottom: 10px">
-                            <p:selectOneMenu id="r_param" value="#{userAttemptBean.RParam}"
-                                             onchange="set_R(this.value); draw_scene()">
-                                <f:selectItem itemLabel="1️⃣" itemValue="1"/>
-                                <f:selectItem itemLabel="2️⃣" itemValue="2"/>
-                                <f:selectItem itemLabel="3️⃣" itemValue="3"/>
-                                <f:selectItem itemLabel="4️⃣" itemValue="4"/>
-                                <f:selectItem itemLabel="5️⃣" itemValue="5"/>
-                            </p:selectOneMenu>
-                        </h:panelGrid>
-                    </div>
-
-                    <!-- PRIMEFACES SUBMIT BUTTON (already has ajax) -->
-                    <p:commandButton value="Выбрать точку" type="submit"
-                                     actionListener="#{userAttemptBean.addAttempt()}"
-                                     update="all_attempts_json @form results-table" onsuccess="on_update()"/>
-
-                    <!-- CLEAN BUTTON (already has ajax) -->
-                    <p:commandButton value="Очистить предыдущие попытки" type="submit"
-                                     actionListener="#{userAttemptBean.deleteAttempts()}"
-                                     update="all_attempts_json @form results-table" onsuccess="on_update()"/>
                 </h:form>
             </div>
         </div>
 
-        <h:dataTable id="results-table" value="${userAttemptBean.attempts}" var="attempt">
-            <!--styleClass="history_table"-->
-            <!--headerClass="history_head"-->
-            <!--rowClasses="order-table-odd-row,order-table-even-row"-->
-            <h:column>
-                <f:facet name="header">X</f:facet>
-                ${attempt.x}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Y</f:facet>
-                ${attempt.y}
-            </h:column>
-            <h:column>
-                <f:facet name="header">R</f:facet>
-                ${attempt.r}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Попадание</f:facet>
-                ${attempt.insideArea ? "✅" : "❌"}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Время запроса</f:facet>
-                ${attempt.currentTime}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Время выполнения</f:facet>
-                ${attempt.procTime}
-            </h:column>
-        </h:dataTable>
+        <div class="container mx-auto py-3">
+            <h:dataTable id="results-table" value="${userAttemptBean.attempts}" var="attempt"
+                         styleClass="table table-sm"
+                         headerClass=""
+                         rowClasses="">
+                <h:column>
+                    <f:facet name="header">X</f:facet>
+                    ${attempt.x}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Y</f:facet>
+                    ${attempt.y}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">R</f:facet>
+                    ${attempt.r}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Попадание</f:facet>
+                    ${attempt.insideArea ? "✅" : "❌"}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Время запроса</f:facet>
+                    ${attempt.currentTime}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Время выполнения</f:facet>
+                    ${attempt.procTime}
+                </h:column>
+            </h:dataTable>
+        </div>
 
         <br/>
 
         <footer>
-            <h:button outcome="start" value="На начальную страницу"/>
         </footer>
     </h:body>
 

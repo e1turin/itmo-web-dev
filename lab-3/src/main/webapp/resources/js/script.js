@@ -10,8 +10,8 @@ const point_r = 5 // [px]
 const line_width = 4 // [px]
 const border_offset = 10 // [px]
 const possible_R = [1, 2, 3, 4, 5] // [dp] = [Density-independent Pixels]
-const point_colors = {in: '#09911b', out: '#c71717'}
-const target_colors = {axis: '#2c2c2c', background: '#eec90f', area: '#2c71f5'}
+const point_colors = {in: '#2bb653', out: '#ef2d2d'}
+const target_colors = {axis: '#2c2c2c', background: '#f8d72d', area: '#4987ef'}
 let delay_to_response = 200 // [ms] for js and jsf interop
 
 // Changeable radius
@@ -51,7 +51,7 @@ const get_points = () => {
 }
 
 /* draws circle with center in point (`x`, `y`) with radius `r`, all are [px] */
-const draw_circ = ({x, y}, r) => {
+const draw_round = ({x, y}, r) => {
     ctx.beginPath();
     ctx.arc(x, y, r, 0, 7);
     ctx.fill();
@@ -60,7 +60,7 @@ const draw_circ = ({x, y}, r) => {
 /* draws point with center in point (`x`, `y`) [dp] with fill color corresponding position inside or outside area */
 const draw_point = ({x, y, isInsideArea}) => {
     ctx.fillStyle = isInsideArea == true ? point_colors.in : point_colors.out
-    draw_circ({
+    draw_round({
         x: x * cft() + mid().x,
         y: (-1 * y * cft()) + mid().y
     }, point_r)
