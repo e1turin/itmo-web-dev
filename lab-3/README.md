@@ -33,6 +33,10 @@
 > Минимально рабочий вариант лабы в коммите [e9272c2](https://github.com/e1turin/itmo-webdev/tree/e9272c25507fecbc27451a2be349a176d7012568)
 > 
 > Дальше добавлены стили из Bootstrap
+> 
+> Можно еще попробовать [Material Theme](https://github.com/material-components/material-components-web)
+>    - #Demos: https://material-components.github.io/material-components-web-catalog/#/
+
 
 ## Дополнительные требования к приложению:
 
