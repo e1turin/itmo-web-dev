@@ -12,14 +12,14 @@ const border_offset = 10 // [px]
 const possible_R = [1, 2, 3, 4, 5] // [dp] = [Density-independent Pixels]
 const point_colors = {in: '#2bb653', out: '#ef2d2d'}
 const target_colors = {axis: '#2c2c2c', background: '#f8d72d', area: '#4987ef'}
-let delay_to_response = 200 // [ms] for js and jsf interop
+let delay_to_response = 75 // [ms] for js and jsf interop
 
 // Changeable radius
 let R = () => {
     return Math.min(...possible_R)
 }
 
-/* set R value with [dp] */
+/* set R value with val [dp] */
 const set_R = (val) => {
     console.log(`[set_R] R := ${val} [dp]`)
     R = () => {
