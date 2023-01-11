@@ -1,4 +1,4 @@
-package io.github.e1turin.lab3.model.core;
+package io.github.e1turin.lab3.model.core.data;
 
 
 import lombok.AllArgsConstructor;
@@ -7,9 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserAttempt {
-    double x;
-    double y;
-    double r;
+    double x, y, r;
     boolean isInsideArea;
     long procTime;
     String currentTime;

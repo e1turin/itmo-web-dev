@@ -1,17 +1,21 @@
 package io.github.e1turin.lab3.model.database;
 
-import io.github.e1turin.lab3.model.core.UserAttempt;
+import io.github.e1turin.lab3.model.core.data.UserAttempt;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 
 import java.util.List;
 
 @Model
+@ApplicationScoped
 public class UserAttemptRepository {
-    private final DbManager dbManager = new DbManager();
+
+    @Inject
+    private DbManager dbManager;
 
     public List<UserAttempt> getAttempts() {
-        List<UserAttempt> attempts = dbManager.selectAllAttempts();
-        return attempts;
+        return dbManager.selectAllAttempts();
     }
 
     public void addAttempt(UserAttempt userAttempt) {
