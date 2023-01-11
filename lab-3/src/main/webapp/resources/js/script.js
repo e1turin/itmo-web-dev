@@ -10,8 +10,8 @@ const point_r = 5 // [px]
 const line_width = 4 // [px]
 const border_offset = 10 // [px]
 const possible_R = [1, 2, 3, 4, 5] // [dp] = [Density-independent Pixels]
-const point_colors = {in: '#2bb653', out: '#ef2d2d'}
-const target_colors = {axis: '#2c2c2c', background: '#f8d72d', area: '#4987ef'}
+const point_colors = {in: '#168a38', out: '#ef2d2d'}
+const target_colors = {axis: '#2c2c2c', background: '#f8d72d', area: '#239dff'}
 let delay_to_response = 75 // [ms] for js and jsf interop
 
 // Changeable radius
