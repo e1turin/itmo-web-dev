@@ -37,6 +37,7 @@
 > Можно еще попробовать [Material Theme](https://github.com/material-components/material-components-web)
 >    - #Demos: https://material-components.github.io/material-components-web-catalog/#/
 
+
 ## Дополнительные требования к приложению:
 
 - [x] Все результаты проверки должны сохраняться в базе данных под управлением СУБД **PostgreSQL**.
