@@ -43,12 +43,11 @@
             <div class="container">
                 <h:form>
                     <div class="container">
-
                         <!-- X INPUT FIELD -->
                         <div class="container d-inline-flex">
                             <h:outputLabel class="m-3">X:</h:outputLabel>
                             <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                <p:inputNumber id="x_param" value="#{userAttemptBean.XParam}" minValue="-5"
+                                <p:inputNumber id="x_param" value="#{userFormInputBean.XParam}" minValue="-5"
                                                maxValue="5" emptyValue="zero" decimalPlaces="3" required="true"/>
                                 <p:slider for="x_param" minValue="-5.0" maxValue="5.0" step="0.001"/>
                             </h:panelGrid>
@@ -58,7 +57,7 @@
                         <div class="container d-inline-flex">
                             <h:outputLabel class="m-3">Y:</h:outputLabel>
                             <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                <p:inputNumber id="y_param" value="#{userAttemptBean.YParam}" minValue="-3"
+                                <p:inputNumber id="y_param" value="#{userFormInputBean.YParam}" minValue="-3"
                                                maxValue="3" emptyValue="zero" decimalPlaces="3" required="true"/>
                             </h:panelGrid>
                         </div>
@@ -67,7 +66,7 @@
                         <div class="container d-inline-flex">
                             <h:outputLabel class="m-3">R:</h:outputLabel>
                             <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                <p:selectOneMenu id="r_param" value="#{userAttemptBean.RParam}"
+                                <p:selectOneMenu id="r_param" value="#{userFormInputBean.RParam}"
                                                  onchange="set_R(this.value); draw_scene()">
                                     <f:selectItem itemLabel="1️⃣" itemValue="1"/>
                                     <f:selectItem itemLabel="2️⃣" itemValue="2"/>
@@ -82,12 +81,12 @@
                     <div class="container btn-group">
                         <!-- PRIMEFACES SUBMIT BUTTON (already has ajax) -->
                         <p:commandButton value="Выбрать точку" type="submit" class="m-2 btn btn-primary"
-                                         actionListener="#{userAttemptBean.addAttempt()}"
+                                         actionListener="#{userFormInputBean.addAttempt()}"
                                          update="all_attempts_json @form results-table" onsuccess="on_update()"/>
 
                         <!-- CLEAN BUTTON (already has ajax) -->
                         <p:commandButton value="Очистить предыдущие попытки" type="submit" class="m-2 btn btn-secondary"
-                                         actionListener="#{userAttemptBean.deleteAttempts()}"
+                                         actionListener="#{userFormInputBean.deleteAttempts()}"
                                          update="all_attempts_json @form results-table" onsuccess="on_update()"/>
                     </div>
                 </h:form>
@@ -95,7 +94,7 @@
         </div>
 
         <div class="container mx-auto py-3">
-            <h:dataTable id="results-table" value="${userAttemptBean.attempts}" var="attempt"
+            <h:dataTable id="results-table" value="${userFormInputBean.attempts}" var="attempt"
                          styleClass="table table-sm"
                          headerClass=""
                          rowClasses="">
@@ -134,17 +133,18 @@
 
     <!-- ALL ATTEMPTS IN HIDDEN JSON TO GET DATA WITHOUT SPECIAL AJAX REQUEST -->
     <div style="display: none">
-        <p:inputText id="all_attempts_json" value="#{userAttemptBean.attemptsAsJson}" style="display:none"
+        <!-- DELAY IN on_update() IS FOR THIS COMPONENT -->
+        <p:inputText id="all_attempts_json" value="#{userFormInputBean.attemptsAsJson}" style="display:none"
                      onchange="on_update()"/>
     </div>
 
     <!-- PHONY FORM FOR JS CANVAS INTEROP WITHOUT AJAX REQUEST TO SPECIAL VIEW -->
     <h:form id="graph_input" style="display: none">
-        <h:inputHidden id="graph_input_x" value="#{userGraphAttemptBean.XParam}"/>
-        <h:inputHidden id="graph_input_y" value="#{userGraphAttemptBean.YParam}"/>
-        <h:inputHidden id="graph_input_r" value="#{userGraphAttemptBean.RParam}"/>
+        <h:inputHidden id="graph_input_x" value="#{userGraphInputBean.XParam}"/>
+        <h:inputHidden id="graph_input_y" value="#{userGraphInputBean.YParam}"/>
+        <h:inputHidden id="graph_input_r" value="#{userGraphInputBean.RParam}"/>
         <p:commandButton id="graph_input_submit_btn" value="--graph_input_submit_btn--" style="display: none"
-                         actionListener="#{userGraphAttemptBean.addAttempt()}"
+                         actionListener="#{userGraphInputBean.addAttempt()}"
                          update="@form results-table all_attempts_json" onsuccess="on_update()">
         </p:commandButton>
     </h:form>

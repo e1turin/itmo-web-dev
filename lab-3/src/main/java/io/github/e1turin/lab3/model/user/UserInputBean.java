@@ -1,11 +1,10 @@
 package io.github.e1turin.lab3.model.user;
 
-import io.github.e1turin.lab3.model.core.Point;
+import io.github.e1turin.lab3.model.core.data.Point;
 import io.github.e1turin.lab3.model.core.PointPicker;
-import io.github.e1turin.lab3.model.core.UserAttempt;
+import io.github.e1turin.lab3.model.core.data.UserAttempt;
 import io.github.e1turin.lab3.model.database.UserAttemptRepository;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
+import jakarta.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,19 +14,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/* class just for don't repeat myself */
 public abstract class UserInputBean implements Serializable {
 
     @Getter
     @Setter
-    public double xParam = 0.0;
+    protected double xParam = 0.0;
     @Getter
     @Setter
-    public double yParam = 0.0;
+    protected double yParam = 0.0;
     @Getter
     @Setter
-    public double rParam = 1.0;
+    protected double rParam = 1.0;
 
-    protected final UserAttemptRepository attemptRepository = new UserAttemptRepository();
+    @Inject
+    protected UserAttemptRepository attemptRepository;
     protected final PointPicker pointPicker = new PointPicker();
 
     public void addAttempt() {
