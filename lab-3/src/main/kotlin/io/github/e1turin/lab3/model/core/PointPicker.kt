@@ -1,12 +1,11 @@
 package io.github.e1turin.lab3.model.core
 
 import io.github.e1turin.lab3.model.core.data.Point
-import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Model
 
 @Model
-@ApplicationScoped
-class PointPicker {
+//@ApplicationScoped
+open class PointPicker {
     fun checkPoint(point: Point): Boolean {
         return isPointInsideArea(point)
     }

@@ -1,7 +1,7 @@
 package io.github.e1turin.lab3.model.user;
 
-import io.github.e1turin.lab3.model.core.data.Point;
 import io.github.e1turin.lab3.model.core.PointPicker;
+import io.github.e1turin.lab3.model.core.data.Point;
 import io.github.e1turin.lab3.model.core.data.UserAttempt;
 import io.github.e1turin.lab3.model.database.UserAttemptRepository;
 import jakarta.inject.Inject;
@@ -14,21 +14,26 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 /* class just for don't repeat myself */
 public abstract class UserInputBean implements Serializable {
 
     @Getter
     @Setter
     protected double xParam = 0.0;
+
     @Getter
     @Setter
     protected double yParam = 0.0;
+
     @Getter
     @Setter
     protected double rParam = 1.0;
 
     @Inject
     protected UserAttemptRepository attemptRepository;
+
+    //@Inject // don't work (Jakarta hates Kotlin???)
     protected final PointPicker pointPicker = new PointPicker();
 
     public void addAttempt() {
