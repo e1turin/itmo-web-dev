@@ -3,24 +3,21 @@
 
 ## Переписать приложение из предыдущей лабораторной работы с использованием следующих технологий:
 > Клевый плейлист про Kotlin Spring jwt, React jwt ... https://www.youtube.com/playlist?list=PLlameCF3cMEtCGZW2djY46Dl20-uSNJba
-- [ ] Уровень back-end должен быть основан на __Spring__[^spring].
+- [ ] Уровень back-end должен быть основан на __Spring__.
   - > Настроил Spring boot в Kotlin как
     в [статье](https://scalablescripts.medium.com/kotlin-api-authentication-using-jwt-spring-boot-jwt-authentication-6e4c099e1c2) 
     (а именно видео), его репозиторий: https://github.com/scalablescripts/kotlin-auth 
-- [ ] Уровень front-end должен быть построен на __React[^react] + Redux__ (необходимо использовать ES6 и JSX) с
+  - > useful links: [Пишет свой спринг](https://youtu.be/rd6wxPzXQvo),
+- [ ] Уровень front-end должен быть построен на __React + Redux__ (необходимо использовать ES6 и JSX) с
   использованием [набора компонентов _PrimeReact_ | набора компонентов _Belle_ | набора компонентов _React
   Toolbox_ | обычных полей ввода _HTML_]
+  - > useful links: [YT video about 'useEffect'](https://youtu.be/bGzanfKVFeU), 
+    > [Как написать свой реакт](https://youtu.be/KJP1E-Y-xyo), 
+    > [Как написать свой реакт (статья)](https://pomb.us/build-your-own-react/)
 - [ ] Взаимодействие между уровнями back-end и front-end должно быть организовано посредством _REST API_.
 
 > Настроил проект с подпроектами в gradle. Скрипт `util/create-db-in-docker.sh` позволяет создать базу данных в докере с
 > нужными параметрами (согласно статье на хабре)
-
-[^react]:
-    useful links: [YT video about 'useEffect'](https://youtu.be/bGzanfKVFeU), [Как написать свой реакт](https://youtu.be/KJP1E-Y-xyo), [Как написать свой реакт (статья)](https://pomb.us/build-your-own-react/)
-
-[^spring]:
-    useful links: [Пишет свой спринг](https://youtu.be/rd6wxPzXQvo),
-  
   
 
 ## Приложение по-прежнему должно включать в себя 2 страницы - стартовую и основную страницу приложения. Обе страницы приложения должны быть адаптированы для отображения в 3 режимах:
