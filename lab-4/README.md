@@ -36,7 +36,7 @@
   - > Библиотеки для jwt https://jwt.io/libraries
     >   - в Туторе: [jwtk/jjwt](https://github.com/jwtk/jjwt)
     >   - [IDunion/SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin) (kotlinx.serialization)
-    >   - 0Auth [auth0/java-jwt](https://github.com/auth0/java-jwt)
+    >   - [auth0/java-jwt](https://github.com/auth0/java-jwt)
 
 ## Основная страница приложения должна содержать следующие элементы:
 

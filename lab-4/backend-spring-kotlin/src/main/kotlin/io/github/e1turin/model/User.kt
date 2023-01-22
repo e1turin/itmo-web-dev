@@ -26,7 +26,7 @@ class User {
             field = passwordEncoder.encode(value)
         }
 
-    fun comparePassword(password: String): Boolean{
-        return BCryptPasswordEncoder().matches(password, this.password)
+    fun comparePassword(rawPassword: String): Boolean{
+        return BCryptPasswordEncoder().matches(rawPassword, this.password)
     }
 }

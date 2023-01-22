@@ -28,20 +28,17 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
-    runtimeOnly("org.postgresql:postgresql")
-
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.2")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
+    runtimeOnly("org.postgresql:postgresql")
     implementation("com.auth0:java-jwt:4.2.2")
 }
 

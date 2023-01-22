@@ -2,6 +2,7 @@ package io.github.e1turin.service
 
 import io.github.e1turin.model.User
 import io.github.e1turin.repository.UserRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,5 +13,9 @@ class UserService(private val userRepository: UserRepository) {
 
     fun findByEmail(email: String): User? {
         return userRepository.findByEmail(email)
+    }
+
+    fun getById(id: Long): User? {
+        return userRepository.findByIdOrNull(id)
     }
 }
