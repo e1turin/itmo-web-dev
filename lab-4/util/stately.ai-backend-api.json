@@ -1,0 +1,68 @@
+{
+  "id": "back-api",
+  "description": "Схема состояний пользователя",
+  "initial": "init",
+  "states": {
+    "init": {
+      "on": {
+        "/api/register": [
+          {
+            "target": "new",
+            "cond": "new email"
+          },
+          {
+            "target": "init",
+            "cond": "used email",
+            "internal": false
+          }
+        ],
+        "/api/token/valid": [
+          {
+            "target": "auth",
+            "cond": "valid token"
+          },
+          {
+            "target": "unauth",
+            "cond": "invalid token"
+          }
+        ]
+      }
+    },
+    "new": {
+      "always": [
+        {
+          "target": "auth",
+          "cond": "has tocken"
+        },
+        {
+          "target": "unauth",
+          "cond": "no token"
+        }
+      ]
+    },
+    "logged in": {
+      "on": {
+        "/api/logout": {
+          "target": "unauth"
+        }
+      }
+    },
+    "auth": {
+      "on": {
+        "/api/login": {
+          "target": "logged in"
+        },
+        "~token~": {
+          "target": "unauth"
+        }
+      }
+    },
+    "unauth": {
+      "on": {
+        "/api/token/gen": {
+          "target": "auth"
+        }
+      }
+    }
+  }
+}
