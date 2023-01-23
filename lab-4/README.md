@@ -15,6 +15,7 @@
     > [How to write React hooks](https://youtu.be/KJP1E-Y-xyo), 
     > [How to build your own React (article)](https://pomb.us/build-your-own-react/)
 - [ ] Взаимодействие между уровнями back-end и front-end должно быть организовано посредством _REST API_.
+  - > Для тестирования CORS можно использовать POSTMAN с заголовками `Access-Control-Request-Method` и `Origin`
 
 > Настроил проект с подпроектами в gradle. Скрипт `util/create-db-in-docker.sh` позволяет создать базу данных в докере с
 > нужными параметрами (согласно статье на хабре)

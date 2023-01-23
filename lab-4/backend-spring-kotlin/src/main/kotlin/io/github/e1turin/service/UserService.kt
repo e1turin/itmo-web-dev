@@ -12,10 +12,18 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun findByEmail(email: String): User? {
-        return userRepository.findByEmail(email)
+        return try {
+            userRepository.findByEmail(email)
+        } catch (e: Exception) {
+            null
+        }
     }
 
     fun getById(id: Long): User? {
         return userRepository.findByIdOrNull(id)
+    }
+
+    fun existsByEmail(email: String): Boolean {
+        return userRepository.existsByEmail(email)
     }
 }

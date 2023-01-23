@@ -1,4 +1,5 @@
 package io.github.e1turin.dto
 
-@JvmInline
-value class Message(val message: String)
+data class Message(val message: String)
+
+fun message(text: String) = Message(text)

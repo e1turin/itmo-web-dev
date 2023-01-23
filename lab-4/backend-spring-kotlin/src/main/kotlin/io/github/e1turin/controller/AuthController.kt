@@ -5,9 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTCreationException
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.sun.net.httpserver.Authenticator.Success
 import io.github.e1turin.dto.*
-import io.github.e1turin.dto.Message
 import io.github.e1turin.model.User
 import io.github.e1turin.service.UserService
 import jakarta.servlet.http.Cookie
@@ -41,7 +39,7 @@ class AuthController(private val userService: UserService) {
         }
 
         //TODO: check if already exists
-        if(userService.existsByEmail(body.email!!)){
+        if (userService.existsByEmail(body.email!!)) {
             return ResponseEntity.badRequest().body(
                 error("User with such email already exists")
             )
@@ -53,7 +51,19 @@ class AuthController(private val userService: UserService) {
             password = body.password!!
         }
 
-        return ResponseEntity.ok(message("Success"))
+        return try {
+            userService.save(user)
+
+            ResponseEntity.ok(message("Success"))
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(
+                error(
+                    error = "An error occurred",
+                    details = mapOf("error" to (e.message ?: ""))
+                )
+            )
+        }
+
     }
 
     @PostMapping("login")
@@ -84,7 +94,7 @@ class AuthController(private val userService: UserService) {
 
         response.addCookie(cookie)
 
-        return ResponseEntity.ok(Message("Success"))
+        return ResponseEntity.ok(message("Success"))
     }
 
     //TODO: Is it necessary end point?
@@ -114,6 +124,6 @@ class AuthController(private val userService: UserService) {
 
         response.addCookie(cookie)
 
-        return ResponseEntity.ok(Message("Success"))
+        return ResponseEntity.ok(message("Success"))
     }
 }

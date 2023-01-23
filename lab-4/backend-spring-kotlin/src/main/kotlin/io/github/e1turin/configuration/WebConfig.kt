@@ -1,4 +1,4 @@
-package io.github.e1turin
+package io.github.e1turin.configuration
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
@@ -10,8 +10,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:8080")
+        //TODO: different config
+        registry.addMapping("/api/**")
+            //.allowedOriginPatterns("*")
+            .allowedOrigins(
+                "http://keklol.idk",
+                "http://localhost",
+            )
             .allowCredentials(true)
     }
 }
