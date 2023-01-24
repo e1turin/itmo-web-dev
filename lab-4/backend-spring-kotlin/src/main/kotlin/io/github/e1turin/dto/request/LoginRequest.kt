@@ -1,4 +1,4 @@
-package io.github.e1turin.dto
+package io.github.e1turin.dto.request
 
 import jakarta.validation.constraints.NotBlank
 

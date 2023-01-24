@@ -20,7 +20,6 @@
 > Настроил проект с подпроектами в gradle. Скрипт `util/create-db-in-docker.sh` позволяет создать базу данных в докере с
 > нужными параметрами (согласно статье на хабре)
 
-> [dancancro/great-big-example-application](https://github.com/dancancro/great-big-example-application) (Spring[java+kotlin] + Angular)
 
 ## Приложение по-прежнему должно включать в себя 2 страницы - стартовую и основную страницу приложения. Обе страницы приложения должны быть адаптированы для отображения в 3 режимах:
 
@@ -35,9 +34,10 @@
   отдельной таблице БД (пароль должен храниться в виде хэш-суммы). Доступ неавторизованных пользователей к основной
   странице приложения должен быть запрещён.
   - > Библиотеки для jwt https://jwt.io/libraries
-    >   - в Туторе: [jwtk/jjwt](https://github.com/jwtk/jjwt)
-    >   - [IDunion/SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin) (kotlinx.serialization)
-    >   - [auth0/java-jwt](https://github.com/auth0/java-jwt)
+    > - в Туторе: [jwtk/jjwt](https://github.com/jwtk/jjwt)
+    > - [IDunion/SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin) (kotlinx.serialization)
+    > - [auth0/java-jwt](https://github.com/auth0/java-jwt)
+  - > [spring-security-architecture](https://spring.io/guides/topicals/spring-security-architecture)
 
 ## __Основная страница__ приложения должна содержать следующие элементы:
 
@@ -93,3 +93,5 @@
 > - [ ] Иф на ex.getCause
 
 ![areas](areas.png)
+
+> [dancancro/great-big-example-application](https://github.com/dancancro/great-big-example-application) (Spring[java+kotlin] + Angular)

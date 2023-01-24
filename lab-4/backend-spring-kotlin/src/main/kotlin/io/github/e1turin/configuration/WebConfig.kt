@@ -12,7 +12,6 @@ class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         //TODO: different config
         registry.addMapping("/api/**")
-            //.allowedOriginPatterns("*")
             .allowedOrigins(
                 "http://keklol.idk",
                 "http://localhost",

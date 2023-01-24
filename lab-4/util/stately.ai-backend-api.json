@@ -7,11 +7,11 @@
       "on": {
         "POST /api/auth/tokens/validate": [
           {
-            "target": "authtorized",
+            "target": "authenticated",
             "cond": "valid token"
           },
           {
-            "target": "unauthtorized",
+            "target": "unauthenticated",
             "cond": "invalid token"
           }
         ]
@@ -20,19 +20,19 @@
     "new": {
       "always": [
         {
-          "target": "authtorized",
+          "target": "authenticated",
           "cond": "has tocken"
         },
         {
-          "target": "unauthtorized",
+          "target": "unauthenticated",
           "cond": "no token"
         }
       ]
     },
-    "authtorized": {
+    "authenticated": {
       "always": [
         {
-          "target": "unauthtorized",
+          "target": "unauthenticated",
           "cond": "token expires"
         },
         {
@@ -41,7 +41,7 @@
         }
       ]
     },
-    "unauthtorized": {
+    "unauthenticated": {
       "always": {
         "target": "[LOGIN PAGE]",
         "cond": "GET /login"
@@ -53,33 +53,33 @@
             "cond": "new email"
           },
           {
-            "target": "unauthtorized",
+            "target": "unauthenticated",
             "cond": "used email",
             "internal": false
           }
         ],
         "POST /api/auth/tokens/create": {
-          "target": "authtorized"
+          "target": "authenticated"
         }
       }
     },
     "[MAIN PAGE]": {
       "always": {
-        "target": "unauthtorized",
+        "target": "unauthenticated",
         "cond": "DELETE /api/auth/delete"
       },
       "on": {
-        "POST /points/append": {
+        "POST /points/add": {
           "target": "[MAIN PAGE]",
           "internal": false
         },
-        "DELETE /points/truncate": {},
-        "GET /points/?page": {}
+        "DELETE /points/delete": {},
+        "GET /points/all?page": {}
       }
     },
     "[LOGIN PAGE]": {
       "always": {
-        "target": "authtorized",
+        "target": "authenticated",
         "cond": "POST /api/auth/tokens/create"
       }
     }

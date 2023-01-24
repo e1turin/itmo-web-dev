@@ -1,6 +1,10 @@
 package io.github.e1turin.controller
 
 import io.github.e1turin.dto.*
+import io.github.e1turin.dto.inline.Jwt
+import io.github.e1turin.dto.request.LoginRequest
+import io.github.e1turin.dto.response.errorResponse
+import io.github.e1turin.dto.response.message
 import io.github.e1turin.service.AuthService
 import io.github.e1turin.service.UserService
 import jakarta.servlet.http.Cookie
@@ -20,12 +24,12 @@ class AuthController(private val userService: UserService, private val authServi
      * Token check method
      */
     @PostMapping("tokens/validate")
-    fun validateToken(@CookieValue("jwt") token: String?): ResponseEntity<Any>{
+    fun validateToken(@CookieValue("jwt") token: String?): ResponseEntity<Any> {
         //TODO @Valid
-        return if (token != null && authService.validateJwt(Jwt(token))){
+        return if (token != null && authService.validateJwt(Jwt(token))) {
             ResponseEntity.ok("Token is valid")
         } else {
-            ResponseEntity.status(401).body(error("Invalid token"))
+            ResponseEntity.status(401).body(errorResponse("Invalid token"))
         }
     }
 
@@ -43,25 +47,28 @@ class AuthController(private val userService: UserService, private val authServi
 
         if (problems.isNotEmpty()) {
             return ResponseEntity.badRequest().body(
-                error("Invalid payload", problems.toMap())
+                errorResponse("Invalid payload", problems.toMap())
             )
         }
 
         val user = userService.findByEmail(body.email!!) ?: run {
-            return ResponseEntity.badRequest().body(error("User not found"))
+            return ResponseEntity.badRequest().body(errorResponse("User not found"))
         }
 
         if (!user.comparePassword(body.password!!)) {
-            return ResponseEntity.badRequest().body(error("Invalid password"))
+            return ResponseEntity.badRequest().body(errorResponse("Invalid password"))
         }
 
         val jwt = authService.createJwtToken(user) ?: run {
             return ResponseEntity.badRequest().body(
-                error("Token was not created")
+                errorResponse("Token was not created")
             )
         }
 
-        val cookie = Cookie("jwt", jwt.token).apply { isHttpOnly = true }
+        val cookie = Cookie("jwt", jwt.token).apply {
+            isHttpOnly = true
+            path = "/"
+        }
 
         response.addCookie(cookie)
 
@@ -87,13 +94,15 @@ class AuthController(private val userService: UserService, private val authServi
     @GetMapping("users") //TODO: Is it necessary end point?
     @CrossOrigin("localhost")
     fun user(@CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
-        jwt ?: run { return ResponseEntity.status(401).body(error("Unauthenticated")) }
+        jwt ?: run {
+            return ResponseEntity.status(401).body(io.github.e1turin.dto.response.errorResponse("Unauthenticated"))
+        }
 
         //TODO: check current user (issuer in jwt)
 
         val decodedJwt = authService.decodeJwt(Jwt(jwt)) ?: run {
             return ResponseEntity.status(401).body(
-                error("Token was not correct")
+                io.github.e1turin.dto.response.errorResponse("Token was not correct")
             )
         }
 

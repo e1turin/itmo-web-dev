@@ -1,10 +1,10 @@
-package io.github.e1turin.dto
+package io.github.e1turin.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
 
 //TODO: DSL (problem with kotlin exception-Error class!!!)
-data class Error(
+data class ErrorResponse(
     val error: String,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -14,11 +14,11 @@ data class Error(
 /**
  * Prepares pair for json response
  */
-fun error(error: String) = Error(error)
+fun errorResponse(error: String) = ErrorResponse(error)
 
 /**
  * Prepares json object of error and it's details for json response
  */
-fun error(error: String, details: Map<String, String>) = Error(error, details)
+fun errorResponse(error: String, details: Map<String, String>) = ErrorResponse(error, details)
 
 

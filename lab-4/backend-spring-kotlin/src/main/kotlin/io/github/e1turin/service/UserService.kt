@@ -1,17 +1,17 @@
 package io.github.e1turin.service
 
-import io.github.e1turin.model.User
+import io.github.e1turin.model.dao.UserEntity
 import io.github.e1turin.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userRepository: UserRepository) {
-    fun save(user: User): User {
+    fun save(user: UserEntity): UserEntity {
         return userRepository.save(user)
     }
 
-    fun findByEmail(email: String): User? {
+    fun findByEmail(email: String): UserEntity? {
         return try {
             userRepository.findByEmail(email)
         } catch (e: Exception) {
@@ -19,7 +19,7 @@ class UserService(private val userRepository: UserRepository) {
         }
     }
 
-    fun getById(id: Long): User? {
+    fun getById(id: Long): UserEntity? {
         return userRepository.findByIdOrNull(id)
     }
 

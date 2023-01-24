@@ -1,4 +1,4 @@
-package io.github.e1turin.model
+package io.github.e1turin.model.dao
 
 import jakarta.persistence.*
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Entity
 @Table(name = "user_account")
-class User {
+class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,11 +20,15 @@ class User {
 
     @Column
     var password: String = ""
-        get() = field
         set(value) {
             val passwordEncoder = BCryptPasswordEncoder()
             field = passwordEncoder.encode(value)
         }
+
+    @OneToMany(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, mappedBy = "user")
+    var attempts: List<UserAttemptEntity> = mutableListOf()
+        get() = attempts.toList()
+
 
     fun comparePassword(rawPassword: String): Boolean {
         return BCryptPasswordEncoder().matches(rawPassword, this.password)
