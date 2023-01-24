@@ -1,8 +1,15 @@
 package io.github.e1turin.dto
 
+import com.fasterxml.jackson.annotation.JsonInclude
+
 
 //TODO: DSL (problem with kotlin exception-Error class!!!)
-data class Error(val error: String, val details: Map<String, String>? = null)
+data class Error(
+    val error: String,
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    val details: Map<String, String>? = null
+)
 
 /**
  * Prepares pair for json response

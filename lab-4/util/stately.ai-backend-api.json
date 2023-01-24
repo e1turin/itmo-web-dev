@@ -1,28 +1,17 @@
 {
-  "id": "back-api",
+  "id": "user-api",
   "description": "Схема состояний пользователя",
-  "initial": "init",
+  "initial": "initial",
   "states": {
-    "init": {
+    "initial": {
       "on": {
-        "/api/register": [
+        "POST /api/auth/tokens/validate": [
           {
-            "target": "new",
-            "cond": "new email"
-          },
-          {
-            "target": "init",
-            "cond": "used email",
-            "internal": false
-          }
-        ],
-        "/api/token/valid": [
-          {
-            "target": "auth",
+            "target": "authtorized",
             "cond": "valid token"
           },
           {
-            "target": "unauth",
+            "target": "unauthtorized",
             "cond": "invalid token"
           }
         ]
@@ -31,37 +20,67 @@
     "new": {
       "always": [
         {
-          "target": "auth",
+          "target": "authtorized",
           "cond": "has tocken"
         },
         {
-          "target": "unauth",
+          "target": "unauthtorized",
           "cond": "no token"
         }
       ]
     },
-    "logged in": {
-      "on": {
-        "/api/logout": {
-          "target": "unauth"
-        }
-      }
-    },
-    "auth": {
-      "on": {
-        "/api/login": {
-          "target": "logged in"
+    "authtorized": {
+      "always": [
+        {
+          "target": "unauthtorized",
+          "cond": "token expires"
         },
-        "~token~": {
-          "target": "unauth"
+        {
+          "target": "[MAIN PAGE]",
+          "cond": "GET /main"
+        }
+      ]
+    },
+    "unauthtorized": {
+      "always": {
+        "target": "[LOGIN PAGE]",
+        "cond": "GET /login"
+      },
+      "on": {
+        "PUT /api/users/create": [
+          {
+            "target": "new",
+            "cond": "new email"
+          },
+          {
+            "target": "unauthtorized",
+            "cond": "used email",
+            "internal": false
+          }
+        ],
+        "POST /api/auth/tokens/create": {
+          "target": "authtorized"
         }
       }
     },
-    "unauth": {
+    "[MAIN PAGE]": {
+      "always": {
+        "target": "unauthtorized",
+        "cond": "DELETE /api/auth/delete"
+      },
       "on": {
-        "/api/token/gen": {
-          "target": "auth"
-        }
+        "POST /points/append": {
+          "target": "[MAIN PAGE]",
+          "internal": false
+        },
+        "DELETE /points/truncate": {},
+        "GET /points/?page": {}
+      }
+    },
+    "[LOGIN PAGE]": {
+      "always": {
+        "target": "authtorized",
+        "cond": "POST /api/auth/tokens/create"
       }
     }
   }
