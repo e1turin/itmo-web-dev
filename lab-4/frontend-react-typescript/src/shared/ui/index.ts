@@ -1,0 +1,11 @@
+export * from "./button";
+export * from "./card";
+export * from "./form";
+export * from "./input";
+export * from "./input-number";
+export * from "./space";
+export * from "./spin";
+export * from "./layout";
+export * as Icon from "./icons";
+export { Typography, Divider } from "antd";
+export * from "antd";
