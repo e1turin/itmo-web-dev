@@ -6,10 +6,14 @@ import { Space } from "shared/ui";
 export const MainPage = () => {
   return (
     <PageTemplate>
-      <Space direction={"vertical"}>
+      <Space direction={"horizontal"} wrap>
         {/* <Space direction={"horizontal"}> */}
         <SelectByGraph />
-        <SelectByForm />
+        <SelectByForm
+          x={{ min: 0, max: 0 }}
+          y={{ min: 0, max: 0 }}
+          r={{ min: 0, max: 0 }}
+        />
         {/* </Space> */}
         <ListOfPoints />
       </Space>

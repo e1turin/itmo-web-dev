@@ -1,7 +1,13 @@
-import { Button, Form, Icon, Input, InputNumber } from "shared/ui";
+import { Button, Form, Icon, InputNumber, Space } from "shared/ui";
 import { onFinish } from "./model";
 
-export const SelectByForm = () => {
+type SelectByFormProps = {
+  x: { min: number; max: number };
+  y: { min: number; max: number };
+  r: { min: number; max: number };
+};
+
+export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
   return (
     <>
       <Form
@@ -15,18 +21,26 @@ export const SelectByForm = () => {
           rules={[{ required: true, message: "Input X coordinate!" }]}
         >
           <InputNumber
-            prefix={<Icon.UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            prefix={"X"}
+            placeholder={`${x.min}≤ x ≤${x.max}`}
+            style={{ width: "100%" }}
+            min={x.min}
+            max={x.max}
+            step={0.01}
           />
         </Form.Item>
 
         <Form.Item
-          name="z"
+          name="y"
           rules={[{ required: true, message: "Input Y coordinate!" }]}
         >
           <InputNumber
-            prefix={<Icon.UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            prefix={"Y"}
+            placeholder={`${y.min}≤ y ≤${y.max}`}
+            style={{ width: "100%" }}
+            min={y.min}
+            max={y.max}
+            step={0.01}
           />
         </Form.Item>
 
@@ -34,10 +48,26 @@ export const SelectByForm = () => {
           name="y"
           rules={[{ required: true, message: "Input R parameter!" }]}
         >
-          <InputNumber
-            prefix={<Icon.UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-          />
+          <Space.Compact block>
+            <InputNumber
+              prefix={"R"}
+              placeholder={`${r.min}≤ r ≤${r.max}`}
+              style={{ width: "100%" }}
+              min={r.min}
+              max={r.max}
+              step={1}
+              addonBefore={
+                <Button type="primary">
+                  <Icon.MinusOutlined />
+                </Button>
+              }
+              addonAfter={
+                <Button type="primary" danger>
+                  <Icon.PlusOutlined />
+                </Button>
+              }
+            />
+          </Space.Compact>
         </Form.Item>
 
         <Form.Item>

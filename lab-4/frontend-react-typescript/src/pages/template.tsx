@@ -1,14 +1,16 @@
 import { PropsWithChildren } from "react";
-import { Layout } from "shared/ui";
+import { Layout, Typography } from "shared/ui";
 import { Header } from "widgets/header";
 
-export const PageTemplate = (props: PropsWithChildren) => {
+type PageTemplateProps = PropsWithChildren & {
+  header?: React.ReactNode;
+};
+
+export const PageTemplate = ({ header, children }: PageTemplateProps) => {
   return (
     <Layout>
-      <Layout.Header>
-        <Header />
-      </Layout.Header>
-      <Layout.Content>{props.children}</Layout.Content>
+      <Layout.Header>{/* <Header /> */ header && ""}</Layout.Header>
+      <Layout.Content>{children}</Layout.Content>
     </Layout>
   );
 };
