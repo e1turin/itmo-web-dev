@@ -45,7 +45,7 @@ export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
         </Form.Item>
 
         <Form.Item
-          name="y"
+          name="r"
           rules={[{ required: true, message: "Input R parameter!" }]}
         >
           <Space.Compact block>
