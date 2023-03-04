@@ -1,4 +1,4 @@
 import { App } from "./app";
-import { withProviders } from "./providers";
+import { WithProviders } from "./providers";
 
-export default withProviders(App);
+export default WithProviders(App);

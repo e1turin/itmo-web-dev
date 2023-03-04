@@ -1,7 +1,11 @@
-import { Graph } from "entities/graph";
-import { ListOfPoints, SelectByForm, SelectByGraph } from "features/points";
+import { Points } from "features/index.";
 import { PageTemplate } from "pages/template";
 import { Space } from "shared/ui";
+
+const { FormSelector, GraphSelector, ListPresenter } = Points;
+const { SelectByForm } = FormSelector;
+const { SelectByGraph } = GraphSelector;
+const { ListOfPoints } = ListPresenter;
 
 export const MainPage = () => {
   return (

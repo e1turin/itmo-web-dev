@@ -1,6 +1,6 @@
-export type UserCredentials = {
-  token: string;
+export type UserCredential = {
+  token?: string;
   username: string;
-  email: string;
-  /* TODO */
+  email?: string;
+  password?: string /* TODO */;
 };
