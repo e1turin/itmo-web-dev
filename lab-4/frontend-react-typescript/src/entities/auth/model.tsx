@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useLocalStorage } from "shared/util";
 import { AuthContextType } from "./context/types";
+import { UserCredential } from "./types";
 
 /**
  * Hook to setup AuthContext. It is used for managing authentication of user.
@@ -10,7 +11,6 @@ import { AuthContextType } from "./context/types";
  */
 export const useAuth = <U,>(): AuthContextType<U> => {
   //TODO: use specified `key`
-  // store 'null' as initial value
   const [viewer, setViewer] = useLocalStorage<U | null>("user", null);
   const isAuth = !!viewer;
 
@@ -28,7 +28,7 @@ export const useAuth = <U,>(): AuthContextType<U> => {
   const signUp = async (data: U) => {
     try {
       let authresult = await axios.post("/api/auth/signup", data);
-      let userObj = { ...authresult.data?.createdUser }; //FIXME: auth result property `creactedUser`
+      let userObj = { ...authresult.data?.createdUser }; //FIXME: auth result property `createdUser`
       userObj.token = authresult.data?.encodedToken;
       setViewer(userObj);
     } catch (err) {

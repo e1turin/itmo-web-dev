@@ -1,14 +1,11 @@
-import {
-  AuthContext,
-  AuthContextType,
-  useAuth,
-  UserCredential,
-} from "entities/auth";
-import { PropsWithChildren } from "react";
+import { AuthContext, useAuth, UserCredential } from "entities/auth";
+import { PropsWithChildren, useState } from "react";
 
-export const WithAuth = ({ children }: PropsWithChildren) => {
-  const auth: AuthContextType<UserCredential> = useAuth<UserCredential>();
+export const WithAuth = (component: () => React.ReactNode) => () => {
+  const auth = useAuth<UserCredential>();
 
   //we use `useAuth` hook to setup AuthContext: it is subscribed for auth changes
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={auth}>{component()}</AuthContext.Provider>
+  );
 };

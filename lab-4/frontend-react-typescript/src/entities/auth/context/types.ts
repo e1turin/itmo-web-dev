@@ -10,11 +10,3 @@ export type AuthContextType<U> = {
   signUp: (data: U) => void;
   signOut: () => void;
 };
-
-export const DefaultAuthContextType: AuthContextType<UserCredential> = {
-  isAuth: false,
-  viewer: null,
-  signIn: (data: UserCredential) => {},
-  signUp: (data: UserCredential) => {},
-  signOut: () => {},
-};

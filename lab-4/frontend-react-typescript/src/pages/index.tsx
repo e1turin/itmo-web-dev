@@ -1,12 +1,12 @@
 import { Routes, Route, useLocation, Navigate } from "react-router";
-import { RequireAuth, useAuthContext } from "entities/auth";
+import { AuthContextType, RequireAuth, useAuthContext } from "entities/auth";
 import { LoginPage } from "./auth/login";
 import { RegisterPage } from "./auth/register";
 import { Main } from "./main";
 
 export const Routing = () => {
   //we use `useAuthContext` hook to get value from setted up AuthContext
-  const { isAuth } = useAuthContext();
+  const { isAuth } = useAuthContext()!;
   const location = useLocation();
   const pathName = location.state?.from || "/";
 
