@@ -1,20 +1,22 @@
+import { useAuthContext } from "entities/auth";
 import { Button, Form, Icon } from "shared/ui";
-import { onFinish } from "./model";
 
 export const Logout = () => {
+  const { signOut } = useAuthContext();
   return (
-    <Form onFinish={onFinish}>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          icon={<Icon.LogoutOutlined />}
-          size={"middle"}
-        >
-          Logout
-        </Button>
-      </Form.Item>
-    </Form>
+    <Button
+      type="primary"
+      htmlType="submit"
+      icon={<Icon.LogoutOutlined />}
+      size={"middle"}
+      onClick={(e) => {
+        signOut().then((err) => {
+          console.error(err);
+        });
+      }}
+    >
+      Logout
+    </Button>
   );
 };
 

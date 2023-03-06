@@ -1,14 +1,28 @@
+import { useAuthContext } from "entities/auth";
+import { useState } from "react";
 import { Button, Checkbox, Form, Input } from "shared/ui";
 import { Icon } from "shared/ui";
-import { onFinish } from "./model";
+import { onFinish, onFinishFailed } from "./model";
 
 export const Register = () => {
+  const { signUp } = useAuthContext();
+  const [error, setError] = useState("");
   return (
     <Form
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={(values) => {
+        onFinish(values);
+        signUp(values).then((err) => {
+          if (!!err) {
+            setError(err.message);
+          }
+        });
+      }}
+      onFinishFailed={(values) => {
+        onFinishFailed(values);
+      }}
     >
       <Form.Item
         name="email"
@@ -41,9 +55,10 @@ export const Register = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          Register
         </Button>
       </Form.Item>
+      {!!error ? <Form.Item>{error}</Form.Item> : ""}
     </Form>
   );
 };

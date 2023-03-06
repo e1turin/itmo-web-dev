@@ -1,14 +1,23 @@
+import { useAuthContext } from "entities/auth";
+import { useState } from "react";
 import { Input, Form, Button, Checkbox } from "shared/ui";
 import { Icon } from "shared/ui";
 import { onFinish } from "./model";
 
 export const Login = () => {
+  const { signIn } = useAuthContext();
+  const [error, setError] = useState(null);
   return (
     <Form
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={(values) => {
+        onFinish(values);
+        signIn(values).then((err) => {
+          setError(err.message);
+        });
+      }}
     >
       <Form.Item
         name="username"
@@ -45,6 +54,7 @@ export const Login = () => {
         </Button>
         Or <a href="/register">register now!</a>
       </Form.Item>
+      {!!error ? <Form.Item>{error}</Form.Item> : ""}
     </Form>
   );
 };

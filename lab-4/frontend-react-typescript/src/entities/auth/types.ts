@@ -1,4 +1,7 @@
 export type UserCredential = {
-  token: string;
   username: string;
+} & Credential;
+
+export type Credential = {
+  token: string;
 };

@@ -6,7 +6,7 @@ import { UserCredential } from "../types";
 export type AuthContextType<U> = {
   isAuth: boolean;
   viewer: U | null;
-  signIn: (data: U) => void;
-  signUp: (data: U) => void;
-  signOut: () => void;
+  signIn: (data: U) => Promise<any | null>;
+  signUp: (data: U) => Promise<any | null>;
+  signOut: () => Promise<any | null>;
 };

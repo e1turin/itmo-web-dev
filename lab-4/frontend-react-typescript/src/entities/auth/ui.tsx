@@ -12,7 +12,7 @@ export const RequireAuth = ({ to }: RequireAuthProps) => {
   const location = useLocation();
 
   return isAuth ? (
-    <>children</>
+    <>{to}</>
   ) : (
     <Navigate to="/login" state={{ from: location.pathname }} /> //TODO: rafactor path in one place
   );
