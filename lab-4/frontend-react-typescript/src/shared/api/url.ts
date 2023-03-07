@@ -1,4 +1,4 @@
-export const apiUrl = {
+export default {
   createUser: "/api/users/create",
   authorize: "/api/auth/tokens/create",
   unauthorize: "/api/auth/delete",

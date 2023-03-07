@@ -1,3 +1,2 @@
-export * from "./types";
-export * from "./config";
-export { apiUrl as API } from "./config";
+export * as Type from "./types";
+export { default as API } from "./url";

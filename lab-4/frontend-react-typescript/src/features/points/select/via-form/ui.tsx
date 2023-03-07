@@ -1,20 +1,24 @@
+import { useState } from "react";
 import { Button, Form, Icon, InputNumber, Space } from "shared/ui";
-import { onFinish } from "./model";
+import { onFormSubmit } from "./model";
 
-type SelectByFormProps = {
+export type FormProps = {
   x: { min: number; max: number };
   y: { min: number; max: number };
   r: { min: number; max: number };
 };
 
-export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
+export const SelectViaForm = ({ x, y, r }: FormProps) => {
+  const [result, setResult] = useState<boolean | null>(null);
   return (
     <>
       <Form
         name="x"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          setResult(onFormSubmit(values));
+        }}
       >
         <Form.Item
           name="x"
@@ -27,6 +31,9 @@ export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
             min={x.min}
             max={x.max}
             step={0.01}
+            onChange={(value: number | null) => {
+              setResult(null);
+            }}
           />
         </Form.Item>
 
@@ -41,6 +48,9 @@ export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
             min={y.min}
             max={y.max}
             step={0.01}
+            onChange={(value: number | null) => {
+              setResult(null);
+            }}
           />
         </Form.Item>
 
@@ -66,6 +76,9 @@ export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
                   <Icon.PlusOutlined />
                 </Button>
               }
+              onChange={(value: number | null) => {
+                setResult(null);
+              }}
             />
           </Space.Compact>
         </Form.Item>
@@ -74,6 +87,11 @@ export const SelectByForm = ({ x, y, r }: SelectByFormProps) => {
           <Button type="primary" htmlType="submit">
             Submit point
           </Button>
+          {result !== null && result ? (
+            <Icon.CheckCircleOutlined color="green" />
+          ) : (
+            <Icon.ClockCircleOutlined color="red" />
+          )}
         </Form.Item>
       </Form>
     </>

@@ -54,7 +54,7 @@ export const Login = () => {
         </Button>
         Or <a href="/register">register now!</a>
       </Form.Item>
-      {!!error ? <Form.Item>{error}</Form.Item> : ""}
+      {!!error && <Form.Item>{error}</Form.Item>}
     </Form>
   );
 };

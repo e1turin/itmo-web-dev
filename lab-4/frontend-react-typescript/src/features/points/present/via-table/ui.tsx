@@ -1,5 +1,5 @@
 import { Table } from "shared/ui";
 
-export const ListOfPoints = () => {
+export const PresentViaTable = () => {
   return <Table>TODO</Table>; //TODO
 };

@@ -58,7 +58,7 @@ export const Register = () => {
           Register
         </Button>
       </Form.Item>
-      {!!error ? <Form.Item>{error}</Form.Item> : ""}
+      {!!error && <Form.Item>{error}</Form.Item>}
     </Form>
   );
 };

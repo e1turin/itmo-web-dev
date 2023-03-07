@@ -1,7 +1,6 @@
 import { Graph } from "entities/graph";
-import styles from "./styles.module.scss";
 
-export const SelectByGraph = () => {
+export const SelectViaGraph = () => {
   return (
     <>
       <Graph />
