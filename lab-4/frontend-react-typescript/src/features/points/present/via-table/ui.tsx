@@ -1,5 +1,6 @@
+import { PointsTable } from "entities/point/ui";
 import { Table } from "shared/ui";
 
 export const PresentViaTable = () => {
-  return <Table>TODO</Table>; //TODO
+  return <PointsTable />;
 };

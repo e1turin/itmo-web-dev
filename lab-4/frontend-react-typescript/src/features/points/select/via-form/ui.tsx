@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button, Form, Icon, InputNumber, Space } from "shared/ui";
 import { onFormSubmit } from "./model";
 
@@ -10,15 +11,14 @@ export type FormProps = {
 
 export const SelectViaForm = ({ x, y, r }: FormProps) => {
   const [result, setResult] = useState<boolean | null>(null);
+  const dispatch = useDispatch<any>();
   return (
     <>
       <Form
         name="x"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={(values) => {
-          setResult(onFormSubmit(values));
-        }}
+        onFinish={onFormSubmit(dispatch)}
       >
         <Form.Item
           name="x"

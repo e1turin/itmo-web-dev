@@ -19,5 +19,3 @@ export const Logout = () => {
     </Button>
   );
 };
-
-export {};

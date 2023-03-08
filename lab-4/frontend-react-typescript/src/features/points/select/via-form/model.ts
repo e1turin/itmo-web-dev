@@ -1,12 +1,13 @@
 import axios from "axios";
+import { addNewPoint } from "entities/point/model";
 import { Point } from "shared/api/types";
 
-export const onFormSubmit = (values: any) => {
+export const onFormSubmit = (dispatcher: any) => (values: Point) => {
   console.log("Success: ", values);
-  return submitPoint(values);
+  dispatcher(addNewPoint(values));
 };
 
-const submitPoint = (point: Point): boolean => {
+/* const submitPoint = (point: Point): boolean => {
   let isOk = false;
   try {
     axios
@@ -25,5 +26,6 @@ const submitPoint = (point: Point): boolean => {
 };
 
 const savePointLocally = (point: Point) => {
-  /* redux noises */
+  // redux noises 
 };
+ */

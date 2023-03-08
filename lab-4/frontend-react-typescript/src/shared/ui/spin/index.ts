@@ -1,1 +1,0 @@
-export { Spin } from 'antd';

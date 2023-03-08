@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { Spin } from "shared/ui/spin";
+import { Spin } from "shared/ui";
 
 export const WithRouter = (component: () => React.ReactNode) => () =>
   (

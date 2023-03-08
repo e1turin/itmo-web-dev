@@ -8,4 +8,5 @@ export type Point = {
   x: number;
   y: number;
   r: number;
+  runningTime: number;
 };
