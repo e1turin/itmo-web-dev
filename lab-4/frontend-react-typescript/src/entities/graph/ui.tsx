@@ -1,28 +1,40 @@
-import { selectAllPoints } from "entities/point";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import draw from "./canvas";
-
+import { selectAllAttempts } from "entities/attempt";
+import { setupCanvasUtils } from "./model";
+import { Point } from "shared/api/types";
+/* 
 export type GraphProps = {
   draw: (ctx: any, points: any[]) => any;
-};
+}; 
+*/
 
-export const Graph = ({ draw }: GraphProps) => {
+export const Graph = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
-  const points = useSelector(selectAllPoints);
-  const pointStatus = useSelector((state: any) => state.points.status);
-  const error = useSelector((state: any) => state.points.error);
+  const attempts = useSelector(selectAllAttempts);
+  const currentR: Point["r"] = useSelector(
+    (state: any): Point["r"] => state.attempts.currentR
+  );
+  const attemptStatus = useSelector((state: any) => state.attempts.status);
 
   useEffect(() => {
-    if (pointStatus === "idle") {
+    if (attemptStatus === "idle") {
       const cnv = canvasRef.current;
-      draw(cnv, points);
+      const { draw_scene, on_click } = setupCanvasUtils(
+        currentR,
+        cnv,
+        attempts
+      );
+      draw_scene();
+      cnv.addEventListener("click", on_click);
     }
-  }, [draw, points]);
+  }, [currentR, attempts]);
 
   return (
-    <canvas ref={canvasRef} width={"600px"} height={"600px"}>
-      You need to enable canvas in browser!
-    </canvas>
+    <>
+      <canvas ref={canvasRef} width={"600px"} height={"600px"}>
+        You need to enable canvas in browser!
+      </canvas>
+    </>
   );
 };

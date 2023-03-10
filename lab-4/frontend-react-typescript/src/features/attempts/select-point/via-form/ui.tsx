@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Form, Icon, InputNumber, Space } from "shared/ui";
+import { defaultPoint, R_values } from "shared/api/types";
+import { Button, Form, Icon, InputNumber, Radio, Space } from "shared/ui";
 import { onFormSubmit } from "./model";
+import { Point } from "shared/api/types";
+import { selectR } from "entities/attempt";
 
 export type FormProps = {
   x: { min: number; max: number };
@@ -12,12 +15,18 @@ export type FormProps = {
 export const SelectViaForm = ({ x, y, r }: FormProps) => {
   const [result, setResult] = useState<boolean | null>(null);
   const dispatch = useDispatch<any>();
+
+  const onFormValuesChange = ({ r }: Point) => {
+    dispatch(selectR(r));
+  };
+
   return (
     <>
       <Form
         name="x"
         className="login-form"
-        initialValues={{ remember: true }}
+        initialValues={defaultPoint}
+        onValuesChange={onFormValuesChange}
         onFinish={onFormSubmit(dispatch)}
       >
         <Form.Item
@@ -58,29 +67,11 @@ export const SelectViaForm = ({ x, y, r }: FormProps) => {
           name="r"
           rules={[{ required: true, message: "Input R parameter!" }]}
         >
-          <Space.Compact block>
-            <InputNumber
-              prefix={"R"}
-              placeholder={`${r.min}≤ r ≤${r.max}`}
-              style={{ width: "100%" }}
-              min={r.min}
-              max={r.max}
-              step={1}
-              addonBefore={
-                <Button type="primary">
-                  <Icon.MinusOutlined />
-                </Button>
-              }
-              addonAfter={
-                <Button type="primary" danger>
-                  <Icon.PlusOutlined />
-                </Button>
-              }
-              onChange={(value: number | null) => {
-                setResult(null);
-              }}
-            />
-          </Space.Compact>
+          <Radio.Group>
+            {R_values.map((value: number) => {
+              return <Radio.Button value={value}>{value}</Radio.Button>;
+            })}
+          </Radio.Group>
         </Form.Item>
 
         <Form.Item>

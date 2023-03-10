@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API } from "shared/api";
-import { useLocalStorage } from "shared/util";
+import { useLocalStorage } from "shared/lib";
 import { AuthContextType } from "./context/types";
 import { Credential } from "./types";
 

@@ -1,10 +1,10 @@
 import axios from "axios";
-import { addNewPoint } from "entities/point/model";
+import { addNewAttempt } from "entities/attempt/model";
 import { Point } from "shared/api/types";
 
 export const onFormSubmit = (dispatcher: any) => (values: Point) => {
   console.log("Success: ", values);
-  dispatcher(addNewPoint(values));
+  dispatcher(addNewAttempt(values));
 };
 
 /* const submitPoint = (point: Point): boolean => {
