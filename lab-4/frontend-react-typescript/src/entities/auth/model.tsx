@@ -44,7 +44,8 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
 
   const signOut = async () => {
     try {
-      axios.post(API.unauthorize, viewer).then(() => {
+      axios.post(API.unauthorize, viewer).then((response) => {
+        console.log("[useAuth::signOut]", response.status);
         setViewer(null!);
       });
     } catch (err) {

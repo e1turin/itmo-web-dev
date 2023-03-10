@@ -1,5 +1,6 @@
 import { fetchAttempts } from "entities/attempt";
 import { Select, Present } from "features/attempts";
+import { Logout } from "features/auth/logout";
 import { PageTemplate } from "pages/template";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ export const MainPage = () => {
   } //else if (attemptStatus === "succeded")
 
   return (
-    <PageTemplate>
+    <PageTemplate header={<Logout />}>
       <Space direction={"horizontal"} wrap>
         {errorBlock}
         <Select.ViaGraph />
