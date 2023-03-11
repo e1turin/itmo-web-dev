@@ -1,20 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { client } from "shared/api";
-import type { Attempt, Point } from "shared/api/types";
+import { getToken } from "entities/auth/lib";
+import { api, client } from "shared/api";
+import type { Attempt, Point, UserCredential } from "shared/api/types";
 import { defaultPoint } from "shared/api/types";
 
 export const fetchAttempts = createAsyncThunk(
   "points/fetchPoints",
   async () => {
-    const response = await client.get("/points");
+    const response = await client.get(api.getAllAttempts, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
     return response.data;
   }
 );
 
 export const addNewAttempt = createAsyncThunk(
   "points/addNewPoint",
-  async (initialPoint: Point) => {
-    const response = await client.post("/points/add", initialPoint);
+  async (point: Point) => {
+    const response = await client.post(api.createAttempt, point, {
+      headers: {
+        Authorization: getToken(),
+      },
+    });
     return response.data;
   }
 );

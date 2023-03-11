@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from "react-router";
-import { AuthContextType, RequireAuth, useAuthContext } from "entities/auth";
+import { RequireAuth, useAuthContext } from "entities/auth";
 import { LoginPage } from "./auth/login";
 import { RegisterPage } from "./auth/register";
 import { Main } from "./main";
@@ -13,6 +13,8 @@ export const Routing = () => {
   return (
     <Routes>
       <Route path="/" element={<RequireAuth to={<Main />} />} />
+      <Route path="/main" element={<RequireAuth to={<Main />} />} />
+
       <Route
         path="/login"
         element={isAuth ? <Navigate to={pathName} /> : <LoginPage />}

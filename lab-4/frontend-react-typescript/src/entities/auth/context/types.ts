@@ -1,4 +1,4 @@
-import { UserCredential } from "../types";
+import { UserCredential } from "../../../shared/api/types/auth";
 
 /**
  * Generic type for authentication data (e.g. `UserCredential`) stored in context

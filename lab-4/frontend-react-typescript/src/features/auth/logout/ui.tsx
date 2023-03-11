@@ -1,5 +1,5 @@
 import { useAuthContext } from "entities/auth";
-import { Button, Form, Icon } from "shared/ui";
+import { Button, Icon } from "shared/ui";
 
 export const Logout = () => {
   const { signOut } = useAuthContext();

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-const getStorageValue = <T>(key: string, defaultValue: T): T => {
+export const getStorageValue = <T>(key: string, defaultValue: T): T => {
   const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : defaultValue;
+  return !!item ? JSON.parse(item) : defaultValue;
 };
 
 // export const useLocalStorage = <T = any>( //or import 'usehooks-ts'

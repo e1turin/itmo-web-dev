@@ -1,4 +1,5 @@
-import { AuthContext, useAuth, UserCredential } from "entities/auth";
+import { AuthContext, useAuth } from "entities/auth";
+import { UserCredential } from "shared/api/types";
 
 export const WithAuth = (component: () => React.ReactNode) => () => {
   // const auth = {

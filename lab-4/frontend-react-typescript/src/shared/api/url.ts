@@ -1,6 +1,10 @@
 export default {
+  getAuthUser: "/api/auth/users",
   createUser: "/api/users/create",
-  authorize: "/api/auth/tokens/create",
+  createToken: "/api/auth/tokens/create",
   unauthorize: "/api/auth/delete",
-  validate: "/api/auth/tokens/validate",
+  validateToken: "/api/auth/tokens/validate",
+  getAllAttempts: "/main/points/all",
+  createAttempt: "/main/points/create",
+  deleteAttempt: "/main/points/delete",
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { defaultPoint, R_values } from "shared/api/types";
-import { Button, Form, Icon, InputNumber, Radio, Space } from "shared/ui";
+import { Button, Form, Icon, InputNumber, Radio } from "shared/ui";
 import { onFormSubmit } from "./model";
 import { Point } from "shared/api/types";
 import { selectR } from "entities/attempt";

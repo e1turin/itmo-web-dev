@@ -34,12 +34,12 @@ export const Register = () => {
         />
       </Form.Item>
       <Form.Item
-        name="username"
+        name="name"
         rules={[{ required: true, message: "Please input your Username!" }]}
       >
         <Input
           prefix={<Icon.UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
+          placeholder="Name"
         />
       </Form.Item>
       <Form.Item

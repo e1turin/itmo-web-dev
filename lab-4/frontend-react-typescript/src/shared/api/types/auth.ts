@@ -1,7 +1,7 @@
 export type UserCredential = {
-  username: string;
+  name: string;
 } & Credential;
 
 export type Credential = {
-  token: string;
+  token?: string;
 };

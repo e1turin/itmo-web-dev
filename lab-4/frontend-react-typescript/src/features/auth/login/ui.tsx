@@ -15,17 +15,17 @@ export const Login = () => {
       onFinish={(values) => {
         onFinish(values);
         signIn(values).then((err) => {
-          setError(err.message);
+          setError(err?.message || "");
         });
       }}
     >
       <Form.Item
-        name="username"
+        name="email"
         rules={[{ required: true, message: "Please input your Username!" }]}
       >
         <Input
-          prefix={<Icon.UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
+          prefix={<Icon.MailOutlined className="site-form-item-icon" />}
+          placeholder="Email"
         />
       </Form.Item>
       <Form.Item

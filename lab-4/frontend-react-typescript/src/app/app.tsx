@@ -1,4 +1,4 @@
-import { Routing } from "pages";
+import { Routing } from "pages/routing";
 import "./index.scss";
 
 export const App = () => {

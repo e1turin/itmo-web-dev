@@ -1,25 +1,30 @@
-import axios, { AxiosResponse } from "axios";
-import { API } from "shared/api";
+import { api, client } from "shared/api";
 import { useLocalStorage } from "shared/lib";
 import { AuthContextType } from "./context/types";
-import { Credential } from "./types";
+import { Credential } from "shared/api/types/auth";
 
 /**
  * Hook is to setup AuthContext. It is used for managing authentication of user.
- * `viewer` stands for authorized user.
- * @type {U} Type is user credentials.
+ * `viewer` stands for authorized user. Type {U} is user credentials.
  * @returns Object inmplementing `IAuthContext`.
  */
 export const useAuth = <U extends Credential>(): AuthContextType<U> => {
+  // debugger;
   //TODO: use specified `key`
   const [viewer, setViewer] = useLocalStorage<U | null>("user", null);
-  const isAuth = !!viewer && validateViewer(viewer);
+  let isAuth = false;
+  validateViewer(viewer).then((res: boolean) => (isAuth = res)); //FIXME: make hook
 
+  /**
+   * Sign in hook
+   * @param data is User Credential type {U}
+   * @returns Promise<Error>
+   */
   const signIn = async (data: U) => {
     try {
-      let authresult = await axios.post(API.authorize, data); //TODO: correct paths and object fields
-      let userObj: U = { ...authresult.data?.user }; //FIXME: auth result property `foundUser`
-      console.log("[DEBUG] userObj: ", userObj);
+      let authresult = await client.post(api.createToken, data);
+      let userObj: U = { ...authresult.data?.user };
+      console.log("[useAuth:signIn] userObj= ", userObj);
       userObj.token = authresult.data?.token;
       setViewer(userObj);
       return null;
@@ -29,11 +34,16 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
     }
   };
 
+  /**
+   * Sign up hook
+   * @param data is User Credential type {U}
+   * @returns Pemise<Error>
+   */
   const signUp = async (data: U) => {
     try {
-      let authresult = await axios.post(API.createUser, data);
-      let userObj = { ...authresult.data?.user }; //FIXME: auth result property `createdUser`
-      // userObj.token = authresult.data?.token;
+      let authresult = await client.put(api.createUser, data);
+      let userObj: U = { ...authresult.data?.user };
+      console.log("[useAuth:signIn] userObj= ", userObj);
       setViewer(userObj);
       return null;
     } catch (err) {
@@ -44,7 +54,7 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
 
   const signOut = async () => {
     try {
-      axios.post(API.unauthorize, viewer).then((response) => {
+      client.post(api.unauthorize, viewer).then((response) => {
         console.log("[useAuth::signOut]", response.status);
         setViewer(null!);
       });
@@ -57,16 +67,22 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
 };
 
 //TODO: move logic to shared/api
-const validateViewer = <U,>(viewer: U): boolean => {
+const validateViewer = async <U extends Credential>(
+  viewer: U | null
+): Promise<boolean> => {
+  if (!!viewer) return false;
   try {
-    let result = false;
-    axios.post(API.validate, viewer).then((response) => {
-      console.log(`[DEBUG] viewer=${viewer} : ${response}`);
-      result = response.data?.isValid as boolean;
+    const resp = await client.post(api.validateToken, "", {
+      headers: {
+        Authorization: viewer!!.token,
+      },
     });
+    console.log("[validateViewer] response = ", resp);
+    // result = response.data?.isValid as boolean;
+    const result = resp.status < 300;
     return result;
   } catch (error) {
-    console.log(`[DEBUG] validation failed with error: ${error}`);
+    console.log("[validateViewer] validation failed with error=", error);
     return false;
   }
 };
