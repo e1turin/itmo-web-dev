@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
-import io.github.e1turin.dto.inline.Jwt
+import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.model.dao.UserEntity
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

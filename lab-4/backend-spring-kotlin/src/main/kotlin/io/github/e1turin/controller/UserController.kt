@@ -1,10 +1,14 @@
 package io.github.e1turin.controller
 
+import io.github.e1turin.dto.Email
+import io.github.e1turin.dto.User
+import io.github.e1turin.dto.Username
 import io.github.e1turin.dto.request.RegisterRequest
+import io.github.e1turin.dto.response.AuthResponse
 import io.github.e1turin.dto.response.errorResponse
-import io.github.e1turin.dto.response.message
 import io.github.e1turin.model.dao.UserEntity
 import io.github.e1turin.service.UserService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -46,11 +50,16 @@ class UserController(private val userService: UserService) {
 
         return try {
             userService.save(user)
-            /*
-             * `201 Created` is success status response code indicates
-             * that the request has succeeded and has led to the creation of a resource.
-             */
-            ResponseEntity.status(201).body(message("Success"))
+            ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                    AuthResponse(
+                        user = User(
+                            name = user.name,
+                            email = user.email
+                        ),
+                        token = null
+                    )
+                )
         } catch (e: Exception) { //TODO: I really want to show user the error message?
             ResponseEntity.badRequest().body(
                 errorResponse(

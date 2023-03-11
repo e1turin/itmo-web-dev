@@ -38,6 +38,9 @@
     > - [IDunion/SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin) (kotlinx.serialization)
     > - [auth0/java-jwt](https://github.com/auth0/java-jwt)
   - > [spring-security-architecture](https://spring.io/guides/topicals/spring-security-architecture)
+  - > Контроль доступа можно организовать с помощью фильтров
+    > - для jwt https://springframework.guru/using-filters-in-spring-web-applications/
+    > - и для конкретных урлов
 
 ## __Основная страница__ приложения должна содержать следующие элементы:
 

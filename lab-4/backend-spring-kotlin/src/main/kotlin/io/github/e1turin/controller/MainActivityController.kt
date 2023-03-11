@@ -1,7 +1,7 @@
 package io.github.e1turin.controller
 
 import com.auth0.jwt.interfaces.DecodedJWT
-import io.github.e1turin.dto.inline.Jwt
+import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.dto.request.PointRequest
 import io.github.e1turin.dto.response.errorResponse
 import io.github.e1turin.model.dao.UserAttemptEntity
@@ -10,6 +10,8 @@ import io.github.e1turin.service.MainActivityService
 import io.github.e1turin.service.UserService
 import io.github.e1turin.util.toPoint
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -23,9 +25,9 @@ class MainActivityController(
 ) {
     private val logger = LoggerFactory.getLogger(MainActivityController::class.java)
 
-    @PostMapping("add")
+    @PostMapping("create")
     fun addUserAttempt(
-        @CookieValue("jwt") token: String?,
+        @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?,
         @RequestBody body: PointRequest
     ): ResponseEntity<Any> {
         //TODO: Validate
@@ -49,12 +51,12 @@ class MainActivityController(
             this.user = user
         }
         mainActivityService.add(userAttempt)
-        return ResponseEntity.ok().body("Success")
+        return ResponseEntity.status(HttpStatus.CREATED).body("Success")
     }
 
     @DeleteMapping("delete")
     fun clearUserAttempts(
-        @CookieValue("jwt") token: String?
+        @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?,
     ): ResponseEntity<Any> {
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
@@ -74,7 +76,7 @@ class MainActivityController(
 
     @GetMapping("all")
     fun getUserAttempts(
-        @CookieValue("jwt") token: String?
+        @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?,
     ): ResponseEntity<Any> {
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }

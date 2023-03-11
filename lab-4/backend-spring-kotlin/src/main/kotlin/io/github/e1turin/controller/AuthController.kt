@@ -1,15 +1,18 @@
 package io.github.e1turin.controller
 
 import io.github.e1turin.dto.*
-import io.github.e1turin.dto.inline.Jwt
 import io.github.e1turin.dto.request.LoginRequest
+import io.github.e1turin.dto.response.AuthResponse
 import io.github.e1turin.dto.response.errorResponse
 import io.github.e1turin.dto.response.message
+import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.service.AuthService
 import io.github.e1turin.service.UserService
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -24,12 +27,13 @@ class AuthController(private val userService: UserService, private val authServi
      * Token check method
      */
     @PostMapping("tokens/validate")
-    fun validateToken(@CookieValue("jwt") token: String?): ResponseEntity<Any> {
+    fun validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) token: String?): ResponseEntity<Any> {
         //TODO @Valid
+        //TODO substring for 'Barer ' prefix
         return if (token != null && authService.validateJwt(Jwt(token))) {
             ResponseEntity.ok("Token is valid")
         } else {
-            ResponseEntity.status(401).body(errorResponse("Invalid token"))
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid token"))
         }
     }
 
@@ -65,14 +69,26 @@ class AuthController(private val userService: UserService, private val authServi
             )
         }
 
-        val cookie = Cookie("jwt", jwt.token).apply {
-            isHttpOnly = true
-            path = "/"
-        }
 
-        response.addCookie(cookie)
+        /*
+            response.addCookie(
+                Cookie("jwt", jwt.token).apply {
+                    isHttpOnly = true
+                    path = "/"
+                }
+            )
+        */
 
-        return ResponseEntity.ok(message("Success"))
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(
+                AuthResponse(
+                    user = User(
+                        name = user.name,
+                        email = user.email
+                    ),
+                    token = jwt
+                )
+            )
     }
 
     /**
@@ -93,21 +109,22 @@ class AuthController(private val userService: UserService, private val authServi
      */
     @GetMapping("users") //TODO: Is it necessary end point?
     @CrossOrigin("localhost")
-    fun user(@CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
+    fun user(@RequestHeader(HttpHeaders.AUTHORIZATION) jwt: String?): ResponseEntity<Any> {
         jwt ?: run {
-            return ResponseEntity.status(401).body(io.github.e1turin.dto.response.errorResponse("Unauthenticated"))
+            return ResponseEntity.status(401).body(errorResponse("Unauthenticated"))
         }
 
         //TODO: check current user (issuer in jwt)
 
         val decodedJwt = authService.decodeJwt(Jwt(jwt)) ?: run {
             return ResponseEntity.status(401).body(
-                io.github.e1turin.dto.response.errorResponse("Token was not correct")
+                errorResponse("Token was not correct")
             )
         }
 
         val user = this.userService.getById(decodedJwt.issuer.toLong())
 
+        //TODO: only for debug, `user` must be dto
         return ResponseEntity.ok(user)
     }
 }
