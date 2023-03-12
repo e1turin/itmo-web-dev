@@ -2,6 +2,8 @@ import { api, client } from "shared/api";
 import { useLocalStorage } from "shared/lib";
 import { AuthContextType } from "./context/types";
 import { Credential } from "shared/api/types/auth";
+import { useState } from "react";
+import { config } from "shared/conftg";
 
 /**
  * Hook is to setup AuthContext. It is used for managing authentication of user.
@@ -10,10 +12,13 @@ import { Credential } from "shared/api/types/auth";
  */
 export const useAuth = <U extends Credential>(): AuthContextType<U> => {
   // debugger;
-  //TODO: use specified `key`
-  const [viewer, setViewer] = useLocalStorage<U | null>("user", null);
-  let isAuth = false;
-  validateViewer(viewer).then((res: boolean) => (isAuth = res)); //FIXME: make hook
+  const [viewer, setViewer] = useLocalStorage<U | null>(
+    config.userLocalStorageKey,
+    null
+  );
+  const [isAuth, setIsAuth] = useState(() => !!viewer);
+
+  // validateViewer(viewer).then((res: boolean) => setIsAuth(res)); //FIXME: make hook
 
   /**
    * Sign in hook
@@ -21,15 +26,18 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
    * @returns Promise<Error>
    */
   const signIn = async (data: U) => {
+    // debugger;
     try {
       let authresult = await client.post(api.createToken, data);
       let userObj: U = { ...authresult.data?.user };
       console.log("[useAuth:signIn] userObj= ", userObj);
       userObj.token = authresult.data?.token;
       setViewer(userObj);
+      setIsAuth(true);
       return null;
     } catch (err) {
       console.error("[useAuth::signIn]", err);
+      setIsAuth(false);
       return err;
     }
   };
@@ -45,6 +53,7 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
       let userObj: U = { ...authresult.data?.user };
       console.log("[useAuth:signIn] userObj= ", userObj);
       setViewer(userObj);
+      setIsAuth(!!viewer);
       return null;
     } catch (err) {
       console.error("[useAuth::signUp]", err);
@@ -54,10 +63,14 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
 
   const signOut = async () => {
     try {
-      client.post(api.unauthorize, viewer).then((response) => {
-        console.log("[useAuth::signOut]", response.status);
-        setViewer(null!);
+      const resp = await client.delete(api.unauthorize, {
+        headers: {
+          Authorization: viewer!!.token,
+        },
       });
+      console.log("[useAuth::signOut]", resp.status);
+      setViewer(null!);
+      setIsAuth(false);
     } catch (err) {
       console.error("[useAuth::signOut]", err);
     }

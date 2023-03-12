@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { reducer } from "entities/attempt";
+import { attemptReducer } from "entities/attempt";
 
 export const store = configureStore({
   reducer: {
-    attempts: reducer,
+    attempts: attemptReducer,
   },
 });

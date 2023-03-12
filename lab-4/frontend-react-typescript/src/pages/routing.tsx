@@ -5,7 +5,7 @@ import { RegisterPage } from "./auth/register";
 import { Main } from "./main";
 
 export const Routing = () => {
-  //we use `useAuthContext` hook to get value from setted up AuthContext
+  //we use `useAuthContext` hook to get values from setted up AuthContext
   const { isAuth } = useAuthContext()!;
   const location = useLocation();
   const pathName = location.state?.from || "/";

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getToken } from "entities/auth/lib";
 import { api, client } from "shared/api";
-import type { Attempt, Point, UserCredential } from "shared/api/types";
+import type { Attempt, Point } from "shared/api/types";
 import { defaultPoint } from "shared/api/types";
 
 export const fetchAttempts = createAsyncThunk(
@@ -12,6 +12,7 @@ export const fetchAttempts = createAsyncThunk(
         Authorization: getToken(),
       },
     });
+    console.log("[fetchAttempts]", response.data);
     return response.data;
   }
 );
@@ -65,7 +66,7 @@ export const attemptsSlice = createSlice({
 
 export const { selectR } = attemptsSlice.actions;
 
-export const reducer = attemptsSlice.reducer;
+export const attemptReducer = attemptsSlice.reducer;
 
 export const selectAllAttempts = (state: any): Attempt<Point>[] =>
-  state.attemps.attempts;
+  state.attempts.attempts;

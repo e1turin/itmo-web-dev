@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { defaultPoint, R_values } from "shared/api/types";
-import { Button, Form, Icon, InputNumber, Radio } from "shared/ui";
+import {
+  Button,
+  Form,
+  Icon,
+  InputNumber,
+  Radio,
+  Row,
+  Space,
+  Typography,
+} from "shared/ui";
 import { onFormSubmit } from "./model";
 import { Point } from "shared/api/types";
 import { selectR } from "entities/attempt";
@@ -67,11 +76,18 @@ export const SelectViaForm = ({ x, y, r }: FormProps) => {
           name="r"
           rules={[{ required: true, message: "Input R parameter!" }]}
         >
-          <Radio.Group>
-            {R_values.map((value: number) => {
-              return <Radio.Button value={value}>{value}</Radio.Button>;
-            })}
-          </Radio.Group>
+          <Space.Compact>
+            <Typography.Text>R</Typography.Text>
+            <Radio.Group>
+              {R_values.map((value: number) => {
+                return (
+                  <Radio.Button key={value} value={value}>
+                    {value}
+                  </Radio.Button>
+                );
+              })}
+            </Radio.Group>
+          </Space.Compact>
         </Form.Item>
 
         <Form.Item>

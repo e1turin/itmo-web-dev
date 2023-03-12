@@ -31,9 +31,9 @@ export const MainPage = () => {
         {errorBlock}
         <Select.ViaGraph />
         <Select.ViaForm
-          x={{ min: 0, max: 0 }}
-          y={{ min: 0, max: 0 }}
-          r={{ min: 0, max: 0 }}
+          x={{ min: -3, max: 5 }}
+          y={{ min: -3, max: 5 }}
+          r={{ min: 1, max: 5 }}
         />
         <Present.ViaTable />
       </Space>
