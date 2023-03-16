@@ -24,3 +24,8 @@ export type Attempt<P> = {
   isInsideArea: boolean;
   runningTime: number;
 } & P;
+
+export type ErrorResponse = {
+  error: string;
+  details?: Map<string, string>;
+};

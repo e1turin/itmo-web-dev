@@ -1,7 +1,7 @@
 import { selectAllAttempts } from "entities/attempt";
 import { useSelector } from "react-redux";
 import { Attempt, Point } from "shared/api/types";
-import { ColumnsType, Table, Spin, Icon, Typography } from "shared/ui";
+import { ColumnsType, Table, Icon, Typography } from "shared/ui";
 
 const columns: ColumnsType<Attempt<Point>> = [
   {

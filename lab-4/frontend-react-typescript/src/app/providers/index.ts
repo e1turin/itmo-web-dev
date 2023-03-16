@@ -3,4 +3,4 @@ import { WithAuth } from "./with-auth";
 import { WithRouter } from "./with-router";
 import { WithStorage } from "./with-store";
 
-export const WithProviders = compose(WithAuth, WithRouter, WithStorage);
+export const WithProviders = compose(WithStorage, WithAuth, WithRouter);

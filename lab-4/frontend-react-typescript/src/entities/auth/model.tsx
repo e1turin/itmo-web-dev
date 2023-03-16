@@ -2,8 +2,9 @@ import { api, client } from "shared/api";
 import { useLocalStorage } from "shared/lib";
 import { AuthContextType } from "./context/types";
 import { Credential } from "shared/api/types/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { config } from "shared/conftg";
+import { useSelector } from "react-redux";
 
 /**
  * Hook is to setup AuthContext. It is used for managing authentication of user.
@@ -16,9 +17,18 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
     config.userLocalStorageKey,
     null
   );
-  const [isAuth, setIsAuth] = useState(() => !!viewer);
+  const [isAuth, setIsAuth] = useState(!!viewer);
+  // const authFailed = useSelector((state: any) => state.attempts.authFailed);
 
-  // validateViewer(viewer).then((res: boolean) => setIsAuth(res)); //FIXME: make hook
+  useEffect(() => {
+    if (!viewer) {
+      setIsAuth(false);
+      return;
+    }
+    validateViewer(viewer).then((isValid: boolean) => {
+      setIsAuth(isValid);
+    });
+  }, [viewer]);
 
   /**
    * Sign in hook
@@ -81,21 +91,21 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
 
 //TODO: move logic to shared/api
 const validateViewer = async <U extends Credential>(
-  viewer: U | null
+  viewer: U
 ): Promise<boolean> => {
-  if (!!viewer) return false;
-  try {
-    const resp = await client.post(api.validateToken, "", {
+  const result = await client
+    .post(api.validateToken, null, {
       headers: {
-        Authorization: viewer!!.token,
+        Authorization: viewer.token,
       },
+    })
+    .then((response) => {
+      console.log("[validateViewer] response = ", response);
+      return 200 <= response.status && response.status < 300;
+    })
+    .catch((error) => {
+      console.log("[validateViewer] validation failed with error=", error);
+      return false;
     });
-    console.log("[validateViewer] response = ", resp);
-    // result = response.data?.isValid as boolean;
-    const result = resp.status < 300;
-    return result;
-  } catch (error) {
-    console.log("[validateViewer] validation failed with error=", error);
-    return false;
-  }
+  return result;
 };

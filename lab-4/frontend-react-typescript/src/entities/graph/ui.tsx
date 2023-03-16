@@ -3,13 +3,10 @@ import { useSelector } from "react-redux";
 import { selectAllAttempts } from "entities/attempt";
 import { setupCanvasUtils } from "./model";
 import { Point } from "shared/api/types";
-/* 
-export type GraphProps = {
-  draw: (ctx: any, points: any[]) => any;
-}; 
-*/
+import styles from "./index.scss";
 
 export const Graph = () => {
+  // debugger;
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const attempts = useSelector(selectAllAttempts);
   const currentR: Point["r"] = useSelector(
