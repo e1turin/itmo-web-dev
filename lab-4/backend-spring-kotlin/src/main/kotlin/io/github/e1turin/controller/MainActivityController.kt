@@ -34,10 +34,10 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could read user)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not read user)"))
         }
 
         val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
@@ -51,7 +51,7 @@ class MainActivityController(
             this.user = user
         }
         mainActivityService.add(userAttempt)
-        return ResponseEntity.status(HttpStatus.CREATED).body("Success")
+        return ResponseEntity.status(HttpStatus.CREATED).body(userAttempt)
     }
 
     @DeleteMapping("delete")
@@ -61,10 +61,10 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could read user)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could read user)"))
         }
 //        val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
 
@@ -81,13 +81,14 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid Token (could read user)"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could read user)"))
         }
         val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
+        val attempts = mainActivityService.getAllUserAttempts(user)
 
-        return ResponseEntity.ok(mainActivityService.getAllUserAttempts(user))
+        return ResponseEntity.ok(attempts)
     }
 }

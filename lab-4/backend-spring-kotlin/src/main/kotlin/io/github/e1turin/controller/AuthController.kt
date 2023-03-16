@@ -30,6 +30,7 @@ class AuthController(private val userService: UserService, private val authServi
     fun validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) token: String?): ResponseEntity<Any> {
         //TODO @Valid
         //TODO substring for 'Barer ' prefix
+        logger.debug(token)
         return if (token != null && authService.validateJwt(Jwt(token))) {
             ResponseEntity.ok("Token is valid")
         } else {
@@ -56,11 +57,11 @@ class AuthController(private val userService: UserService, private val authServi
         }
 
         val user = userService.findByEmail(body.email!!) ?: run {
-            return ResponseEntity.badRequest().body(errorResponse("User not found"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("User not found"))
         }
 
         if (!user.comparePassword(body.password!!)) {
-            return ResponseEntity.badRequest().body(errorResponse("Invalid password"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid password"))
         }
 
         val jwt = authService.createJwtToken(user) ?: run {
@@ -95,10 +96,10 @@ class AuthController(private val userService: UserService, private val authServi
      * Logout method
      */
     @DeleteMapping("tokens/delete")
-    fun deleteToken(response: HttpServletResponse): ResponseEntity<Any> {
-        val cookie = Cookie("jwt", "").apply { maxAge = 0 }
-
-        response.addCookie(cookie)
+    fun deleteToken(@RequestHeader(HttpHeaders.AUTHORIZATION) jwt: String?): ResponseEntity<Any> {
+//        val cookie = Cookie("jwt", "").apply { maxAge = 0 }
+//
+//        response.addCookie(cookie)
 
         return ResponseEntity.ok(message("Success"))
     }
@@ -111,13 +112,13 @@ class AuthController(private val userService: UserService, private val authServi
     @CrossOrigin("localhost")
     fun user(@RequestHeader(HttpHeaders.AUTHORIZATION) jwt: String?): ResponseEntity<Any> {
         jwt ?: run {
-            return ResponseEntity.status(401).body(errorResponse("Unauthenticated"))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Unauthenticated"))
         }
 
         //TODO: check current user (issuer in jwt)
 
         val decodedJwt = authService.decodeJwt(Jwt(jwt)) ?: run {
-            return ResponseEntity.status(401).body(
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                 errorResponse("Token was not correct")
             )
         }

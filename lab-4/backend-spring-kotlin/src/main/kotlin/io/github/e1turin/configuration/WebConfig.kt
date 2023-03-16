@@ -13,7 +13,11 @@ class WebConfig : WebMvcConfigurer {
         //TODO: different config
         registry.addMapping("/api/**")
             .allowedOriginPatterns( "http://localhost:*" )
-            .allowedMethods("*")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+            .allowCredentials(true)
+        registry.addMapping("/main/**")
+            .allowedOriginPatterns( "http://localhost:*" )
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
             .allowCredentials(true)
     }
 }
