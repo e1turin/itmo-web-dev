@@ -75,7 +75,7 @@ export const attemptsSlice = createSlice({
         state.status = "succeeded";
         state.attempts = action.payload.slice();
         state.authFailed = false;
-        state.status = "idle";
+        // state.status = "idle";
       })
       .addCase(fetchAttempts.rejected, (state, action) => {
         state.status = "failed";
@@ -95,7 +95,7 @@ export const attemptsSlice = createSlice({
         state.status = "succeeded";
         state.attempts.push(action.payload);
         state.authFailed = false;
-        state.status = "idle";
+        // state.status = "idle";
       })
       .addCase(addNewAttempt.rejected, (state, action) => {
         state.status = "failed";

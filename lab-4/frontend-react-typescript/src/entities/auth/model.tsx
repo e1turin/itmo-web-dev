@@ -46,7 +46,7 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
       setIsAuth(true);
       return null;
     } catch (err) {
-      console.error("[useAuth::signIn]", err);
+      console.log("[useAuth::signIn]", err);
       setIsAuth(false);
       return err;
     }

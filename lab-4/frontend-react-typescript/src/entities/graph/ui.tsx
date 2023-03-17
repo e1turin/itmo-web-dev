@@ -9,22 +9,18 @@ export const Graph = () => {
   // debugger;
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const attempts = useSelector(selectAllAttempts);
-  const currentR: Point["r"] = useSelector(
+  const currentR = useSelector(
     (state: any): Point["r"] => state.attempts.currentR
   );
   const attemptStatus = useSelector((state: any) => state.attempts.status);
 
   useEffect(() => {
-    if (attemptStatus === "idle") {
-      const cnv = canvasRef.current;
-      const { draw_scene, on_click } = setupCanvasUtils(
-        currentR,
-        cnv,
-        attempts
-      );
-      draw_scene();
-      cnv.addEventListener("click", on_click);
-    }
+    // if (attemptStatus === "idle") {
+    const cnv = canvasRef.current;
+    const { draw_scene, on_click } = setupCanvasUtils(currentR, cnv, attempts);
+    draw_scene();
+    cnv.addEventListener("click", on_click);
+    // }
   }, [currentR, attempts]);
 
   return (

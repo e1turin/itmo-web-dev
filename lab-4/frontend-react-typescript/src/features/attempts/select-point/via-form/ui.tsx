@@ -25,17 +25,13 @@ export const SelectViaForm = ({ x, y, r }: FormProps) => {
   const [result, setResult] = useState<boolean | null>(null);
   const dispatch = useDispatch<any>();
 
-  const onFormValuesChange = ({ r }: Point) => {
-    dispatch(selectR(r));
-  };
-
   return (
     <>
       <Form
         name="x"
         className="login-form"
         initialValues={defaultPoint}
-        onValuesChange={onFormValuesChange}
+        // onValuesChange={onFormValuesChange}
         onFinish={onFormSubmit(dispatch)}
       >
         <Form.Item
@@ -78,7 +74,12 @@ export const SelectViaForm = ({ x, y, r }: FormProps) => {
         >
           <Space.Compact>
             <Typography.Text>R</Typography.Text>
-            <Radio.Group>
+            <Radio.Group
+              defaultValue={defaultPoint.r}
+              onChange={({ target: { value } }) => {
+                dispatch(selectR(value));
+              }}
+            >
               {R_values.map((value: number) => {
                 return (
                   <Radio.Button key={value} value={value}>
