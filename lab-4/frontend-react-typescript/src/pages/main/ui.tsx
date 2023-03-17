@@ -1,8 +1,9 @@
 import { fetchAttempts } from "entities/attempt";
+import { useAuthContext } from "entities/auth";
 import { Select, Present } from "features/attempts";
 import { Logout } from "features/auth/logout";
 import { PageTemplate } from "pages/template";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Space, Spin } from "shared/ui";
 
@@ -10,6 +11,15 @@ export const MainPage = () => {
   const dispatch = useDispatch<any>();
   const attemptStatus = useSelector((state: any) => state.attempts.status);
   const error = useSelector((state: any) => state.attempts.error);
+
+  const authFailed = useSelector(
+    (state: any): boolean => state.attempts.authFailed
+  );
+  const { validateViewer } = useAuthContext();
+  useEffect(() => {
+    console.log("[MainPage::authFailed] authFailed changed");
+    validateViewer();
+  }, [authFailed]);
 
   useEffect(() => {
     if (attemptStatus === "idle") {

@@ -5,6 +5,7 @@ import { Credential } from "shared/api/types/auth";
 import { useEffect, useState } from "react";
 import { config } from "shared/conftg";
 import { useSelector } from "react-redux";
+import { getToken } from "./lib";
 
 /**
  * Hook is to setup AuthContext. It is used for managing authentication of user.
@@ -17,17 +18,15 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
     config.userLocalStorageKey,
     null
   );
-  const [isAuth, setIsAuth] = useState(!!viewer);
-  // const authFailed = useSelector((state: any) => state.attempts.authFailed);
+  const [isAuth, setIsAuth] = useState(false);
+  // const [authFailed, setAuthFailed] = useState(false);
 
   useEffect(() => {
     if (!viewer) {
       setIsAuth(false);
       return;
     }
-    validateViewer(viewer).then((isValid: boolean) => {
-      setIsAuth(isValid);
-    });
+    validateViewer();
   }, [viewer]);
 
   /**
@@ -86,26 +85,33 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
     }
   };
 
-  return { isAuth, viewer, signIn, signUp, signOut };
-};
+  //TODO: move logic to shared/api
+  const validateViewer = async () => {
+    try {
+      const result = await client
+        .post(api.validateToken, null, {
+          headers: {
+            Authorization: getToken(),
+            // Authorization: viewer?.token,
+          },
+        })
+        .then((response) => {
+          console.log("[validateViewer] response = ", response);
+          return 200 <= response.status && response.status < 300;
+        })
+        .then((isValid: boolean) => {
+          setIsAuth(isValid);
+        })
+        .catch((error) => {
+          console.log("[validateViewer] validation failed with error=", error);
+          // return 200 <= response.status && response.status < 300;
+          setIsAuth(false);
+        });
+      // return result;
+    } catch (err) {
+      console.error("[useAuth::signOut]", err);
+    }
+  };
 
-//TODO: move logic to shared/api
-const validateViewer = async <U extends Credential>(
-  viewer: U
-): Promise<boolean> => {
-  const result = await client
-    .post(api.validateToken, null, {
-      headers: {
-        Authorization: viewer.token,
-      },
-    })
-    .then((response) => {
-      console.log("[validateViewer] response = ", response);
-      return 200 <= response.status && response.status < 300;
-    })
-    .catch((error) => {
-      console.log("[validateViewer] validation failed with error=", error);
-      return false;
-    });
-  return result;
+  return { isAuth, viewer, signIn, signUp, signOut, validateViewer };
 };

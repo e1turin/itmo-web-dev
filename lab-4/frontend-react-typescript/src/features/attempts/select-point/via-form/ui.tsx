@@ -12,7 +12,6 @@ import {
   Typography,
 } from "shared/ui";
 import { onFormSubmit } from "./model";
-import { Point } from "shared/api/types";
 import { selectR } from "entities/attempt";
 
 export type FormProps = {
@@ -21,7 +20,7 @@ export type FormProps = {
   r: { min: number; max: number };
 };
 
-export const SelectViaForm = ({ x, y, r }: FormProps) => {
+export const SelectViaForm = ({ x, y }: FormProps) => {
   const [result, setResult] = useState<boolean | null>(null);
   const dispatch = useDispatch<any>();
 

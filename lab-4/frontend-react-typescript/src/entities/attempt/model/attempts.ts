@@ -22,7 +22,7 @@ export const fetchAttempts = createAsyncThunk(
       if (!error.response) {
         throw e;
       }
-      return rejectWithValue(error.response);
+      return rejectWithValue({ status: error.response.status, error: error.response.data });
     }
   }
 );

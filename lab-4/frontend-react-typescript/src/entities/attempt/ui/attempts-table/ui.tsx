@@ -1,7 +1,20 @@
+import { AntTreeNodeMouseEvent } from "antd/es/tree";
 import { selectAllAttempts } from "entities/attempt";
 import { useSelector } from "react-redux";
 import { Attempt, Point } from "shared/api/types";
 import { ColumnsType, Table, Icon, Typography } from "shared/ui";
+
+var options = {
+  era: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  weekday: "long",
+  timezone: "UTC",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+} as Intl.DateTimeFormatOptions;
 
 const columns: ColumnsType<Attempt<Point>> = [
   {
@@ -28,7 +41,7 @@ const columns: ColumnsType<Attempt<Point>> = [
   {
     title: "Creation Date Time",
     dataIndex: "creationDateTime",
-    render: (it) => it,
+    render: (it) => new Date(it).toLocaleString("ru", options),
   },
 ];
 

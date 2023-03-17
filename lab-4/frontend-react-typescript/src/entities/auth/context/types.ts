@@ -9,4 +9,7 @@ export type AuthContextType<U> = {
   signIn: (data: U) => Promise<any | null>;
   signUp: (data: U) => Promise<any | null>;
   signOut: () => Promise<any | null>;
+  // authFailed: boolean;
+  // setAuthFailed: (data: boolean) => void;
+  validateViewer: () => Promise<any | null>;
 };
