@@ -34,10 +34,10 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not read user)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not read user)"))
         }
 
         val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
@@ -61,10 +61,10 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could read user)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could read user)"))
         }
 //        val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
 
@@ -81,10 +81,10 @@ class MainActivityController(
 
         token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
         val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could not decode)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("Invalid Token (could read user)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could read user)"))
         }
         val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
         val attempts = mainActivityService.getAllUserAttempts(user)

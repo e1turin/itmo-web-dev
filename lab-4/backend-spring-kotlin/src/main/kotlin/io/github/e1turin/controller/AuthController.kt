@@ -30,7 +30,6 @@ class AuthController(private val userService: UserService, private val authServi
     fun validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) token: String?): ResponseEntity<Any> {
         //TODO @Valid
         //TODO substring for 'Barer ' prefix
-        logger.debug(token)
         return if (token != null && authService.validateJwt(Jwt(token))) {
             ResponseEntity.ok("Token is valid")
         } else {
