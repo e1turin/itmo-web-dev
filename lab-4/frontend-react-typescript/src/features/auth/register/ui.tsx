@@ -1,6 +1,5 @@
 import { useAuthContext } from "entities/auth";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router";
 import { Button, Form, Input, notification } from "shared/ui";
 import { Icon } from "shared/ui";
 import { onFinish, onFinishFailed } from "./model";
@@ -13,15 +12,17 @@ export const Register = () => {
   const notify = ({
     message,
     description = "",
+    icon = <Icon.WarningOutlined />,
   }: {
     message: React.ReactNode;
     description?: React.ReactNode;
+    icon?: React.ReactNode;
   }) => {
     api.info({
       message: message,
       description: description,
       placement: "top",
-      icon: <Icon.WarningFilled color="red" />,
+      icon: icon,
     });
   };
 
@@ -38,12 +39,18 @@ export const Register = () => {
             if (!!err) {
               notify({
                 message: "Sorry, error occured while signing up",
-                description: error,
+                description: err.response.data.error,
+                icon: <Icon.WarningTwoTone twoToneColor="#ff2323" />,
               });
             } else {
               notify({
                 message: "You have successfully signed up!",
-                description: <Button href="/">Log In now!</Button>,
+                description: (
+                  <>
+                    <Button href="/">Log In now!</Button>
+                  </>
+                ),
+                icon: <Icon.CheckCircleTwoTone twoToneColor="#52c41a" />,
               });
             }
           });
@@ -90,7 +97,6 @@ export const Register = () => {
             Register
           </Button>
         </Form.Item>
-        {/* {!!error && <Form.Item>{error}</Form.Item>} */}
       </Form>
     </>
   );

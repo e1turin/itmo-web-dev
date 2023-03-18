@@ -11,6 +11,7 @@ export const MainPage = () => {
   const dispatch = useDispatch<any>();
   const attemptStatus = useSelector((state: any) => state.attempts.status);
   const error = useSelector((state: any) => state.attempts.error);
+  const { isAuth } = useAuthContext();
 
   const authFailed = useSelector(
     (state: any): boolean => state.attempts.authFailed
@@ -22,10 +23,10 @@ export const MainPage = () => {
   }, [authFailed]);
 
   useEffect(() => {
-    if (attemptStatus === "idle") {
+    if (attemptStatus === "idle" && isAuth) {
       dispatch(fetchAttempts());
     }
-  }, [attemptStatus, dispatch]);
+  }, [attemptStatus, dispatch, isAuth]);
 
   let errorBlock = null;
 
@@ -38,7 +39,6 @@ export const MainPage = () => {
   return (
     <PageTemplate header={<Logout />}>
       <Space direction={"horizontal"} wrap>
-        {errorBlock}
         <Select.ViaGraph />
         <Select.ViaForm
           x={{ min: -3, max: 5 }}

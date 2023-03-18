@@ -6,7 +6,7 @@ designed in [stately.ai](https://stately.ai/)
 # TODO
 
 - [x] form register successfull registation toast
-- [ ] multiple requests on click
-- [ ] not loading attempts after auth failed
+- [x] multiple requests on click
+- [x] not loading attempts after auth failed
 - [x] authFailed toast on login page
-- [ ] login failed message
+- [x] login failed message

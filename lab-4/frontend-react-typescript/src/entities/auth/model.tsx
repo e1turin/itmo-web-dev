@@ -61,8 +61,6 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
       let authresult = await client.put(api.createUser, data);
       let userObj: U = { ...authresult.data?.user };
       console.log("[useAuth:signIn] userObj= ", userObj);
-      setViewer(userObj);
-      setIsAuth(!!viewer);
       return null;
     } catch (err) {
       console.error("[useAuth::signUp]", err);
@@ -82,6 +80,7 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
       setIsAuth(false);
     } catch (err) {
       console.error("[useAuth::signOut]", err);
+      return err;
     }
   };
 

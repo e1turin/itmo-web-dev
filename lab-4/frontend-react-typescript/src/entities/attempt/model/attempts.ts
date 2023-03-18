@@ -22,7 +22,10 @@ export const fetchAttempts = createAsyncThunk(
       if (!error.response) {
         throw e;
       }
-      return rejectWithValue({ status: error.response.status, error: error.response.data });
+      return rejectWithValue({
+        status: error.response.status,
+        error: error.response.data,
+      });
     }
   }
 );
@@ -85,7 +88,7 @@ export const attemptsSlice = createSlice({
         };
         if (payload) {
           state.error = payload.error.error;
-          state.authFailed = payload.status == 401;
+          state.authFailed = payload.status == 403 || payload.status == 401;
           if (state.authFailed) {
             console.error("Auth failed");
           }
@@ -105,7 +108,7 @@ export const attemptsSlice = createSlice({
         };
         if (payload) {
           state.error = payload.error.error;
-          state.authFailed = payload.status == 401;
+          state.authFailed = payload.status == 403 || payload.status == 401;
           if (state.authFailed) {
             console.error("Auth failed");
           }
