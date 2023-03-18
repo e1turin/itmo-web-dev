@@ -41,7 +41,7 @@ const columns: ColumnsType<Attempt<Point>> = [
   {
     title: "Creation Date Time",
     dataIndex: "creationDateTime",
-    render: (it) => new Date(it).toLocaleString("ru", options),
+    render: (it) => new Date(it).toString(),
   },
 ];
 

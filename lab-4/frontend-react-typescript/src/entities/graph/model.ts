@@ -1,5 +1,6 @@
 import { addNewAttempt } from "entities/attempt";
 import { store } from "entities/store";
+import { useDispatch } from "react-redux";
 import { Attempt, Point } from "shared/api/types";
 
 type dot = { x: number; y: number };
@@ -20,7 +21,7 @@ export const setupCanvasUtils = (
   const line_width = 4; // [px]
   const border_offset = 10; // [px]
   const possible_R = [1, 2, 3, 4, 5]; // [dp] = [Density-independent Pixels]
-  const point_colors = { in: "#168a38", out: "#ef2d2d" };
+  const point_colors = { in: "#16953c", out: "#ef2d2d" };
   const target_colors = {
     axis: "#2c2c2c",
     background: "#f8d72d",
@@ -135,38 +136,41 @@ export const setupCanvasUtils = (
     }
   };
 
-  const on_click = (event: MouseEvent) => {
-    /* return point (`x`, `y`) [px] of canvas */
-    const get_mouse_position = (
-      canvas: HTMLCanvasElement,
-      event: MouseEvent
-    ) => {
-      let rect = canvas.getBoundingClientRect();
-      let position = {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
+  const on_click =
+    // (commit_point: (data: Point) => void) =>
+    (event: MouseEvent) => {
+      /* return point (`x`, `y`) [px] of canvas */
+      const get_mouse_position = (
+        canvas: HTMLCanvasElement,
+        event: MouseEvent
+      ) => {
+        let rect = canvas.getBoundingClientRect();
+        let position = {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+        };
+        console.log(
+          `[get_mouse_position] {x: ${position.x}, y: ${position.y}} [px]`
+        );
+        return position;
       };
-      console.log(
-        `[get_mouse_position] {x: ${position.x}, y: ${position.y}} [px]`
-      );
-      return position;
+
+      let position = get_mouse_position(cnv, event);
+      let point = {
+        x: (position.x - mid().x) / cft(),
+        y: (mid().y - position.y) / cft(),
+        r: R,
+      };
+
+      console.log(`[on_click] point: {x: ${point.x}, y: ${point.y}} [dp]`);
+
+      commit_point(point);
     };
-
-    let position = get_mouse_position(cnv, event);
-    let point = {
-      x: (position.x - mid().x) / cft(),
-      y: (mid().y - position.y) / cft(),
-      r: R,
-    };
-
-    console.log(`[on_click] point: {x: ${point.x}, y: ${point.y}} [dp]`);
-
-    commit_point(point);
-  };
 
   return { draw_scene, on_click };
 };
 
 const commit_point = (point: Point) => {
-  const dispatcher = store.dispatch(addNewAttempt(point));
+  store.dispatch(addNewAttempt(point));
+  // dispatch<any>(addNewAttempt(point));
 };
