@@ -13,6 +13,6 @@ public class ErrorHandlerController {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND )
     public String handleNotFoundError(NoHandlerFoundException ex) {
-        return "[ " + this + " ] path does not exists (fix your url :0)";
+        return "[ " + this + " ] path does not exists (fix your url lol)";
     }
 }

@@ -16,7 +16,5 @@ interface UserAttemptRepository : JpaRepository<UserAttemptEntity, Long> {
     @Modifying
     @Transactional
     @Query("delete from user_attempts where user_attempts.user_id=:userId", nativeQuery = true)
-    fun deleteAllByUserId(@Param("userId") userId: Long) {
-        /* TODO */
-    }
+    fun deleteAllByUserId(@Param("userId") userId: Long)
 }

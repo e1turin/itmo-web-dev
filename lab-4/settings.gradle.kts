@@ -3,4 +3,3 @@
 rootProject.name = "lab-4-spring-react"
 
 include("backend-spring-kotlin")
-include("frontend-react-redux-typescript")

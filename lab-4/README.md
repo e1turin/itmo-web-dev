@@ -27,8 +27,6 @@
 - [ ] "Планшетный" - для устройств, ширина экрана которых равна или превышает _843_, но меньше _1197_ пикселей.
 - [ ] "Мобильный"- для устройств, ширина экрана которых меньше _843_ пикселей.
 
-> 
-
 ## __Стартовая страница__ должна содержать следующие элементы:
 
 - [ ] "Шапку", содержащую ФИО студента, номер группы и номер варианта.
@@ -40,6 +38,9 @@
     > - [IDunion/SD-JWT-Kotlin](https://github.com/IDunion/SD-JWT-Kotlin) (kotlinx.serialization)
     > - [auth0/java-jwt](https://github.com/auth0/java-jwt)
   - > [spring-security-architecture](https://spring.io/guides/topicals/spring-security-architecture)
+  - > Контроль доступа можно организовать с помощью фильтров
+    > - для jwt https://springframework.guru/using-filters-in-spring-web-applications/
+    > - и для конкретных урлов
 
 ## __Основная страница__ приложения должна содержать следующие элементы:
 
@@ -60,9 +61,13 @@
 
 - [ ] Все результаты проверки должны сохраняться в базе данных под управлением СУБД _PostgreSQL_.
   - > [НЕЛЬЗЯ создать таблицу c именем "user"](https://stackoverflow.com/questions/22256124/cannot-create-a-database-table-named-user-in-postgresql),
+    > Хорошо бы для безопасности иметь таблицу невалидных токенов с TTL (Redis like) потому, что токены живут мало и
+      если я его инвалидировал, то либо он сгорел по времени, либо я найду его в этой таблице. Тут же нужно уметь продлевать их.
 - [ ] Для доступа к БД необходимо использовать _Spring Data_.
 
 ## Вопросы к защите лабораторной работы:
+> см. https://github.com/DeltaZN/Lab4-Web
+> см. https://github.com/band-of-four/cheatsheets/blob/master/Internet-Applications-Development/Lab4.md
 
 - [ ] Платформа Java EE. Спецификации и их реализации.
 - [ ] Принципы IoC, CDI и Location Transpanency. Компоненты и контейнеры.

@@ -1,5 +1,5 @@
 package io.github.e1turin.model.dao
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
@@ -7,6 +7,7 @@ import java.util.*
 @Entity
 @Table(name = "user_attempts")
 class UserAttemptEntity {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long = 0
@@ -26,7 +27,7 @@ class UserAttemptEntity {
     @Column(name = "creation_time")
     @Temporal(TemporalType.TIMESTAMP)
     var creationDateTime: Date? = null
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     var user: UserEntity? = null
