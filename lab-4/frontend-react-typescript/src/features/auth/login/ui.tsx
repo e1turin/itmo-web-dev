@@ -7,7 +7,7 @@ import { onFinish } from "./model";
 
 export const Login = () => {
   const { signIn } = useAuthContext();
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
 
   const [api, contextHolder] = notification.useNotification();
   const notify = ({

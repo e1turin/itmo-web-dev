@@ -76,8 +76,10 @@ export const useAuth = <U extends Credential>(): AuthContextType<U> => {
         },
       });
       console.log("[useAuth::signOut]", resp.status);
-      setViewer(null!);
-      setIsAuth(false);
+      if (resp.status < 300) {
+        setViewer(null!);
+        setIsAuth(false);
+      }
     } catch (err) {
       console.error("[useAuth::signOut]", err);
       return err;
