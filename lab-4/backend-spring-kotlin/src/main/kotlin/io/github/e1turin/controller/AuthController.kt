@@ -8,7 +8,6 @@ import io.github.e1turin.dto.response.message
 import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.service.AuthService
 import io.github.e1turin.service.UserService
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -95,12 +94,18 @@ class AuthController(private val userService: UserService, private val authServi
      * Logout method
      */
     @DeleteMapping("tokens/delete")
-    fun deleteToken(@RequestHeader(HttpHeaders.AUTHORIZATION) jwt: String?): ResponseEntity<Any> {
-//        val cookie = Cookie("jwt", "").apply { maxAge = 0 }
-//
-//        response.addCookie(cookie)
+    fun deleteToken(@RequestHeader(HttpHeaders.AUTHORIZATION) token: String?): ResponseEntity<Any> {
+        token ?: run {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("No token is given"))
+        }
 
-        return ResponseEntity.ok(message("Success"))
+        val result = authService.invalidateJwt(Jwt(token))
+        return if (result) {
+           ResponseEntity.ok(message("Success"))
+        } else {
+            ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse("Problem while invalidating token"))
+        }
+
     }
 
 

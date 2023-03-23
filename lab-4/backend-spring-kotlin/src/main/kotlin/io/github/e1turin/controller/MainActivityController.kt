@@ -1,9 +1,9 @@
 package io.github.e1turin.controller
 
 import com.auth0.jwt.interfaces.DecodedJWT
-import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.dto.request.PointRequest
 import io.github.e1turin.dto.response.errorResponse
+import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.model.dao.UserAttemptEntity
 import io.github.e1turin.service.AuthService
 import io.github.e1turin.service.MainActivityService
@@ -27,8 +27,7 @@ class MainActivityController(
 
     @PostMapping("create")
     fun addUserAttempt(
-        @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?,
-        @RequestBody body: PointRequest
+        @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?, @RequestBody body: PointRequest
     ): ResponseEntity<Any> {
         //TODO: Validate
 
@@ -37,7 +36,8 @@ class MainActivityController(
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not decode)"))
         }
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not read user)"))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(errorResponse("Invalid Token (could not read user)"))
         }
 
         val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
@@ -50,6 +50,7 @@ class MainActivityController(
             creationDateTime = Date()
             this.user = user
         }
+
         mainActivityService.add(userAttempt)
         return ResponseEntity.status(HttpStatus.CREATED).body(userAttempt)
     }
@@ -59,17 +60,17 @@ class MainActivityController(
         @RequestHeader(HttpHeaders.AUTHORIZATION) token: String?,
     ): ResponseEntity<Any> {
 
-        token ?: run { return ResponseEntity.badRequest().body(errorResponse("Invalid Token")) }
-        val decodedJWT: DecodedJWT = authService.decodeJwt(Jwt(token)) ?: run {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could not decode)"))
-        }
+        if (token == null) return ResponseEntity.badRequest().body(errorResponse("Invalid Token"))
+
+        val decodedJWT: DecodedJWT =
+            authService.decodeJwt(Jwt(token)) ?: return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(errorResponse("Invalid Token (could not decode)"))
+
         val userId = decodedJWT.issuer.toLongOrNull() ?: run {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse("Invalid Token (could read user)"))
         }
-//        val user = userService.getById(userId) ?: return ResponseEntity.internalServerError().body("NO such user (1)")
 
         logger.debug("Will remove attempts")
-//        mainActivityService.deleteAllUserAttempts(user)
         mainActivityService.deleteAllUserAttempts(userId)
         return ResponseEntity.ok("Success")
     }
