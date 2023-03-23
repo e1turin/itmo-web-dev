@@ -1,0 +1,182 @@
+openapi: "3.0.3"
+info:
+  title: "lab_4_spring_react API"
+  description: "lab_4_spring_react API"
+  version: "1.0.0"
+servers:
+  - url: "https://lab_4_spring_react"
+paths:
+  /api/auth/tokens/create:
+    post:
+      summary: "POST api/auth/tokens/create"
+      operationId: "createToken"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /api/auth/tokens/delete:
+    delete:
+      summary: "DELETE api/auth/tokens/delete"
+      operationId: "deleteToken"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /api/auth/tokens/validate:
+    post:
+      summary: "POST api/auth/tokens/validate"
+      operationId: "validateToken"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /api/auth/users:
+    get:
+      summary: "GET api/auth/users"
+      operationId: "user"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /api/users/create:
+    put:
+      summary: "PUT api/users/create"
+      operationId: "registerNewUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /main/points/all:
+    get:
+      summary: "GET main/points/all"
+      operationId: "getUserAttempts"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /main/points/create:
+    post:
+      summary: "POST main/points/create"
+      operationId: "addUserAttempt"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PointRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+  /main/points/delete:
+    delete:
+      summary: "DELETE main/points/delete"
+      operationId: "clearUserAttempts"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ResponseEntity"
+components:
+  schemas:
+    LoginRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+    HttpHeaders:
+      type: "object"
+      properties: { }
+    ResponseEntity:
+      type: "object"
+      properties:
+        headers:
+          $ref: "#/components/schemas/HttpHeaders"
+    RegisterRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string"
+    PointRequest:
+      type: "object"
+      properties:
+        x:
+          type: "number"
+          format: "double"
+        "y":
+          type: "number"
+          format: "double"
+        r:
+          type: "number"
+          format: "double"
