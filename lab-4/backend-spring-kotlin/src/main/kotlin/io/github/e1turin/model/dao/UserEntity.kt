@@ -28,7 +28,6 @@ class UserEntity {
     @OneToMany(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, mappedBy = "user")
     var attempts: List<UserAttemptEntity> = mutableListOf()
         get() = attempts.toList()
-
     @OneToMany(cascade = [(CascadeType.ALL)], fetch = FetchType.LAZY, mappedBy = "user")
     var tokens: List<UserTokenEntity> = mutableListOf()
         get() = tokens.toList()

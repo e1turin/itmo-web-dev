@@ -8,6 +8,7 @@ import io.github.e1turin.dto.token.Jwt
 import io.github.e1turin.model.dao.UserEntity
 import io.github.e1turin.model.dao.UserTokenEntity
 import io.github.e1turin.repository.UserTokenRepository
+
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
@@ -49,7 +50,6 @@ class AuthService(private val userTokenRepository: UserTokenRepository) {
     fun validateJwt(token: Jwt): Boolean {
         return decodeJwt(token) != null
     }
-
     fun invalidateJwt(token: Jwt): Boolean {
         try {
             val decodedJWT: DecodedJWT = decodeJwt(token) ?: return false
@@ -67,5 +67,4 @@ class AuthService(private val userTokenRepository: UserTokenRepository) {
             return false
         }
     }
-
 }
